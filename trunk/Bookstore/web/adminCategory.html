@@ -1,0 +1,160 @@
+<html><!-- InstanceBegin template="/Templates/_Admin_Template.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Live网上书店 - 后台管理</title>
+<!-- InstanceEndEditable -->
+<link href="css/common.css" rel="stylesheet" type="text/css">
+<script src="js/prototype.js"></script>
+<script src="js/common.js"></script>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+
+<body>
+<table width="980" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="1"><table width="980" height="80" border="0" cellpadding="6" cellspacing="0">
+      <tr>
+        <td width="192"><img src="images/logo.jpg" width="192" height="35" border="0"></td>
+        <td width="764"><font size="+2">后台管理</font></td>
+        </tr>
+      <tr>
+        <td>你好，<b>管理员</b>！<a href="/logout.jspx" class="hot"><b>注销</b></a></td>
+        <td width="764">警告：您已经以<b><font color="#FF0000">管理员</font></b>身份登录，完成管理任务后，请务必<a href="/logout.jspx" class="hot"><b>注销</b></a>您的登录并关闭浏览器！</td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td height="1"><!-- InstanceBeginEditable name="NavigatorBar" -->
+      <table width="100%" border="0" cellpadding="3" cellspacing="0" class="tabStyle" style="margin:3px;">
+        <tr>
+          <td width="100">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminOrder.jspx');">订单管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminAccount.jspx');">会员管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminBook.jspx');">书籍管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btnSelected" onClick="location.assign('adminCategory.jspx');">分类管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminReport.jspx');">统计报告</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td valign="top" style="padding:6px;"><!-- InstanceBeginEditable name="MainContent" -->
+      <table width="100%" border="0" cellspacing="0" cellpadding="3">
+        
+        <tr>
+          <td width="30%" valign="top">
+<script>
+var selectedCategoryId = (-1);
+function selectCategory(objAHref){
+	selectedCategoryId = objAHref.id;
+	$("selectedName").value=objAHref.name;
+}
+
+function createCategory(){
+	if(selectedCategoryId==(-1)){
+		alert("请先选择一个分类！");
+		return;
+	}
+	if(confirm("确实要创建这个分类吗？")){
+		location.assign("adminCategory.jspx?action=create&parentId="+selectedCategoryId+"&name="+encodeURIComponent($F("createName")));
+	}
+}
+
+function updateCategory(){
+	if(selectedCategoryId==(-1)){
+		alert("请先选择一个分类！");
+		return;
+	}
+	if(confirm("确实要修改这个分类吗？")){
+		location.assign("adminCategory.jspx?action=update&id="+selectedCategoryId+"&name="+encodeURIComponent($F("selectedName")));
+	}
+}
+
+function deleteCategory(){
+	if(selectedCategoryId==(-1)){
+		alert("请先选择一个分类！");
+		return;
+	}
+	if(confirm("确实要删除这个分类吗？")){
+		location.assign("adminCategory.jspx?action=delete&id="+selectedCategoryId);
+	}
+}
+</script>
+<!-- display category -->
+#category($root)
+          </td>
+          <td width="70%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="3">
+            <tr>
+              <td width="8%" bgcolor="#dedeef">&nbsp;</td>
+              <td width="92%" bgcolor="#dedeef"><b>新增一个分类</b></td>
+            </tr>
+            <tr>
+              <td align="right">名称：</td>
+              <td><input name="name" type="text" class="text" id="createName" maxlength="50" style="width:200px;">
+                <b><font color="#FF0000">*</font></b></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><input name="SubmitNewC" type="submit" class="button" id="SubmitNewC" value="创建新分类" onClick="createCategory()"></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td bgcolor="#dedeef">&nbsp;</td>
+              <td bgcolor="#dedeef"><b>修改/删除一个分类</b></td>
+            </tr>
+            <tr>
+              <td align="right">名称：</td>
+              <td><input name="name" type="text" class="text" id="selectedName" maxlength="50" style="width:200px;">
+                <b><font color="#FF0000">*</font></b></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><input name="SubmitUpdateC" type="submit" class="button" id="SubmitUpdateC" value="修改名称" onClick="updateCategory()">
+                <input name="SubmitDeleteC" type="submit" class="button" id="SubmitDeleteC" value="删除分类" onClick="deleteCategory()"></td>
+            </tr>
+            
+            
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td bgcolor="#dedeef">&nbsp;</td>
+              <td bgcolor="#dedeef"><b>导出分类到SQL脚本</b></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><input name="ButtonOutputSql" type="button" class="button" id="ButtonOutputSql" value="导出为SQL脚本" onClick="window.open('adminOutput.jspx')"></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+          </table></td>
+        </tr>
+      </table>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="20" align="center"><hr width="99%" size="1" noshade></td>
+  </tr>
+  
+  <tr>
+    <td height="1"><div align="center" class="pad6">
+    <a href="#" target="_blank">公司简介</a> | <a href="#" target="_blank">诚聘英才</a> | <a href="#" target="_blank">网站地图</a> | <a href="#" target="_blank">联系我们</a> | <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP证XXXXXX号</a><br>
+    版权所有&copy;2006，保留所有权利，Live在线书店 [<a href="#">管理</a>]。<br>
+    技术支持：<a href="http://www.crackj2ee.com" target="_blank">http://www.crackj2ee.com</a></div></td>
+  </tr>
+</table>
+</body>
+<!-- InstanceEnd --></html>

@@ -1,0 +1,198 @@
+body {
+	background-color: #FFFFFF;
+	margin: 0px;
+	text-align: center;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	line-height: 150%;
+}
+
+img { border: 0px; }
+img.simpleBorder { border: 1px solid #cccccc; }
+
+table.tabStyle{border-bottom:1px #39599C solid; }
+td.btnSelected{ background-color:#39599C;cursor:hand;text-align:center; color:#ffffff;font-size:14px; font-weight:bold;}
+td.btn{background-color:#dedeef;cursor:hand;text-align:center;color:#0061de;font-size:14px; font-weight:bold;}
+
+table {
+	text-align: left;
+	word-break: break-all;
+}
+
+table.panel {
+	padding:3px;
+	border:1px solid #336699;
+}
+
+td.panel {
+	background-color:#336699;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+td {
+	word-break: break-all;
+	font-size: 13px;
+	line-height: 150%;
+}
+
+td.pageClickable {
+	cursor:hand;
+	border: 1px solid #CCCCCC;
+	color: #0061de;
+}
+
+td.pageUnclickable {
+	border: 1px solid #CCCCCC;
+	color: #999999;
+}
+
+td.pageNonClickable {
+	border: 1px none #CCCCCC;
+}
+
+a:link {
+	color: #0061de; text-decoration: none;
+}
+
+a:visited {
+	color: #0061de; text-decoration: none;
+}
+
+a:hover {
+	color: #FFFFFF;
+	background-color: #0061de;
+	text-decoration: none;
+}
+
+a:active {
+	color: #FFFFFF;
+	background-color: #0061de;
+	text-decoration: none;
+}
+
+a.hot:link {
+	color: #ff0000; text-decoration: none;
+}
+
+a.hot:visited {
+	color: #ff0000; text-decoration: none;
+}
+
+a.hot:hover {
+	color: #FFFFFF;
+	background-color: #0061de;
+	text-decoration: none;
+}
+
+a.hot:active {
+	color: #FFFFFF;
+	background-color: #0061de;
+	text-decoration: none;
+}
+
+a.white:link {
+	color: #ffffff; text-decoration: none;
+	blr:expression(this.onFocus=this.blur());
+}
+
+a.white:visited {
+	color: #ffffff; text-decoration: none;
+}
+
+a.white:hover {
+	color: #ffffff; text-decoration: none;
+}
+
+a.white:active {
+	color: #ffffff; text-decoration: none;
+	blr:expression(this.onFocus=this.blur());
+}
+
+
+a.unselected:link,visited,hover,active{
+	color: #0000ff; text-decoration: none; font-weight:normal;
+}
+a.selected:link,visited,hover,active{
+	color: #ff0000;	text-decoration: none; font-weight:bold;
+}
+
+a.big:link {font-size: 14.8px; font-weight:bold;color:#0061de;text-decoration:none;}
+
+a.big:visited {
+font-size: 14.8px; font-weight:bold;color: #0061de; text-decoration: none;
+}
+
+a.big:hover {
+font-size: 14.8px; font-weight:bold;
+	color: #FFFFFF;
+	background-color: #0061de;
+	text-decoration: none;
+}
+
+a.big:active {
+font-size: 14.8px; font-weight:bold;
+	color: #FFFFFF;
+	background-color: #0061de;
+	text-decoration: none;
+}
+
+input.text {
+	font-size: 12px;
+	color:#333333;
+	background-color: #FFFFFF;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #BCBCBC;
+}
+
+input.button {
+	font-size: 12px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #BCBCBC;
+	padding: 2px;
+}
+
+select {
+	font-size: 12px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #BCBCBC;
+}
+
+span.header { font-size: 14.8px; font-weight:bold; }
+span.colorHeader { color:#0066cc;font-size: 14.8px; font-weight:bold; }
+
+span.gray { color:#666666; }
+
+span.hint { background-color:#99CCCC; }
+
+span.hot { color:ff870f;}
+
+div { word-break: break-all; }
+div.pad6 { padding:6px; }
+div.pad3 { padding:3px; }
+.tip{
+	padding:5px;
+	background-color:#E2FFE4;
+}
+td.line { border-bottom: 1px dashed #999999 }
+
+div.channel { width:980px; padding:6px; text-align:left; border-bottom: 1px solid #cccccc; border-top:1px solid #cccccc; }
+div.header { text-align:left; padding:6px;background-color:#EFEFEF; border-bottom: 1px solid #DEDBDE; }
+div.dot { text-align:left; padding:6px; border-bottom:1px dashed #DEDBDE; }
+
+div.darkHeader { width: 980px; text-align:left; padding: 3px; background-color:#EFEFEF; border-bottom: 1px solid #DEDBDE; }
+div.darkHeader760 { width: 760px; text-align:left; padding: 6px; background-color:#EFEFEF; border-bottom: 1px solid #DEDBDE; }
+
+div.darkFooter { width: 980px; text-align:center; padding: 6px; background-color:#EFEFEF; border-top: 1px solid #DEDBDE; }
+div.darkFooter760 { width: 760px; text-align:center; padding: 6px; background-color:#EFEFEF; border-top: 1px solid #DEDBDE; }
+
+div.left { text-align: left; float: left; }
+div.right { text-align: right; float: right; }
+
+.clickable { cursor:hand; }
+
+div.inline { display:inline; position:relative; width:100px; height:100px;}

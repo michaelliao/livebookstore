@@ -1,0 +1,110 @@
+<html><!-- InstanceBegin template="/Templates/_Site_Template.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Live在线书店</title>
+<!-- InstanceEndEditable -->
+<link href="../css/common.css" rel="stylesheet" type="text/css">
+<script src="../js/prototype.js"></script>
+<script src="../js/common.js"></script>
+<!-- InstanceBeginEditable name="head" --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable --><!-- InstanceEndEditable -->
+</head>
+
+<body>
+<table width="980" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="1"><table width="980" height="80" border="0" cellpadding="6" cellspacing="0">
+      <tr>
+        <td width="242"><a href="../cart.jspx" target="_blank"><img src="../images/cart.gif" width="20" height="20" align="absmiddle">购物车</a> | <a href="#" target="_blank">客服中心</a> | <a href="#" target="_blank">第一次购物？</a></td>
+        <td width="684" rowspan="3" align="center"><img src="../images/ad.gif" width="388" height="60" align="absmiddle"> <img src="../images/hot-book.gif" width="269" height="76" align="absmiddle"></td>
+        <td width="18" rowspan="3"><a href="#" target="_blank"></a><a href="#" target="_blank"></a><br></td>
+        </tr>
+      <tr>
+        <td align="center"><a href="../listBooks.jspx"><img src="../images/logo.jpg" width="192" height="35" border="0"></a></td>
+        </tr>
+      <tr>
+        <td>
+<script src="../checkState.jspx"></script>
+		</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="1"><!-- InstanceBeginEditable name="NavigatorBar" -->
+      <table width="100%" border="0" cellpadding="3" cellspacing="0" class="tabStyle" style="margin:3px;">
+        <tr>
+          <td width="100">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('listBooks.jspx');">Live在线书店</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btnSelected" onClick="location.assign('myLive.jspx');">我的Live</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('topSales.jspx');">书籍排行榜</td>
+          <td width="8">&nbsp;</td>
+          <td width="8">&nbsp;</td>
+		  <form action="searchBooks.jspx" method="get" name="formSearch" target="_blank" id="formSearch">
+          <td width="*">
+            关键字：
+            <input name="q" type="text" class="text" id="q" style="width:150px;" maxlength="50">
+            <input name="Submit" type="submit" class="button" value="书籍搜索">          </td>
+          </form>
+        </tr>
+      </table>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td valign="top" style="padding:6px;"><!-- InstanceBeginEditable name="MainContent" -->
+      <table width="967" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="219" valign="top"><table width="100%" cellspacing="0" class="panel">
+            <tr>
+              <td class="panel">分类浏览销售排行</td>
+            </tr>
+
+            <tr>
+              <td>#categoryList($root "topSales.jspx?time=$time")</td>
+            </tr>
+          </table></td>
+          <td width="13"></td>
+          <td width="735" valign="top">&nbsp;</td>
+        </tr>
+      </table>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="20" align="center"><hr width="99%" size="1" noshade></td>
+  </tr>
+  <tr>
+    <td height="1"><table border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#CCCCCC">
+      <tr>
+        <td bgcolor="#FFFFFF"><img src="../images/orange-arrow.gif" width="10" height="9" align="absmiddle">联系客服</td>
+        <td bgcolor="#FFFFFF"><img src="../images/orange-arrow.gif" width="10" height="9" align="absmiddle">初次购物</td>
+        <td bgcolor="#FFFFFF"><img src="../images/orange-arrow.gif" width="10" height="9" align="absmiddle">如何支付</td>
+        <td bgcolor="#FFFFFF"><img src="../images/orange-arrow.gif" width="10" height="9" align="absmiddle">关于送货</td>
+        <td bgcolor="#FFFFFF"><img src="../images/orange-arrow.gif" width="10" height="9" align="absmiddle">售后服务</td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF">顾客投诉</td>
+        <td bgcolor="#FFFFFF">新手上路</td>
+        <td bgcolor="#FFFFFF">如何汇款/使用银行卡支付</td>
+        <td bgcolor="#FFFFFF">送货方式</td>
+        <td bgcolor="#FFFFFF">退换货政策</td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF">顾客建议</td>
+        <td bgcolor="#FFFFFF">如何使用我的Live</td>
+        <td bgcolor="#FFFFFF">如何使用礼券/积分</td>
+        <td bgcolor="#FFFFFF">送货范围</td>
+        <td bgcolor="#FFFFFF">退换货流程</td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td height="1"><div align="center" class="pad6">
+    <a href="#" target="_blank">公司简介</a> | <a href="#" target="_blank">诚聘英才</a> | <a href="#" target="_blank">网站地图</a> | <a href="#" target="_blank">联系我们</a> | <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP证XXXXXX号</a><br>
+    版权所有&copy;2006，保留所有权利，Live在线书店 [<a href="../adminBook.jspx" target="_blank">管理</a>]。<br>
+    技术支持：<a href="http://www.crackj2ee.com" target="_blank">http://www.crackj2ee.com</a></div></td>
+  </tr>
+</table>
+</body>
+<!-- InstanceEnd --></html>

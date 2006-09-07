@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>Live网上书店 - 后台管理</title>
+<!-- TemplateEndEditable -->
+<link href="../css/common.css" rel="stylesheet" type="text/css">
+<script src="../js/prototype.js"></script>
+<script src="../js/common.js"></script>
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+</head>
+
+<body>
+<table width="980" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="1"><table width="980" height="80" border="0" cellpadding="6" cellspacing="0">
+      <tr>
+        <td width="192"><img src="../images/logo.jpg" width="192" height="35" border="0"></td>
+        <td width="764"><font size="+2">后台管理</font></td>
+        </tr>
+      <tr>
+        <td>你好，<b>管理员</b>！<a href="/logout.jspx" class="hot"><b>注销</b></a></td>
+        <td width="764">警告：您已经以<b><font color="#FF0000">管理员</font></b>身份登录，完成管理任务后，请务必<a href="/logout.jspx" class="hot"><b>注销</b></a>您的登录并关闭浏览器！</td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td height="1"><!-- TemplateBeginEditable name="NavigatorBar" -->
+      <table width="100%" border="0" cellpadding="3" cellspacing="0" class="tabStyle" style="margin:3px;">
+        <tr>
+          <td width="100">&nbsp;</td>
+          <td width="100" class="btnSelected" onClick="location.assign('adminOrder.jspx');">订单管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminAccount.jspx');">会员管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminBook.jspx');">书籍管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminCategory.jspx');">分类管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminReport.jspx');">统计报告</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    <!-- TemplateEndEditable --></td>
+  </tr>
+  <tr>
+    <td valign="top" style="padding:6px;"><!-- TemplateBeginEditable name="MainContent" -->MainContent<!-- TemplateEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="20" align="center"><hr width="99%" size="1" noshade></td>
+  </tr>
+  
+  <tr>
+    <td height="1"><div align="center" class="pad6">
+    <a href="#" target="_blank">公司简介</a> | <a href="#" target="_blank">诚聘英才</a> | <a href="#" target="_blank">网站地图</a> | <a href="#" target="_blank">联系我们</a> | <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP证XXXXXX号</a><br>
+    版权所有&copy;2006，保留所有权利，Live在线书店 [<a href="#">管理</a>]。<br>
+    技术支持：<a href="http://www.crackj2ee.com" target="_blank">http://www.crackj2ee.com</a></div></td>
+  </tr>
+</table>
+</body>
+</html>

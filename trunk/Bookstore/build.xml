@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="Building Live Online Bookstore" default="deploy" basedir=".">
+
+    <description>Live Online Bookstore v1.0</description>
+
+    <property name="src.dir"    value="src" />
+    <property name="test.dir"   value="test" />
+    <property name="doc.dir"    value="api-doc" />
+    <property name="web.dir"    value="web" />
+    <property name="lib.dir"    value="lib" />
+    <property name="conf.dir"   value="conf" />
+    <property name="gen.dir"    value="auto-gen" />
+    <property name="build.dir"  value="${web.dir}/WEB-INF/classes" />
+    <property name="report.dir" value="${gen.dir}/report" />
+
+    <!-- classpath definition -->
+    <path id="build-classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+        <pathelement path="${build.dir}"/>
+        <pathelement path="${src.dir}"/>
+    </path>
+
+    <target name="taskdef" description="define some xdoclet task">
+        <taskdef name="springdoclet" classname="xdoclet.modules.spring.SpringDocletTask">
+            <classpath refid="build-classpath"/>
+        </taskdef>
+        <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask">
+            <classpath refid="build-classpath"/>
+        </taskdef>
+        <taskdef name="annotationconfiguration" classname="org.hibernate.tool.ant.AnnotationConfigurationTask">
+            <classpath refid="build-classpath"/>
+        </taskdef>
+    </target>
+
+    <!-- clean all built class file and config file -->
+    <target name="clean">
+        <delete dir="${gen.dir}" />
+        <delete dir="${web.dir}/WEB-INF" />
+        <delete dir="${doc.dir}" />
+    </target>
+
+    <!-- make all needed dirs -->
+    <target name="pre-init" depends="taskdef" description="make dir">
+        <mkdir dir="${web.dir}/WEB-INF/lib" />
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${doc.dir}" />
+        <mkdir dir="${gen.dir}" />
+        <mkdir dir="${report.dir}" />
+    </target>
+
+    <!-- do some init work -->
+    <target name="init" depends="pre-init" description="copy to web dir">
+        <copy todir="${web.dir}/WEB-INF">
+            <fileset file="${conf.dir}/web.xml" />
+            <fileset file="${conf.dir}/velocity.properties" />
+        </copy>
+        <copy todir="${build.dir}">
+            <fileset file="${conf.dir}/hibernate.cfg.xml" />
+            <fileset file="${conf.dir}/compass.cfg.xml" />
+            <fileset file="${conf.dir}/log4j.properties" />
+        </copy>
+        <copy todir="${web.dir}/WEB-INF/lib">
+            <fileset file="${lib.dir}/core/*.jar" />
+        </copy>
+    </target>
+
+    <!-- generate spring config file using xdoclet -->
+    <target name="gen-spring-conf" depends="init" description="generate spring config file">
+        <!-- make spring beans config file -->
+        <springdoclet
+            destDir="${gen.dir}"
+            mergeDir="${conf.dir}"
+            force="false"
+            excludedtags="@version,@author,@todo">
+            <fileset dir="${src.dir}" includes="**/*.java" />
+            <springxml destinationFile="dispatcher-servlet.xml" xmlencoding="iso-8859-1" />
+        </springdoclet>
+        <!-- copy generated configure files to web dir -->
+        <copy todir="${web.dir}/WEB-INF">
+            <fileset file="${gen.dir}/dispatcher-servlet.xml" />
+        </copy>
+    </target>
+
+    <!-- compile all java source files -->
+    <target name="build" depends="init" description="compile the source files">
+        <!-- for product use, set: optimize="on" debug="off" -->
+        <javac destdir="${build.dir}" target="1.5" encoding="utf-8" deprecation="on" debug="on" debuglevel="lines,vars,source">
+            <src path="${src.dir}" />
+            <src path="${test.dir}" />
+            <classpath refid="build-classpath"/>
+        </javac>
+        <!-- copy non-java source files to build dir -->
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}" excludes="**/*.java" />
+        </copy>
+        <copy todir="${build.dir}">
+            <fileset dir="${test.dir}" excludes="**/*.java" />
+        </copy>
+    </target>
+
+    <!-- test -->
+    <target name="test" depends="build" description="run junit test">
+        <mkdir dir="${report.dir}"/>
+        <delete file="${report.dir}/*.*" />
+        <junit printsummary="on"
+               haltonfailure="false"
+               failureproperty="tests.failed"
+               showoutput="true">
+            <classpath refid="build-classpath" />
+            <formatter type="plain"/>
+            <batchtest todir="${report.dir}">
+                <fileset dir="${build.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <fail if="tests.failed">
+        ***********************************************************
+        ****  One or more tests failed!  Check the output ...  ****
+        ***********************************************************
+        </fail>
+    </target>
+
+    <!-- api doc -->
+    <target name="apidoc" depends="init" description="create api doc">
+        <javadoc packagenames="com.crackj2ee.*"
+                sourcepath="${src.dir}"
+                destdir="${doc.dir}"
+                author="true"
+                Encoding="UTF-8"
+                docencoding="UTF-8"
+                windowtitle="Live Bookstore API Documents"
+        >
+            <classpath refid="build-classpath"/>
+            <bottom><![CDATA[<b>Live Bookstore v1.0</b>, <i>Copyright_2006, <a href="http://www.crackj2ee.com" target="_blank">http://www.crackj2ee.com</a>, All Rights Reserved.</i>]]></bottom>
+        </javadoc>
+    </target>
+
+    <target name="make-schema" depends="gen-spring-conf, build" description="create schema">
+        <annotationconfiguration configurationfile="${conf.dir}/hibernate.cfg.xml"/>
+        <hibernatetool destdir="${gen.dir}">
+            <classpath refid="build-classpath"/>
+            <annotationconfiguration configurationfile="${conf.dir}/hibernate.cfg.xml"/>
+            <hbm2ddl
+                export="false"
+                drop="false"
+                create="true"
+                delimiter=";"
+                outputfilename="schema.sql"
+                destdir="${gen.dir}"
+            />
+        </hibernatetool>
+    </target>
+
+    <target name="deploy" depends="gen-spring-conf, build" description="deploy">
+    </target>
+
+</project>
