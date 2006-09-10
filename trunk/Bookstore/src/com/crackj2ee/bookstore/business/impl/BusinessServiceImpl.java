@@ -3,9 +3,12 @@ package com.crackj2ee.bookstore.business.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.crackj2ee.bookstore.business.BusinessService;
 import com.crackj2ee.bookstore.dao.*;
 import com.crackj2ee.bookstore.domain.*;
+import com.crackj2ee.bookstore.exception.LoginFailedException;
 
 /**
  * Implementation of BusinessService interface.<br/>
@@ -96,7 +99,12 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     public Account login(String username, String password) {
-        return accountDao.login(username, password);
+        try {
+            return accountDao.login(username, password);
+        }
+        catch(Exception e) {
+            throw new LoginFailedException("无效的用户名和口令");
+        }
     }
 
     public Category queryRoot() {
