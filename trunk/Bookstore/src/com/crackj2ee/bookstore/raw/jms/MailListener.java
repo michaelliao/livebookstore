@@ -10,11 +10,14 @@ import org.springframework.mail.SimpleMailMessage;
 import com.crackj2ee.bookstore.raw.mail.MailSender;
 
 /**
- * Implementation of MessageListener.
+ * Implementation of MessageListener. A demo of handle messages using JMS 
+ * directly.
  * 
  * @author xuefeng
  * 
- * spring.bean id="rawMessageListener" destroy-method="shutdown"
+ * @spring.bean id="rawMessageListener" destroy-method="shutdown"
+ * 
+ * @deprecated
  */
 public class MailListener implements MessageListener {
 

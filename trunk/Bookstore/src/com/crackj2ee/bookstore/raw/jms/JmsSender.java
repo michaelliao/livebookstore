@@ -8,9 +8,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.SimpleMailMessage;
 
 /**
- * Using JMS to send a message directly.
+ * Demo of using JMS to send a message directly.
  * 
  * @author Xuefeng
+ * 
+ * @deprecated
  */
 public class JmsSender {
 
