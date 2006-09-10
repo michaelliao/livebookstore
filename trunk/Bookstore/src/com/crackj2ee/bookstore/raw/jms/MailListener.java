@@ -15,7 +15,7 @@ import com.crackj2ee.bookstore.raw.mail.MailSender;
  * 
  * @author xuefeng
  * 
- * @spring.bean id="rawMessageListener" destroy-method="shutdown"
+ * spring.bean id="rawMessageListener" destroy-method="shutdown"
  * 
  * @deprecated
  */
