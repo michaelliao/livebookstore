@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Template class for handling request that DONOT need login.
+ * Template class for classic mvc handling.
  * 
  * @author xuefeng
  */

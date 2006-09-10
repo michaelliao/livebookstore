@@ -1,8 +1,5 @@
 package com.crackj2ee.bookstore.web;
 
-import java.net.URLEncoder;
-import java.util.Map;
-
 import javax.servlet.http.*;
 
 import com.crackj2ee.bookstore.domain.*;
@@ -16,11 +13,11 @@ import com.crackj2ee.bookstore.web.core.*;
  * 
  * @spring.bean id="loginController" name="/login.jspx"
  */
-public class LoginController extends AbstractMvcController {
+public class LoginController extends AbstractRedirectController {
 
     private static final int MAX_AGE = 3600 * 24 * 30 * 12; // 1 year
 
-    public Map handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String redirect(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String username = HttpUtil.getString(request, "username");
         String password = HttpUtil.getString(request, "password");
         boolean remember = HttpUtil.getBoolean(request, "remember", false);
@@ -42,16 +39,7 @@ public class LoginController extends AbstractMvcController {
         }
         // jump to previous page, or home page if url is not specified:
         log.info("redirect to: " + url);
-        response.sendRedirect(url);
-        return null;
-    }
-
-    public String getView(HttpServletRequest request, HttpServletResponse response) {
-        return "/login.html";
-    }
-
-    public void handleException(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
-        response.sendRedirect("login.html?error=" + URLEncoder.encode(e.getMessage(), "UTF-8"));
+        return url;
     }
 
 }

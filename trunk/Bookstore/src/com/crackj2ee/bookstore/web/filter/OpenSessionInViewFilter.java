@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 
 import com.crackj2ee.bookstore.exception.NeedLoginException;
 import com.crackj2ee.bookstore.raw.hibernate.HibernateUtil;
-import com.crackj2ee.bookstore.util.HttpUtil;
 
 /**
  * This filter implements OpenSessionInView pattern and JDBC transaction. 
@@ -23,6 +22,8 @@ import com.crackj2ee.bookstore.util.HttpUtil;
  * session is opened, can check user's identity.
  * 
  * @author xuefeng
+ * 
+ * @deprecated
  */
 public class OpenSessionInViewFilter implements Filter {
 
