@@ -13,6 +13,8 @@ import org.apache.commons.logging.LogFactory;
  * This demo shows how to send mail directly using JavaMail API.
  * 
  * @author Xuefeng
+ * 
+ * @deprecated
  */
 public class MailSender {
 
