@@ -14,7 +14,7 @@ import org.springframework.web.servlet.*;
  * 
  * @author xuefeng
  * 
- * @spring.bean id="hibernateTransactionHandlerInterceptor"
+ * spring.bean id="hibernateTransactionHandlerInterceptor"
  * 
  * @deprecated
  */

@@ -12,7 +12,7 @@ import org.hibernate.Transaction;
  * 
  * @author xuefeng
  * 
- * @spring.bean id="hibernateTransactionInterceptor"
+ * spring.bean id="hibernateTransactionInterceptor"
  * 
  * @deprecated
  */
