@@ -62,6 +62,11 @@ import com.crackj2ee.bookstore.web.cache.FileCacheResolver;
 import com.crackj2ee.bookstore.web.cache.MemoryCache;
 import com.crackj2ee.bookstore.web.cache.MemoryCacheResolver;
 
+/**
+ * Extension of DispatcherServlet in spring framework, providing cache ability.
+ * 
+ * @author Xuefeng
+ */
 public class DispatcherServletEx extends DispatcherServlet {
 
     /**
