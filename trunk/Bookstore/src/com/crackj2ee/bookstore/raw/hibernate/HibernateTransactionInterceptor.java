@@ -13,6 +13,8 @@ import org.hibernate.Transaction;
  * @author xuefeng
  * 
  * @spring.bean id="hibernateTransactionInterceptor"
+ * 
+ * @deprecated
  */
 public class HibernateTransactionInterceptor implements MethodInterceptor {
 

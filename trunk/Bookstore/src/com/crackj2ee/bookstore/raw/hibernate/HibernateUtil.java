@@ -5,9 +5,11 @@ import org.hibernate.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
- * HibernateUtil.
+ * HibernateUtil for non-spring managed hibernate session.
  * 
  * @author xuefeng
+ * 
+ * @deprecated
  */
 public final class HibernateUtil {
 
