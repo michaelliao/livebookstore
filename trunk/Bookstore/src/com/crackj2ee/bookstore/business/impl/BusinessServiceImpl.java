@@ -3,8 +3,6 @@ package com.crackj2ee.bookstore.business.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import com.crackj2ee.bookstore.business.BusinessService;
 import com.crackj2ee.bookstore.dao.*;
 import com.crackj2ee.bookstore.domain.*;
