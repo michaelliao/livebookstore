@@ -7,8 +7,6 @@ import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
 
-import com.crackj2ee.bookstore.business.BusinessService;
-import com.crackj2ee.bookstore.domain.Account;
 import com.crackj2ee.bookstore.web.core.*;
 
 public final class HttpUtil {
@@ -23,6 +21,7 @@ public final class HttpUtil {
     public static final Cookie CLEAR_USERNAME;
 
     static {
+        // cookie used to clear username & password:
         CLEAR_USERNAME = new Cookie("username", "any");
         CLEAR_USERNAME.setPath("/");
         CLEAR_USERNAME.setMaxAge(0);

@@ -1,5 +1,6 @@
 package com.crackj2ee.bookstore.domain;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -153,9 +154,10 @@ public class Book {
 
     @Transient
     public String getImage() {
-        int id = getId().hashCode();
-        int dir1 = id / 1000;
-        int dir2 = id % 1000;
+        int hash = getId().hashCode();
+        int dir1 = (hash & 0xf0) >>> 4;
+        int dir2 = hash & 0xf;
         return dir1 + "/" + dir2 + "/" + getId() + ".jpg";
     }
+
 }

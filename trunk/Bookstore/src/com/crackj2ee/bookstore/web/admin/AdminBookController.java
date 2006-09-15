@@ -26,6 +26,9 @@ public class AdminBookController extends AbstractMvcController implements AdminR
     private String bookUploadDir;
 
     /**
+     * Set book upload directory. Spring will auto map ralative web path 
+     * "/upload/" to real local directory such as "C:/mybookstore/upload/".
+     * 
      * @spring.property value="/upload/"
      */
     public void setBookUploadDir(Resource resource) {
@@ -37,6 +40,7 @@ public class AdminBookController extends AbstractMvcController implements AdminR
                     throw new IOException("Cannot create dirs: " + f.getPath());
             }
             String dir = f.getPath();
+            // make sure dir is end with "/":
             if(!dir.endsWith("/") && !dir.endsWith("\\"))
                 dir = dir + "/";
             log.info("Upload dir is set to: " + dir);
@@ -65,6 +69,7 @@ public class AdminBookController extends AbstractMvcController implements AdminR
             MultipartHttpServletRequest multipart = (MultipartHttpServletRequest)request;
             InputStream input = multipart.getFile("file").getInputStream();
             ImageUtil.createPreviewImage(input, bookFile);
+            input.close();
             searchService.index(book);
             log.info("Book \"" + book.getName() + "\" has been created.");
         }

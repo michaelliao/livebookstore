@@ -47,12 +47,6 @@ public class ImageUtil {
         catch(Exception e) {
             log.warn("Create preview image failed.", e);
         }
-        finally {
-            try {
-                srcInput.close();
-            }
-            catch(Exception e) {}
-        }
     }
 
 }

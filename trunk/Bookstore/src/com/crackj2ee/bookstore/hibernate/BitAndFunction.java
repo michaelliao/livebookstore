@@ -37,7 +37,7 @@ public class BitAndFunction implements SQLFunction {
         }
         // for HSQLDB:
         //return "BITAND(" + args.get(0).toString() + ", " + args.get(1).toString() + ")";
-        // for MySQL:
+        // for MySQL/MSSQL/Oracle:
         return args.get(0).toString() + " & " + args.get(1).toString();
     }
 
