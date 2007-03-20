@@ -1,0 +1,115 @@
+<html><!-- InstanceBegin template="/Templates/_Admin_Template.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Live网上书店 - 后台管理</title>
+<!-- InstanceEndEditable -->
+<link rel="shortcut icon" href="favicon.ico">
+<link href="css/common.css" rel="stylesheet" type="text/css">
+<script src="js/prototype.js"></script>
+<script src="js/common.js"></script>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+
+<body>
+<table width="980" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="1"><table width="980" height="80" border="0" cellpadding="6" cellspacing="0">
+      <tr>
+        <td width="192"><a href="http://www.livebookstore.net/" target="_blank"><img src="/images/logo.gif" width="184" height="52" border="0"></a></td>
+        <td width="764"><strong><font size="+2">Live在线书店后台管理</font></strong></td>
+        </tr>
+      <tr>
+        <td>你好，<b>管理员</b>！<a href="/logout.jspx" class="hot"><b>注销</b></a></td>
+        <td width="764">警告：您已经以<b>管理员</b>身份登录，完成管理任务后，请务必<a href="/logout.jspx" class="hot"><b>注销</b></a>您的登录并关闭浏览器！</td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td height="1"><!-- InstanceBeginEditable name="NavigatorBar" -->
+      <table width="100%" border="0" cellpadding="3" cellspacing="0" class="tabStyle" style="margin:3px;">
+        <tr>
+          <td width="100">&nbsp;</td>
+          <td width="100" class="btnSelected" onClick="location.assign('adminListOrders.jspx');">订单管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminAccount.jspx');">会员管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminBook.jspx');">书籍管理</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('adminCategory.jspx');">分类管理</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td valign="top" style="padding:6px;"><!-- InstanceBeginEditable name="MainContent" -->
+
+<script language="javascript">
+function finishOrder(orderId){
+	if(confirm("确认订单处理完毕？"))
+		location.assign("adminManageOrder.jspx?action=done&id=" + orderId);
+}
+function cancelOrder(orderId){
+	if(confirm("确认取消该订单？"))
+		location.assign("adminManageOrder.jspx?action=cancel&id=" + orderId);
+}
+</script>
+
+    	<table width="800" border="0" cellspacing="0" cellpadding="0">
+
+			<tr>
+				<td width="60" align="right">&nbsp;</td>
+			  <td width="740"><table width="700" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td colspan="4">#pagination()</td>
+                </tr>
+              </table>
+			    <table width="700" border="0" cellspacing="0" cellpadding="3">
+                  <tr>
+                    <td width="30" bgcolor="#CCCCCC">&nbsp;</td>
+                    <td width="330" bgcolor="#CCCCCC">订单号</td>
+                    <td width="150" bgcolor="#CCCCCC">日期</td>
+                    <td width="80" bgcolor="#CCCCCC">当前状态</td>
+                    <td width="80" bgcolor="#CCCCCC">操作</td>
+                  </tr>
+                </table>
+#foreach($order in $orders)
+			    <table width="700" border="0" cellspacing="0" cellpadding="3" style="border-bottom:1px dashed #cccccc">
+                  <tr>
+                    <td width="30"><img src="images/state${order.state}.gif"></td>
+                    <td width="330">${order.id}</td>
+                    <td width="150">${order.createdDateAsString}</td>
+                    <td width="80">${order.stateAsString}</td>
+                    <td width="80">
+#if($order.state<4)
+					  <input type="button" class="button" value="完成" onClick="finishOrder('${order.id}');">
+					  <input type="button" class="button" value="取消" onClick="cancelOrder('${order.id}');">
+#end
+					</td>
+                  </tr>
+                </table>
+#end
+			    <table width="700" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4">#pagination()</td>
+                  </tr>
+                </table></td>
+		  </tr>
+	  </table>
+    	<!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="20" align="center"><hr width="99%" size="1" noshade></td>
+  </tr>
+  
+  <tr>
+    <td height="1" align="center"><div class="pad6"><span class="pad6"><a href="static/intro.html" target="_blank">网站简介</a> | <a href="static/intro.html#hr">诚聘英才</a> | <a href="static/intro.html#map">网站地图</a> | <a href="static/intro.html#serv">客服中心</a> | <a href="static/intro.html#first">首次购物</a> | <a href="" onClick="if(this.href.indexOf('mailto:')==(-1)) this.href='mailt'+'o:serv'+'ice'+'@'+'javae'+'edev.com';">联系我们</a><br>
+版权所有&copy;2007，保留所有权利，Live在线书店 [<a href="adminListOrders.jspx" target="_blank">管理</a>]<br>
+技术支持：<a href="http://www.javaeedev.com" target="_blank">http://www.javaeedev.com</a><br>
+最后更新：2007年3月15日</span></div></td>
+  </tr>
+</table>
+</body>
+<!-- InstanceEnd --></html>

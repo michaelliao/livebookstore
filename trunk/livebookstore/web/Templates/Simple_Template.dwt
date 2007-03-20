@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../favicon.ico">
+<link href="../css/common.css" rel="stylesheet" type="text/css">
+<script src="../js/prototype.js"></script>
+<script src="../js/common.js"></script>
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>Live在线书店</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+</head>
+
+<body>
+<table width="760" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="1"><table width="760" border="0" cellspacing="0" cellpadding="3">
+      <tr>
+        <td width="192"><a href="http://www.livebookstore.net/" target="_blank"><img src="../images/logo.gif" width="184" height="52" border="0" /></a></td>
+        <td width="556">欢迎访问<a href="http://www.livebookstore.net" target="_blank">Live在线书店</a>！<br />
+          鼠标点击，轻松购书，送货上门！</td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top"><!-- TemplateBeginEditable name="MainContent" -->MainContent<!-- TemplateEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="20" align="center"><hr width="99%" size="1" noshade></td>
+  </tr>
+  <tr>
+    <td height="1" align="center"><div class="pad6"><span class="pad6"><a href="../static/intro.html" target="_blank">网站简介</a> | <a href="../static/intro.html#hr">诚聘英才</a> | <a href="../static/intro.html#map">网站地图</a> | <a href="../static/intro.html#serv">客服中心</a> | <a href="../static/intro.html#first">首次购物</a> | <a href="" onClick="if(this.href.indexOf('mailto:')==(-1)) this.href='mailt'+'o:serv'+'ice'+'@'+'javae'+'edev.com';">联系我们</a><br>
+版权所有&copy;2007，保留所有权利，Live在线书店 [<a href="../adminListOrders.jspx" target="_blank">管理</a>]<br>
+技术支持：<a href="http://www.javaeedev.com" target="_blank">http://www.javaeedev.com</a><br>
+最后更新：2007年3月15日</span></div></td>
+  </tr>
+</table>
+<script language="javascript">
+//  document.getElementById('contact_us').href=;
+</script>
+</body>
+</html>

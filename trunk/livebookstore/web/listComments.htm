@@ -1,0 +1,187 @@
+<html><!-- InstanceBegin template="/Templates/ListBook_Template.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Live在线书店 - 书籍浏览</title>
+<!-- InstanceEndEditable -->
+<link rel="shortcut icon" href="favicon.ico">
+<link href="css/common.css" rel="stylesheet" type="text/css">
+<script src="js/prototype.js"></script>
+<script src="js/common.js"></script>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+
+<body>
+<table width="980" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="1"><table width="980" height="80" border="0" cellpadding="3" cellspacing="0">
+      <tr>
+        <td width="226"><a href="javascript:void(0)" onClick="javascript:openCart('cart/cart.jspx')"><img src="images/cart.gif" width="20" height="18" align="absmiddle"></a><a href="javascript:void(0)" onClick="javascript:openCart('cart/cart.jspx')">购物车</a> | <a href="static/intro.html#serv" target="_blank">客服中心</a> | <a href="static/intro.html#first" target="_blank">首次购物？</a></td>
+        <td width="488" rowspan="3" align="center"><img src="images/header.gif" width="480" height="80" align="absmiddle"><a href="#" target="_blank"></a><a href="#" target="_blank"></a></td>
+        <td width="248" rowspan="3" align="center"><a href="http://www.joyo.com/channel/book.asp?source=w-90001861" target="_blank"><img src="images/hot-book.gif" width="240" height="80" border="0" align="absmiddle"></a></td>
+      </tr>
+      <tr>
+        <td align="center"><a href="http://www.livebookstore.net/"><img src="images/logo.gif" width="184" height="52" border="0"></a></td>
+        </tr>
+      <tr>
+        <td>
+<script src="checkState.jspx"></script>		</td>
+        </tr>
+    </table>    </td>
+  </tr>
+  <tr>
+    <td height="1"><!-- InstanceBeginEditable name="NavigatorBar" -->
+      <table width="100%" border="0" cellpadding="3" cellspacing="0" class="tabStyle" style="margin:3px;">
+        <tr>
+          <td width="100">&nbsp;</td>
+          <td width="100" class="btnSelected" onClick="location.assign('listBooks.jspx');">Live在线书店</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('userListOrders.jspx');">我的Live</td>
+          <td width="8">&nbsp;</td>
+          <td width="100" class="btn" onMouseOver="hoverTabButton(this);" onMouseOut="normalTabButton(this);" onClick="location.assign('topSales.jspx');">书籍排行榜</td>
+          <td width="8">&nbsp;</td>
+		  <form action="searchBooks.jspx" method="get" name="formSearch" target="_blank" id="formSearch">
+          <td width="*">
+            关键字：
+            <input name="q" type="text" class="text" id="q" style="width:150px;" maxlength="50">
+            <input name="Submit" type="submit" class="button" value="书籍搜索">          </td>
+          </form>
+        </tr>
+      </table>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td valign="top" style="padding:6px;">
+      <table width="967" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="219" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><table width="100%" cellspacing="0" class="panel">
+                <tr>
+                  <td class="panel">分类浏览</td>
+                </tr>
+                <tr>
+                  <td><!-- InstanceBeginEditable name="ListCategories" -->
+#categoryList($root "listBooks.jspx?")
+					<!-- InstanceEndEditable --></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            
+          </table></td>
+          <td width="13"></td>
+          <td width="735" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="3">
+            <tr>
+              <td>
+<!-- InstanceBeginEditable name="EndPositionTitle" -->
+您的当前位置：
+  #foreach($c in $positions)
+  <a href="listBooks.jspx?categoryId=$c.id">${c.name}</a> » 
+  #end
+  <a href="bookDetail.jspx?id=${book.id}">${book.name}</a> » 查看评论<!-- InstanceEndEditable -->				</td>
+            </tr>
+			
+          </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><!-- InstanceBeginEditable name="MainDisplayBooks" -->
+                	<table width="700" border="0" cellspacing="0" cellpadding="3">
+						<tr>
+							<td width="129" rowspan="2" align="center"><img src="upload/${book.image}" width="80" height="100" border="0" class="simpleBorder"></td>
+							<td width="559"><b><font size="+1">${book.name}</font></b>
+								#if(${book.originalName}) <br>
+								原名：<b>${book.originalName}</b> #end </td>
+						</tr>
+						
+						
+						<tr>
+							<td>综合评价：<img src="images/${book.ratingLevel}.gif" align="absmiddle"></td>
+						</tr>
+						
+						
+						<tr>
+							<td colspan="2" align="center" valign="top"></td>
+							</tr>
+						<tr>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="2"><strong>查看《${book.name}》一书的所有<font color="#FF0000">${page.totalCount}</font>条评论：</strong></td>
+							</tr>
+					</table>
+					#foreach($comment in $comments)
+                	<table width="700" border="0" cellspacing="0" cellpadding="3">
+						<tr>
+							<td colspan="2">用户<strong>${comment.account.username}</strong>对本书评分：<img src="images/c${comment.rating}.gif" align="absmiddle"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td>${comment.content}</td>
+						</tr>
+						<tr>
+							<td width="31">&nbsp;</td>
+							<td width="657"><font color="#666666">发表日期：${comment.createdDateAsString}</font></td>
+						</tr>
+					</table>
+					#end
+                	<table width="700" border="0" cellspacing="0" cellpadding="3">
+						
+						<tr>
+							<td>#pagination()</td>
+						</tr>
+					</table>
+                <!-- InstanceEndEditable --></td>
+              </tr>
+          </table></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td height="20" align="center"><hr width="99%" size="1" noshade></td>
+  </tr>
+  <tr>
+    <td align="center"><table width="614" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#CCCCCC">
+      <tr>
+        <td width="100" bgcolor="#FFFFFF"><img src="images/orange-arrow.gif" width="10" height="9" align="absmiddle">联系客服</td>
+        <td width="122" bgcolor="#FFFFFF"><img src="images/orange-arrow.gif" width="10" height="9" align="absmiddle">初次购物</td>
+        <td width="182" bgcolor="#FFFFFF"><img src="images/orange-arrow.gif" width="10" height="9" align="absmiddle">如何支付</td>
+        <td width="84" bgcolor="#FFFFFF"><img src="images/orange-arrow.gif" width="10" height="9" align="absmiddle">关于送货</td>
+        <td width="90" bgcolor="#FFFFFF"><img src="images/orange-arrow.gif" width="10" height="9" align="absmiddle">售后服务</td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF">顾客投诉</td>
+        <td bgcolor="#FFFFFF">新手上路</td>
+        <td bgcolor="#FFFFFF">如何使用邮局汇款/电汇</td>
+        <td bgcolor="#FFFFFF">送货方式</td>
+        <td bgcolor="#FFFFFF">退换货政策</td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF">顾客建议</td>
+        <td bgcolor="#FFFFFF">如何使用收藏夹</td>
+        <td bgcolor="#FFFFFF">如何使用银行卡支付</td>
+        <td bgcolor="#FFFFFF">送货范围</td>
+        <td bgcolor="#FFFFFF">退换货流程</td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF">联系电话</td>
+        <td bgcolor="#FFFFFF">如何使用购物车</td>
+        <td bgcolor="#FFFFFF">如何使用礼券/积分</td>
+        <td bgcolor="#FFFFFF">送货时间</td>
+        <td bgcolor="#FFFFFF">退换货时间</td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td height="1" align="center"><div class="pad6"><span class="pad6"><a href="static/intro.html" target="_blank">网站简介</a> | <a href="static/intro.html#hr">诚聘英才</a> | <a href="static/intro.html#map">网站地图</a> | <a href="static/intro.html#serv">客服中心</a> | <a href="static/intro.html#first">首次购物</a> | <a href="" onClick="if(this.href.indexOf('mailto:')==(-1)) this.href='mailt'+'o:serv'+'ice'+'@'+'javae'+'edev.com';">联系我们</a><br>
+版权所有&copy;2007，保留所有权利，Live在线书店 [<a href="adminListOrders.jspx" target="_blank">管理</a>]<br>
+技术支持：<a href="http://www.javaeedev.com" target="_blank">http://www.javaeedev.com</a><br>
+最后更新：2007年3月15日</span></div></td>
+  </tr>
+</table>
+</body>
+<!-- InstanceEnd --></html>
