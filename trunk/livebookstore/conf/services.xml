@@ -38,13 +38,17 @@
         DataSource
         Using Spring provided DriverManagerDataSource;
         For deployment, using container-managed JNDI DataSource instead.
-    =========================================================================-->
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver}" />
         <property name="url" value="${jdbc.url}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
+    </bean>
+    =========================================================================-->
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/bookstore" />
     </bean>
 
     <!--========================================================================

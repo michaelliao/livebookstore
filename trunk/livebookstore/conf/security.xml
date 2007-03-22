@@ -5,7 +5,7 @@
 >
 
     <!--========================================================================
-         认证管理器
+         AuthenticationManager
     =========================================================================-->
 
     <bean id="authenticationManager" class="org.acegisecurity.providers.ProviderManager">
@@ -17,7 +17,7 @@
         </property>
     </bean>
 
-    <!-- 基于DAO验证的AuthenticationProvider -->
+    <!-- DaoAuthenticationProvider -->
     <bean id="daoAuthenticationProvider"
         class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="userDetailsService" />
@@ -28,7 +28,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- 基于RememberMe验证的AuthenticationProvider -->
+    <!-- RememberMeAuthenticationProvider -->
     <bean id="rememberMeAuthenticationProvider"
         class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
         <property name="key" value="RememberMeAtLiveBookstore" />
@@ -41,7 +41,7 @@
     </bean>
 
     <!--========================================================================
-         决策管理器
+         AccessDecisionManager
     =========================================================================-->
 
     <bean id="accessDecisionManager"
@@ -55,7 +55,7 @@
     </bean>
 
     <!--========================================================================
-         过滤器链
+         Filter chain
     =========================================================================-->
 
     <bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
@@ -97,22 +97,22 @@
         <property name="rememberMeServices" ref="rememberMeServices" />
     </bean>
 
-    <!-- 处理登录异常或权限异常的Filter -->
+    <!-- Filter to handle login exception or authencication exception -->
     <bean id="exceptionFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
-        <!-- 出现AuthenticationException时的登录入口 -->
+        <!-- Login entry when AuthenticationException thrown -->
         <property name="authenticationEntryPoint">
             <bean class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
                 <property name="loginFormUrl" value="/login.jspx" />
                 <property name="forceHttps" value="false" />
             </bean>
         </property>
-        <!-- 出现AccessDeniedException时的Handler -->
+        <!-- handle AccessDeniedException -->
         <property name="accessDeniedHandler">
             <bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl" />
         </property>
     </bean>
 
-    <!-- 基于URL的安全拦截器 -->
+    <!-- Security interceptor based on URL -->
     <bean id="securityInterceptor"
         class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
         <property name="authenticationManager" ref="authenticationManager" />
