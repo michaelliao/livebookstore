@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+
+       default-autowire="no"
+       default-lazy-init="false"
+       default-dependency-check="none"
+>
+			<bean
+					name="/adminListOrders.jspx"
+				class="net.livebookstore.web.admin.AdminListOrdersController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/listBooks.jspx"
+				class="net.livebookstore.web.ListBooksController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/cart/previewOrder.jspx"
+				class="net.livebookstore.web.user.PreviewOrderController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userPassword.jspx"
+				class="net.livebookstore.web.user.PasswordController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userProfile.jspx"
+				class="net.livebookstore.web.user.ProfileController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/bookDetail.jspx"
+				class="net.livebookstore.web.BookDetailController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userOrderDetail.jspx"
+				class="net.livebookstore.web.user.OrderDetailController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					id="handlerExceptionResolver"
+				class="net.livebookstore.web.core.GlobalHandlerExceptionResolver"
+			>
+
+			</bean>
+
+			<bean
+					id="performanceFilter"
+				class="net.livebookstore.web.filter.PerformanceFilter"
+			>
+
+						<property name="httpSampler">
+								<ref bean="sampler:name=HttpSampler"/>
+						</property>
+						<property name="businessSampler">
+								<ref bean="sampler:name=BusinessSampler"/>
+						</property>
+						<property name="daoSampler">
+								<ref bean="sampler:name=DaoSampler"/>
+						</property>
+
+			</bean>
+
+			<bean
+					id="performanceInterceptor"
+				class="net.livebookstore.web.core.PerformanceHandlerInterceptor"
+			>
+
+			</bean>
+
+			<bean
+					name="/adminAccount.jspx"
+				class="net.livebookstore.web.admin.AdminAccountController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/adminOutput.jspx"
+				class="net.livebookstore.web.admin.AdminOutputController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/register.jspx"
+				class="net.livebookstore.web.RegisterController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/checkState.jspx"
+				class="net.livebookstore.web.CheckStateController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/listComments.jspx"
+				class="net.livebookstore.web.ListCommentsController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userConfirmOrder.jspx"
+				class="net.livebookstore.web.user.ConfirmOrderController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userListOrders.jspx"
+				class="net.livebookstore.web.user.ListOrdersController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/adminCategory.jspx"
+				class="net.livebookstore.web.admin.AdminCategoryController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/searchBooks.jspx"
+				class="net.livebookstore.web.SearchBooksController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userCancelOrder.jspx"
+				class="net.livebookstore.web.user.CancelOrderController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/adminRebuildIndex.jspx"
+				class="net.livebookstore.web.admin.AdminRebuildIndexController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/topSales.jspx"
+				class="net.livebookstore.web.TopSalesController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/adminBook.jspx"
+				class="net.livebookstore.web.admin.AdminBookController"
+			>
+
+						<property name="fileCacheFilter">
+								<ref bean="fileCacheFilter"/>
+						</property>
+						<property name="bookUploadDir">
+								<value>/upload/</value>
+						</property>
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/cart/cart.jspx"
+				class="net.livebookstore.web.CartController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userMakeComment.jspx"
+				class="net.livebookstore.web.user.MakeCommentController"
+			>
+
+						<property name="removeCache">
+								<value>true</value>
+						</property>
+						<property name="fileCacheFilter">
+								<ref bean="fileCacheFilter"/>
+						</property>
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/adminBroadcast.jspx"
+				class="net.livebookstore.web.admin.AdminBroadcastMailController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/userFavorite.jspx"
+				class="net.livebookstore.web.user.FavoriteController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/adminManageOrder.jspx"
+				class="net.livebookstore.web.admin.AdminManageOrderController"
+			>
+
+						<property name="businessService">
+								<ref bean="businessService"/>
+						</property>
+						<property name="searchService">
+								<ref bean="searchService"/>
+						</property>
+						<property name="mailService">
+								<ref bean="mailService"/>
+						</property>
+
+			</bean>
+
+		<!--
+			To include additional bean definitions for Spring in the generated
+			application context file, add a file to your XDoclet merge directory
+			called spring-beans.xml that contains the <bean></bean> markup.
+		-->
+
+</beans>
