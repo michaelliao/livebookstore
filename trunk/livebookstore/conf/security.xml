@@ -73,7 +73,7 @@
 
     <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
         <!-- URL redirected to after logout -->
-        <constructor-arg value="/" />
+        <constructor-arg value="/listBooks.jspx" />
         <constructor-arg>
             <list>
                 <bean class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler" />
