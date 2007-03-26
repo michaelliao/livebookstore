@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project name="Building Live Online Bookstore" default="deploy" basedir=".">
+<project name="Building Live Online Bookstore" default="deploy-windows" basedir=".">
 
     <description>Live Online Bookstore v1.0</description>
 
     <!-- 定义变量 -->
     <property name="src.dir"      value="src" />
     <property name="test.dir"     value="test" />
+    <property name="bin.dir"      value="bin" />
     <property name="doc.dir"      value="api-doc" />
     <property name="web.dir"      value="web" />
     <property name="lib.dir"      value="lib" />
     <property name="conf.dir"     value="conf" />
     <property name="gen.dir"      value="auto-gen" />
-    <property name="build.dir"    value="${web.dir}/WEB-INF/classes" />
+    <property name="deploy.dir"   value="deploy" />
     <property name="report.dir"   value="${gen.dir}/report" />
     <property name="template.dir" value="template" />
 
@@ -20,64 +21,62 @@
         <fileset dir="${lib.dir}">
             <include name="**/*.jar" />
         </fileset>
-        <pathelement path="${build.dir}"/>
         <pathelement path="${src.dir}"/>
     </path>
 
-    <!-- 清除class文件和所有自动生成的文件 -->
+    <taskdef name="springdoclet" classname="xdoclet.modules.spring.SpringDocletTask">
+        <classpath refid="build-classpath"/>
+    </taskdef>
+    <taskdef name="springdoclet2" classname="xdoclet.modules.spring.SpringDocletTask">
+        <classpath refid="build-classpath"/>
+    </taskdef>
+
+    <!-- clear all classes and auto-created files -->
     <target name="clean">
+        <delete dir="${bin.dir}" />
         <delete dir="${gen.dir}" />
-        <delete dir="${web.dir}/WEB-INF" />
         <delete dir="${doc.dir}" />
     </target>
 
-    <!-- 初始化目录 -->
-    <target name="pre-init" description="make dir">
-        <mkdir dir="${web.dir}/WEB-INF/lib" />
-        <mkdir dir="${build.dir}" />
+    <!-- init all directories -->
+    <target name="init" description="make dir">
+        <mkdir dir="${bin.dir}" />
         <mkdir dir="${doc.dir}" />
         <mkdir dir="${gen.dir}" />
         <mkdir dir="${report.dir}" />
     </target>
 
-    <!-- 初始化配置文件 -->
-    <target name="init" depends="pre-init" description="copy to web dir">
-        <copy todir="${web.dir}/WEB-INF">
-            <fileset file="${conf.dir}/*.*" />
-        </copy>
-        <copy todir="${web.dir}/WEB-INF/lib">
-            <fileset file="${lib.dir}/core/*.jar" />
+    <!-- compile java source code -->
+    <target name="build" depends="init">
+        <!-- for product use, set: optimize="on" debug="off" -->
+        <javac destdir="${bin.dir}" target="1.5" encoding="utf-8" deprecation="on" debug="on" debuglevel="lines,vars,source">
+            <src path="${src.dir}" />
+            <classpath refid="build-classpath"/>
+        </javac>
+        <!-- copy non-java source files to build dir -->
+        <copy todir="${bin.dir}">
+            <fileset dir="${src.dir}" excludes="**/*.java" />
         </copy>
     </target>
 
-    <!-- 编译java代码 -->
-    <target name="build" depends="init">
+    <!-- compile junit test code -->
+    <target name="build-test" depends="build">
         <!-- for product use, set: optimize="on" debug="off" -->
-        <javac destdir="${build.dir}" target="1.5" encoding="utf-8" deprecation="on" debug="on" debuglevel="lines,vars,source">
-            <src path="${src.dir}" />
+        <javac destdir="${bin.dir}" target="1.5" encoding="utf-8" deprecation="on" debug="on" debuglevel="lines,vars,source">
             <src path="${test.dir}" />
             <classpath refid="build-classpath"/>
         </javac>
         <!-- copy non-java source files to build dir -->
-        <copy todir="${build.dir}">
-            <fileset dir="${src.dir}" excludes="**/*.java" />
-        </copy>
-        <copy todir="${build.dir}">
+        <copy todir="${bin.dir}">
             <fileset dir="${test.dir}" excludes="**/*.java" />
         </copy>
     </target>
 
     <!-- 使用XDoclet生成spring配置文件 -->
     <target name="gen-spring-conf" depends="build">
-    	<taskdef name="springdoclet" classname="xdoclet.modules.spring.SpringDocletTask">
-            <classpath refid="build-classpath"/>
-    	</taskdef>
-        <taskdef name="springdoclet2" classname="xdoclet.modules.spring.SpringDocletTask">
-            <classpath refid="build-classpath"/>
-        </taskdef>
         <!-- make spring service config file -->
         <springdoclet
-            destDir="${web.dir}/WEB-INF"
+            destDir="${gen.dir}"
             force="true"
             excludedtags="@version,@author,@todo"
         >
@@ -90,7 +89,7 @@
         </springdoclet>
     	<!-- make spring mvc config file -->
         <springdoclet2
-            destDir="${web.dir}/WEB-INF"
+            destDir="${gen.dir}"
             force="true"
             excludedtags="@version,@author,@todo"
         >
@@ -103,8 +102,8 @@
         </springdoclet2>
     </target>
 
-    <!-- 运行junit测试 -->
-    <target name="test" depends="build">
+    <!-- run junit test -->
+    <target name="test" depends="build-test">
         <mkdir dir="${report.dir}"/>
         <delete file="${report.dir}/*.*" />
         <junit printsummary="on"
@@ -114,7 +113,7 @@
             <classpath refid="build-classpath" />
             <formatter type="plain"/>
             <batchtest todir="${report.dir}">
-                <fileset dir="${build.dir}">
+                <fileset dir="${bin.dir}">
                     <include name="**/*Test.class"/>
                 </fileset>
             </batchtest>
@@ -126,7 +125,7 @@
         </fail>
     </target>
 
-    <!-- 生成api doc -->
+    <!-- make api doc -->
     <target name="apidoc" depends="init">
         <delete dir="${doc.dir}" />
     	<mkdir dir="${doc.dir}" />
@@ -146,9 +145,9 @@
         </javadoc>
     </target>
 
-    <!-- 生成sql脚本用于创建数据库表 -->
-    <target name="make-schema" depends="gen-spring-conf" description="create schema">
-        <!-- 定义task -->
+    <!-- create sql schema -->
+    <target name="make-schema" depends="build" description="create schema">
+        <!-- define task -->
         <taskdef name="hibernatetool"
             classname="org.hibernate.tool.ant.HibernateToolTask">
             <classpath refid="build-classpath"/>
@@ -172,8 +171,41 @@
         </hibernatetool>
     </target>
 
-    <!-- 部署 -->
-    <target name="deploy" depends="gen-spring-conf">
+    <!-- deploy -->
+    <target name="pre-deploy" depends="gen-spring-conf">
+        <delete>
+            <fileset dir="${deploy.dir}" excludes="upload/**.*,WEB-INF/compass/**.*" />
+        </delete>
+        <mkdir dir="${deploy.dir}" />
+        <mkdir dir="${deploy.dir}/WEB-INF" />
+        <mkdir dir="${deploy.dir}/WEB-INF/classes" />
+        <mkdir dir="${deploy.dir}/WEB-INF/lib" />
+        <copy todir="${deploy.dir}">
+            <fileset dir="${web.dir}" />
+        </copy>
+        <copy todir="${deploy.dir}/WEB-INF">
+            <fileset file="${conf.dir}/*.*" />
+        </copy>
+        <copy todir="${deploy.dir}/WEB-INF/classes">
+            <fileset dir="${bin.dir}" />
+        </copy>
+        <copy todir="${deploy.dir}/WEB-INF/lib">
+        	<fileset file="${lib.dir}/core/*.jar" />
+        </copy>
+    </target>
+
+    <target name="deploy-windows" depends="pre-deploy">
+        <copy todir="${deploy.dir}/WEB-INF">
+            <fileset file="${conf.dir}/windows/*.*" />
+            <fileset file="${gen.dir}/*.xml" />
+        </copy>
+    </target>
+
+    <target name="deploy-linux" depends="pre-deploy">
+        <copy todir="${deploy.dir}/WEB-INF">
+            <fileset file="${conf.dir}/linux/*.*" />
+            <fileset file="${gen.dir}/*.xml" />
+        </copy>
     </target>
 
 </project>
