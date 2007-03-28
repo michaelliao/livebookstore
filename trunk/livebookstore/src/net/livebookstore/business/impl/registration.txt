@@ -1,6 +1,0 @@
-﻿亲爱的${USERNAME}：您好！
-恭喜您成功注册成为Live在线书店的会员！
-
-您的登陆用户名为：${USERNAME}
-
-Live在线书店是一个基于Spring 2.0框架的轻量级J2EE Web应用。
