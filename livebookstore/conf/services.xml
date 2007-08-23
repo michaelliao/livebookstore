@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+>
+
+    <!--========================================================================
+        Import auto-generated xml configuaration file
+    =========================================================================-->
+
+    <import resource="services-import-beans.xml" />
+
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/jdbc.properties</value>
+                <value>/WEB-INF/smtp.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--========================================================================
+        DataSource: Using container-managed JNDI DataSource.
+    =========================================================================-->
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/bookstore" />
+    </bean>
+
+    <!--========================================================================
+        Hibernate config
+    =========================================================================-->
+
+    <!-- Using AnnotationSessionFactoryBean -->
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>net.livebookstore.domain.Account</value>
+                <value>net.livebookstore.domain.Book</value>
+                <value>net.livebookstore.domain.Category</value>
+                <value>net.livebookstore.domain.Comment</value>
+                <value>net.livebookstore.domain.FavoriteBook</value>
+                <value>net.livebookstore.domain.Order</value>
+                <value>net.livebookstore.domain.OrderItem</value>
+            </list>
+        </property>
+        <property name="annotatedPackages">
+            <list>
+                <value>net.livebookstore.domain</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${jdbc.dialect}</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.jdbc.fetch_size">10</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+            </props>
+        </property>
+        <property name="eventListeners">
+            <map>
+                <entry key="pre-update">
+                    <bean class="org.hibernate.validator.event.ValidatePreUpdateEventListener" />
+                </entry>
+                <entry key="pre-insert">
+                    <bean class="org.hibernate.validator.event.ValidatePreInsertEventListener" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <!-- Using HibernateTemplate, and shared by all DAO object because it is thread-safe -->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="fetchSize" value="20" />
+    </bean>
+
+    <!-- TransactionManager -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!--========================================================================
+        Mail configuration
+    =========================================================================-->
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${smtp.host}" />
+        <property name="port" value="${smtp.port}" />
+        <property name="username" value="${smtp.username}" />
+        <property name="password" value="${smtp.password}" />
+        <property name="defaultEncoding" value="${smtp.encoding}" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">${smtp.auth}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--========================================================================
+        JMS configuration
+    =========================================================================-->
+
+    <bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jms/bookstore/factory" />
+    </bean>
+
+    <bean id="jmsDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jms/bookstore/queue" />
+    </bean>
+
+    <!-- JMS listener wrapper -->
+    <bean id="listenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+        <property name="destination" ref="jmsDestination" />
+        <property name="messageListener" ref="mailListener" />
+    </bean>
+
+    <!--========================================================================
+        Make all @Transactional beans
+    =========================================================================-->
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!--========================================================================
+        Make businessService secured
+    =========================================================================-->
+
+    <bean id="serviceSecurityInterceptor"
+        class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
+        <property name="validateConfigAttributes" value="true" />
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="accessDecisionManager" ref="accessDecisionManager" />
+        <property name="objectDefinitionSource">
+            <bean class="org.acegisecurity.intercept.method.MethodDefinitionAttributes">
+                <property name="attributes">
+                    <bean class="org.acegisecurity.annotation.SecurityAnnotationAttributes" />
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Using Spring auto proxy -->
+    <bean id="autoProxyCreator"
+        class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>serviceSecurityInterceptor</value>
+            </list>
+        </property>
+        <property name="beanNames">
+            <list>
+                <value>businessService</value>
+                <value>mailService</value>
+            </list>
+        </property>
+    </bean>
+
+    <aop:aspectj-autoproxy />
+
+    <!--========================================================================
+        Using JMX
+    =========================================================================-->
+
+    <!-- HTML Adaptor Disabled -
+
+    <bean name="adaptor:name=html" class="com.sun.jdmk.comm.HtmlAdaptorServer" init-method="start">
+        <constructor-arg value="8088" />
+        <constructor-arg>
+            <list>
+                <bean class="com.sun.jdmk.comm.AuthInfo">
+                    <property name="login" value="jmxadmin" />
+                    <property name="password" value="livebookstore" />
+                </bean>
+            </list>
+        </constructor-arg>
+        <property name="maxActiveClientCount" value="10" />
+    </bean>
+
+    <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="autodetect" value="true" />
+    </bean>
+
+    - DISABLED -->
+
+</beans>
