@@ -1,0 +1,11 @@
+﻿亲爱的${USERNAME}，您好！
+
+您于${ORDER_DATE}在Live在线书店订购了以下书籍：
+
+${ORDER_DETAIL}
+
+您的订单号是：${ORDER_ID}。您可以登录Live在线书店查询您的订单状态：http://www.livebookstore.net
+
+由于Live在线书店仅仅是《Spring 2.0核心技术与最佳实践》一书的示例，因此您的订单仅被存储在系统中，不会产生实际的支付和配送。如果您确实要订购以上书籍，我们推荐您去China Pub (http://www.china-pub.com)订购。
+
+感谢您对Live在线书店的支持！
