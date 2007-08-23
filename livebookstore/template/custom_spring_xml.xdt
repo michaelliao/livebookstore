@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="<XDtConfig:configParameterValue paramName='Xmlencoding'/>"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+
+       default-autowire="<XDtConfig:configParameterValue paramName="defaultAutowire"/>"
+       default-lazy-init="<XDtConfig:configParameterValue paramName="defaultLazyInit"/>"
+       default-dependency-check="<XDtConfig:configParameterValue paramName="defaultDependencyCheck"/>"
+>
+	<XDtClass:forAllClasses>
+		<XDtClass:forAllClassTags tagName="spring:bean">
+			<bean
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="id">
+					id="<XDtClass:classTagValue tagName="spring.bean" paramName="id"/>"
+				</XDtClass:ifHasClassTag>
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="name">
+					name="<XDtClass:classTagValue tagName="spring.bean" paramName="name"/>"
+				</XDtClass:ifHasClassTag>
+				class="<XDtClass:fullClassName/>"
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="autowire">
+					autowire="<XDtClass:classTagValue tagName="spring:bean" paramName="autowire" values="no,byName,byType,constructor,auto-detect"/>"
+				</XDtClass:ifHasClassTag>
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="init-method">
+					init-method="<XDtClass:classTagValue tagName="spring.bean" paramName="init-method"/>"
+				</XDtClass:ifHasClassTag>
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="destroy-method">
+					destroy-method="<XDtClass:classTagValue tagName="spring:bean" paramName="destroy-method"/>"
+				</XDtClass:ifHasClassTag>
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="dependency-check">
+					dependency-check="<XDtClass:classTagValue tagName="spring:bean" paramName="dependency-check" values="all,objects,simple"/>"
+				</XDtClass:ifHasClassTag>
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="singleton">
+					singleton="<XDtClass:classTagValue tagName="spring:bean" paramName="singleton" values="true,false" default="true"/>"
+				</XDtClass:ifHasClassTag>
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="scope">
+					scope="<XDtClass:classTagValue tagName="spring:bean" paramName="scope" values="singleton,prototype,request,session,globalSession" default="singleton"/>"
+				</XDtClass:ifHasClassTag>
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="lazy-init">
+					lazy-init="<XDtClass:classTagValue tagName="spring:bean" paramName="lazy-init" values="true,false,default" default="default"/>"
+				</XDtClass:ifHasClassTag>
+			>
+
+				<XDtClass:ifHasClassTag tagName="spring.bean" paramName="description">
+					<description><XDtClass:classTagValue tagName="spring.bean" paramName="description"/></description>
+				</XDtClass:ifHasClassTag>
+
+				<XDtConstructor:forAllConstructors>
+					<XDtConstructor:forAllConstructorTags tagName="spring.constructor-arg">
+						<constructor-arg
+							<XDtConstructor:ifHasConstructorTag tagName="spring.constructor-arg" paramName="type">
+								type="<XDtConstructor:constructorTagValue tagName="spring.constructor-arg" paramName="type"/>"
+							</XDtConstructor:ifHasConstructorTag>
+						>
+							<XDtConstructor:ifHasConstructorTag tagName="spring.constructor-arg" paramName="value">
+								<value><XDtConstructor:constructorTagValue tagName="spring.constructor-arg" paramName="value"/></value>
+							</XDtConstructor:ifHasConstructorTag>
+							<XDtConstructor:ifHasConstructorTag tagName="spring.constructor-arg" paramName="ref">
+								<ref bean="<XDtConstructor:constructorTagValue tagName="spring.constructor-arg" paramName="ref"/>"/>
+							</XDtConstructor:ifHasConstructorTag>
+							<XDtConstructor:ifHasConstructorTag tagName="spring.constructor-arg" paramName="list">
+								<list>
+									<XDtConstructor:forAllConstructorTagTokens tagName="spring.constructor-arg" paramName="list">
+										<value><XDtConstructor:currentToken/></value>
+									</XDtConstructor:forAllConstructorTagTokens>
+								</list>
+							</XDtConstructor:ifHasConstructorTag>
+							<XDtConstructor:ifHasConstructorTag tagName="spring.constructor-arg" paramName="listRef">
+								<list>
+									<XDtConstructor:forAllConstructorTagTokens tagName="spring.constructor-arg" paramName="listRef">
+										<ref bean="<XDtConstructor:currentToken/>" />
+									</XDtConstructor:forAllConstructorTagTokens>
+								</list>
+							</XDtConstructor:ifHasConstructorTag>
+						</constructor-arg>
+					</XDtConstructor:forAllConstructorTags>
+				</XDtConstructor:forAllConstructors>
+
+				<XDtMethod:forAllMethods superclasses="true">
+					<XDtMethod:ifHasMethodTag tagName="spring.property">
+						<property name="<XDtMethod:propertyName/>">
+							<XDtMethod:ifHasMethodTag tagName="spring.property" paramName="value">
+								<value><XDtMethod:methodTagValue tagName="spring.property" paramName="value"/></value>
+							</XDtMethod:ifHasMethodTag>
+							<XDtMethod:ifHasMethodTag tagName="spring.property" paramName="ref">
+								<ref bean="<XDtMethod:methodTagValue tagName="spring.property" paramName="ref"/>"/>
+							</XDtMethod:ifHasMethodTag>
+							<XDtMethod:ifHasMethodTag tagName="spring.property" paramName="list">
+								<list>
+									<XDtMethod:forAllMethodTagTokens tagName="spring.property" paramName="list">
+										<value><XDtMethod:currentToken/></value>
+									</XDtMethod:forAllMethodTagTokens>
+								</list>
+							</XDtMethod:ifHasMethodTag>
+							<XDtMethod:ifHasMethodTag tagName="spring.property" paramName="listRef">
+								<list>
+									<XDtMethod:forAllMethodTagTokens tagName="spring.property" paramName="listRef">
+										<ref bean="<XDtMethod:currentToken/>"/>
+									</XDtMethod:forAllMethodTagTokens>
+								</list>
+							</XDtMethod:ifHasMethodTag>
+							<XDtMethod:ifHasMethodTag tagName="spring.property" paramName="set">
+								<set>
+									<XDtMethod:forAllMethodTagTokens tagName="spring.property" paramName="set">
+										<value><XDtMethod:currentToken/></value>
+									</XDtMethod:forAllMethodTagTokens>
+								</set>
+							</XDtMethod:ifHasMethodTag>
+							<XDtMethod:ifHasMethodTag tagName="spring.property" paramName="setRef">
+								<set>
+									<XDtMethod:forAllMethodTagTokens tagName="spring.property" paramName="setRef">
+										<ref bean="<XDtMethod:currentToken/>"/>
+									</XDtMethod:forAllMethodTagTokens>
+								</set>
+							</XDtMethod:ifHasMethodTag>
+						</property>
+					</XDtMethod:ifHasMethodTag>
+				</XDtMethod:forAllMethods>
+
+				<XDtClass:forAllClassTags tagName="spring.property">
+					<property name="<XDtClass:classTagValue tagName="spring.property" paramName="name"/>">
+						<XDtClass:ifHasClassTag tagName="spring.property" paramName="value">
+							<value><XDtClass:classTagValue tagName="spring.property" paramName="value"/></value>
+						</XDtClass:ifHasClassTag>
+						<XDtClass:ifHasClassTag tagName="spring.property" paramName="ref">
+							<ref bean="<XDtClass:classTagValue tagName="spring.property" paramName="ref"/>"/>
+						</XDtClass:ifHasClassTag>
+						<XDtClass:ifHasClassTag tagName="spring.property" paramName="list">
+							<list>
+								<XDtClass:forAllClassTagTokens tagName="spring.property" paramName="list">
+									<value><XDtClass:currentToken/></value>
+								</XDtClass:forAllClassTagTokens>
+							</list>
+						</XDtClass:ifHasClassTag>
+						<XDtClass:ifHasClassTag tagName="spring.property" paramName="listRef">
+							<list>
+								<XDtClass:forAllClassTagTokens tagName="spring.property" paramName="listRef">
+									<ref bean="<XDtClass:currentToken/>"/>
+								</XDtClass:forAllClassTagTokens>
+							</list>
+						</XDtClass:ifHasClassTag>
+					</property>
+				</XDtClass:forAllClassTags>
+			</bean>
+		</XDtClass:forAllClassTags>
+
+	</XDtClass:forAllClasses>
+
+	<XDtMerge:merge file="spring-beans.xml">
+		<!--
+			To include additional bean definitions for Spring in the generated
+			application context file, add a file to your XDoclet merge directory
+			called spring-beans.xml that contains the <bean></bean> markup.
+		-->
+	</XDtMerge:merge>
+
+</beans>
