@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+    <display-name>LiveBookstore</display-name>
+    <description>Live Bookstore, Java Web Application, version 1.0</description>
+    <distributable />
+
+    <!--========================================================================
+        Context Params
+    =========================================================================-->
+
+    <!-- Acegi config -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/security.xml,
+            /WEB-INF/services.xml,
+            /WEB-INF/dispatcher-servlet.xml
+        </param-value>
+    </context-param>
+
+    <!-- log4j config -->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/log4j.properties</param-value>
+    </context-param>
+
+    <!--========================================================================
+        Filters
+    =========================================================================-->
+
+    <filter>
+        <filter-name>performanceFilter</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>net.livebookstore.web.filter.PerformanceFilter</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>net.livebookstore.web.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>forbiddenFilter</filter-name>
+        <filter-class>net.livebookstore.web.filter.ForbiddenFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>expiresFilter</filter-name>
+        <filter-class>net.livebookstore.web.filter.ExpiresFilter</filter-class>
+        <init-param>
+            <param-name>.css</param-name>
+            <param-value>360000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>.jpg</param-name>
+            <param-value>360000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>.gif</param-name>
+            <param-value>360000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>.png</param-name>
+            <param-value>360000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>.js</param-name>
+            <param-value>360000</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>memoryCacheFilter</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>net.livebookstore.web.filter.MemoryCacheFilter</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>fileCacheFilter</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>net.livebookstore.web.filter.FileCacheFilter</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>acegiFilterChain</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>performanceFilter</filter-name>
+        <url-pattern>*.jspx</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*.jspx</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>forbiddenFilter</filter-name>
+        <url-pattern>*.htm</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>expiresFilter</filter-name>
+        <url-pattern>*.css</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>expiresFilter</filter-name>
+        <url-pattern>*.jpg</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>expiresFilter</filter-name>
+        <url-pattern>*.gif</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>expiresFilter</filter-name>
+        <url-pattern>*.png</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>expiresFilter</filter-name>
+        <url-pattern>*.js</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>memoryCacheFilter</filter-name>
+        <url-pattern>*.jspx</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>fileCacheFilter</filter-name>
+        <url-pattern>*.jspx</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>acegiFilterChain</filter-name>
+        <url-pattern>*.jspx</url-pattern>
+    </filter-mapping>
+
+    <!--========================================================================
+        Listeners
+    =========================================================================-->
+
+    <listener>
+        <listener-class>
+            org.springframework.web.util.Log4jConfigListener
+        </listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+    <!--========================================================================
+        Servlets
+    =========================================================================-->
+
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.jspx</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/bookstoreWebService*</url-pattern>
+    </servlet-mapping>
+
+    <!--========================================================================
+        Session
+    =========================================================================-->
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>welcome.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>
