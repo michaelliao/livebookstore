@@ -1,0 +1,6 @@
+﻿-- create admin role with password 'livebookstore':
+
+insert into t_account
+    (address, name, password, email, createdDate, privilege, zip, telephone, mobile, username)
+    values ('', '', '8a375a797b28608ab4bbec300b451ea2', 'admin@livebookstore.net', '2007-01-01 00:00:00', 255, '', '', '', 'admin'
+)

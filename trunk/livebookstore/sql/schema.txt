@@ -1,0 +1,102 @@
+﻿create table t_account (
+    username varchar(20) not null,
+    password varchar(32) not null,
+    email varchar(50),
+    privilege integer not null,
+    createdDate datetime not null,
+    name varchar(10),
+    address varchar(100),
+    zip varchar(10),
+    telephone varchar(20),
+    mobile varchar(20),
+    primary key (username)
+);
+
+create table t_book (
+    id varchar(32) not null,
+    categoryId integer not null,
+    name varchar(50) not null,
+    originalName varchar(50),
+    language varchar(10) not null,
+    author varchar(50) not null,
+    publisher varchar(50) not null,
+    discount integer not null,
+    isbn varchar(50) not null,
+    pubDate date not null,
+    price float not null,
+    rating float not null,
+    ratingCount integer not null,
+    sold integer not null,
+    stock integer not null,
+    state integer not null,
+    description varchar(2000) not null,
+    primary key (id)
+);
+
+create table t_category (
+    id integer not null,
+    categoryOrder integer not null,
+    name varchar(20) not null,
+    primary key (id)
+);
+
+create table t_comment (
+    id varchar(32) not null,
+    rating integer not null,
+    content varchar(2000) not null,
+    account_username varchar(20) not null,
+    book_id varchar(32) not null,
+    createdDate datetime not null,
+    primary key (id)
+);
+
+create table t_fav_book (
+    id varchar(32) not null,
+    account_username varchar(20) not null,
+    book_id varchar(32) not null,
+    createdDate datetime not null,
+    primary key (id)
+);
+
+create table t_order (
+    id varchar(32) not null,
+    createdDate datetime not null,
+    payment integer not null,
+    state integer not null,
+    name varchar(20) not null,
+    address varchar(200) not null,
+    zip varchar(10),
+    telephone varchar(20),
+    mobile varchar(20),
+    account_username varchar(20) not null,
+    primary key (id)
+);
+
+create table t_orderItem (
+    id varchar(32) not null,
+    number integer not null,
+    order_id varchar(32) not null,
+    book_id varchar(32) not null,
+    primary key (id)
+);
+
+alter table t_comment add index FKF437E194FF7061D5 (book_id),
+add constraint FKF437E194FF7061D5 foreign key (book_id) references t_book (id);
+
+alter table t_comment add index FKF437E194F14A1A3A (account_username),
+add constraint FKF437E194F14A1A3A foreign key (account_username) references t_account (username);
+
+alter table t_fav_book add index FKF46594F8FF7061D5 (book_id),
+add constraint FKF46594F8FF7061D5 foreign key (book_id) references t_book (id);
+
+alter table t_fav_book add index FKF46594F8F14A1A3A (account_username),
+add constraint FKF46594F8F14A1A3A foreign key (account_username) references t_account (username);
+
+alter table t_order add index FKA0C0C3C3F14A1A3A (account_username),
+add constraint FKA0C0C3C3F14A1A3A foreign key (account_username) references t_account (username);
+
+alter table t_orderItem add index FK7861976FF7061D5 (book_id),
+add constraint FK7861976FF7061D5 foreign key (book_id) references t_book (id);
+
+alter table t_orderItem add index FK7861976C164D99F (order_id),
+add constraint FK7861976C164D99F foreign key (order_id) references t_order (id);

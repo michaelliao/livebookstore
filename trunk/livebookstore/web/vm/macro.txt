@@ -1,0 +1,83 @@
+
+#macro(category $c)
+	#set($indent=${c.level}*16)
+	<div class="pad3" style="text-indent:${indent}px;" onClick="toggleCategory(${c.id})"><img src="images/orange-arrow.gif" width="10" height="9" align="absmiddle"><a href="javascript:void(0)" onClick="selectCategory(this)" name="${c.name}" id="${c.id}" class="unselected">${c.name}</a></div>
+	<div id="child${c.id}">
+		#foreach($child in $c.children)
+			#category($child)
+		#end
+	</div>
+#end
+
+
+## 显示分类:
+#macro(categoryList $c $url)
+    #set($indent=${c.level}*16)
+    <div class="pad3" style="text-indent:${indent}px;"><img src="images/orange-arrow.gif" width="10" height="9" align="absmiddle"><a href="${url}categoryId=${c.id}" name="${c.name}" id="${c.id}"
+        #if($categoryId==${c.id})
+            class="hot"
+        #end
+    >${c.name}</a></div>
+    <div id="child${c.id}">
+        #foreach($child in $c.children)
+            #categoryList($child $url)
+        #end
+    </div>
+#end
+
+
+## 分页
+#macro(pagination)
+    #if( ${page.totalCount} == 0 )
+        <table border="0" align="center" cellpadding="3" cellspacing="3">
+            <tr><td align="center"><font color="#ff0000"><strong>没有可显示的项目</strong></font></td></tr>
+        </table>
+    #else
+        #set( $p_count = $page.pageCount )
+        #set( $p_index = $page.pageIndex )
+        <table border="0" align="center" cellpadding="3" cellspacing="3">
+            <tr>
+                <td class="pageNonClickable">共<b>${page.totalCount}</b>项，<b>${p_count}</b>页：</td>
+                ## 是否显示"上一页":
+                #if(${page.hasPrevious})
+                    #set($p_tmp = $p_index - 1)
+                    <td class="pageClickable" onMouseOver="hoverPage(this)" onMouseOut="normalPage(this)" onClick="location.assign(getPageLocation(${p_tmp}))">上一页</td>
+                #else
+                    <td class="pageUnclickable">上一页</td>
+                #end
+                ## 如果前面页数过多,显示"...":
+                #if($p_index>5)
+                    #set( $p_prevPages = $p_index - 5)
+                    #set( $p_start = $p_index - 4)
+                    <td class="pageClickable" onMouseOver="hoverPage(this)" onMouseOut="normalPage(this)" onClick="location.assign(getPageLocation(${p_prevPages}))">…</td>
+                #else
+                    #set($p_start = 1)
+                #end
+                ## 显示当前页附近的页
+                #set( $p_end = $p_index + 4 )
+                #if( $p_end > $p_count )
+                    #set( $p_end = $p_count )
+                #end
+                #foreach($i in [$p_start..$p_end])
+                    #if($i==$p_index)
+                        <td class="pageNonClickable"><b><font color="#FF0084">${i}</font></b></td>
+                    #else
+                        <td class="pageClickable" onMouseOver="hoverPage(this)" onMouseOut="normalPage(this)" onClick="location.assign(getPageLocation(${i}))">${i}</td>
+                    #end
+                #end
+                ## 如果后面页数过多,显示"...":
+                #if( $p_end < $p_count )
+                    #set( $p_nextPages=$p_end + 1 )
+                    <td class="pageClickable" onMouseOver="hoverPage(this)" onMouseOut="normalPage(this)" onClick="location.assign(getPageLocation(${p_nextPages}))">…</td>
+                #end
+                ## 显示"下一页":
+                #if(${page.hasNext})
+                    #set($p_tmp=${p_index}+1)
+                    <td class="pageClickable" onMouseOver="hoverPage(this)" onMouseOut="normalPage(this)" onClick="location.assign(getPageLocation(${p_tmp}))">下一页</td>
+                #else
+                    <td class="pageUnclickable">下一页</td>
+                #end
+            </tr>
+        </table>
+    #end
+#end
