@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/core/hibernate3.jar"/>
+	<classpathentry kind="lib" path="lib/core/spring.jar"/>
+	<classpathentry kind="lib" path="lib/ext/servlet-api.jar"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="lib/core/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/core/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="lib/core/mail.jar"/>
+	<classpathentry kind="lib" path="lib/core/compass-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/core/compass-core.jar"/>
+	<classpathentry kind="lib" path="lib/core/oscache-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/core/lucene-core.jar"/>
+	<classpathentry kind="lib" path="lib/ext/hibernate-tools.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/core/quartz-1.5.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/core/activation.jar"/>
+	<classpathentry kind="lib" path="lib/core/hsqldb.jar"/>
+	<classpathentry kind="lib" path="lib/core/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/core/acegi-security-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/core/acegi-security-tiger-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/ext/jms-11.jar"/>
+	<classpathentry kind="lib" path="lib/core/commons-codec.jar"/>
+	<classpathentry kind="lib" path="lib/core/xfire-jsr181-api-1.0-M1.jar"/>
+	<classpathentry kind="lib" path="lib/core/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="lib/core/jmxtools.jar"/>
+	<classpathentry kind="lib" path="lib/core/hibernate-validator.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
