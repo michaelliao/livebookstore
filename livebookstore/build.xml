@@ -31,7 +31,7 @@
         <classpath refid="build-classpath"/>
     </taskdef>
 
-    <!-- clear all classes and auto-created files -->
+    <!-- clear all classes and auto-generated files -->
     <target name="clean">
         <delete dir="${bin.dir}" />
         <delete dir="${gen.dir}" />
@@ -48,8 +48,6 @@
         <mkdir dir="${doc.dir}" />
         <mkdir dir="${gen.dir}" />
         <mkdir dir="${report.dir}" />
-        <mkdir dir="${web.dir}/WEB-INF/lib" />
-        <mkdir dir="${web.dir}/WEB-INF/classes" />
     </target>
 
     <!-- compile java source code -->
@@ -179,27 +177,20 @@
 
     <!-- deploy -->
     <target name="deploy" depends="gen-spring-conf">
-        <delete dir="${web.dir}/WEB-INF/classes" />
         <delete dir="${web.dir}/WEB-INF/lib" />
         <delete file="${web.dir}/WEB-INF/lib/bookstore.jar" />
-        <mkdir dir="${web.dir}/WEB-INF/classes" />
-        <mkdir dir="${web.dir}/WEB-INF/lib" />
         <copy todir="${web.dir}/WEB-INF">
             <fileset file="${conf.dir}/*.*" />
             <fileset file="${gen.dir}/*.xml" />
         </copy>
-        <copy todir="${web.dir}/WEB-INF/classes">
-            <fileset dir="${bin.dir}" excludes="net/**" />
-        </copy>
-        <jar destfile="${web.dir}/WEB-INF/lib/bookstore.jar"
-             basedir="${bin.dir}"
-             excludes="org/**"
-        />
+        <mkdir dir="${web.dir}/WEB-INF/lib" />
+        <jar destfile="${web.dir}/WEB-INF/lib/bookstore.jar" basedir="${bin.dir}" />
         <copy todir="${web.dir}/WEB-INF/lib">
             <fileset file="${lib.dir}/core/*.jar" />
         </copy>
     </target>
 
+    <!-- Only for online-demo running on linux, please ignore!!! -->
     <target name="deploy-linux" depends="deploy">
         <copy todir="${web.dir}/WEB-INF" overwrite="true">
             <fileset file="${conf.dir}/linux/*.*" />
