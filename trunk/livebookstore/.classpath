@@ -19,13 +19,13 @@
 	<classpathentry kind="lib" path="lib/core/activation.jar"/>
 	<classpathentry kind="lib" path="lib/core/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/core/commons-logging.jar"/>
-	<classpathentry kind="lib" path="lib/core/acegi-security-1.0.3.jar"/>
-	<classpathentry kind="lib" path="lib/core/acegi-security-tiger-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/ext/jms-11.jar"/>
 	<classpathentry kind="lib" path="lib/core/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/core/xfire-jsr181-api-1.0-M1.jar"/>
 	<classpathentry kind="lib" path="lib/core/aspectjweaver.jar"/>
 	<classpathentry kind="lib" path="lib/core/jmxtools.jar"/>
 	<classpathentry kind="lib" path="lib/core/hibernate-validator.jar"/>
+	<classpathentry kind="lib" path="lib/core/acegi-security-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/core/acegi-security-tiger-1.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
