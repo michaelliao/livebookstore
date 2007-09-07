@@ -32,6 +32,8 @@ Acegi 1.0.4
     <property name="jndiName" value="java:comp/env/jdbc/bookstore" />
 </bean>
 
+请在/conf/log4j.properties中设定log文件地址，默认是/var/log/resin/livebookstore.log
+
 编译后的Class文件将存放在/bin目录，Ant脚本会直接将编译好的所有Class文件打包放入/web/WEB-INF/lib/bookstore.jar，因此，/WEB-INF目录下不再需要/classes目录。
 
 通过HTML访问JMX的HTML Adaptor默认没有启用，要启用HTML Adaptor，请将/conf/services.xml的相关注释去掉。
