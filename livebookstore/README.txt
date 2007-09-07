@@ -27,21 +27,6 @@ Acegi 1.0.4
 --------------------
 请在/conf/smtp.properties中设定SMTP服务器信息
 
---------------------
-编译工程
---------------------
-运行默认的Ant任务ant_build.bat，将在/web目录下获得完整的应用程序
-
---------------------
-Bug修复
---------------------
-net.livebookstore.web.core.AbstractScriptController:
-JavaScript的MIME类型更正为application/x-javascript
-Cache-Control头更正为max-age=xxx
-
---------------------
-工程结构修改
---------------------
 数据源已由原来直接通过Spring配置（/conf/services.xml）改为由服务器管理的JNDI数据源：
 <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
     <property name="jndiName" value="java:comp/env/jdbc/bookstore" />
@@ -57,3 +42,17 @@ file.resource.loader.modificationCheckInterval = 0
 velocimacro.library.autoreload = true
 
 请在Dreamwaver中自行删除模板文件中的Google广告，然后更新所有HTML页面
+
+--------------------
+编译工程
+--------------------
+运行默认的Ant任务ant_build.bat，将在/web目录下获得完整的应用程序
+
+第一次运行时，请重建所有书籍索引，否则将搜索不到任何书籍
+
+--------------------
+Bug修复
+--------------------
+net.livebookstore.web.core.AbstractScriptController:
+JavaScript的MIME类型更正为application/x-javascript
+Cache-Control头更正为max-age=xxx
