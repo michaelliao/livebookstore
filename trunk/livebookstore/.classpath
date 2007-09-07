@@ -14,7 +14,6 @@
 	<classpathentry kind="lib" path="lib/core/lucene-core.jar"/>
 	<classpathentry kind="lib" path="lib/ext/hibernate-tools.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/core/quartz-1.5.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/core/activation.jar"/>
 	<classpathentry kind="lib" path="lib/core/hsqldb.jar"/>

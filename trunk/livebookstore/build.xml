@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <project name="Building Live Online Bookstore" default="deploy" basedir=".">
 
-    <description>Live Online Bookstore v1.0</description>
+    <description>Live Online Bookstore v1.1</description>
 
     <!-- 定义变量 -->
     <property name="src.dir"      value="src" />

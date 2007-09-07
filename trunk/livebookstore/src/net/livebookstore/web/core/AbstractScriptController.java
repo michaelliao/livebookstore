@@ -21,7 +21,7 @@ public abstract class AbstractScriptController extends AbstractBaseController {
         if(cache<=0)
             response.setHeader("Cache-Control", "no-cache");
         else {
-            response.setHeader("Cache-Control", "Private");
+            response.setHeader("Cache-Control", "max-age=" + cache);
             response.addDateHeader("Expires", System.currentTimeMillis() + 1000 * cache);
         }
         PrintWriter writer = response.getWriter();
