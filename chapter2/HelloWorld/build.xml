@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HelloWorld" default="compile" basedir=".">
+    <property name="src.dir"    value="src"/>
+    <property name="lib.dir"    value="lib"/>
+    <property name="build.dir"  value="bin"/>
+
+    <!-- 定义Classpath -->
+    <path id="master-classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+    </path>
+
+    <!-- 初始化${build.dir}目录 -->
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <!-- 编译java源代码 -->
+    <target name="compile" depends="init">
+        <mkdir dir="${build.dir}" />
+        <javac destdir="${build.dir}">
+            <classpath refid="master-classpath"/>
+            <src path="${src.dir}"/>
+        </javac>
+        <!-- 复制beans.xml -->
+        <copy todir="${build.dir}">
+            <fileset file="${src.dir}/beans.xml"/>
+        </copy>
+    </target>
+</project>
