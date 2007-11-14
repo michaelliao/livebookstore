@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <!-- 具有Mutable接口的代理Bean -->
+    <bean id="user" scope="prototype"
+        class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="target" />
+        <property name="proxyTargetClass" value="true" />
+        <property name="proxyInterfaces">
+            <list>
+                <value>example.chapter4.Mutable</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>introductionAdvisor</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="introductionAdvisor" scope="prototype"
+        class="org.springframework.aop.support.DefaultIntroductionAdvisor">
+        <constructor-arg>
+            <bean class="example.chapter4.MutableInterceptor" />
+        </constructor-arg>
+    </bean>
+
+    <!-- 原始Bean -->
+    <bean id="target" class="example.chapter4.User" scope="prototype">
+        <property name="username" value="default-name" />
+        <property name="password" value="PaSsWoRd" />
+        <property name="email" value="default-email@abc.xyz" />
+    </bean>
+
+</beans>
