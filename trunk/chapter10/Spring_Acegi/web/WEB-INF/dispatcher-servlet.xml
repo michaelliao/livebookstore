@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <bean id="service" class="example.chapter10.ServiceImpl" />
+
+    <bean name="/order.do" class="example.chapter10.OrderController">
+        <property name="service" ref="service" />
+    </bean>
+
+    <bean id="serviceSecurityInterceptor"
+        class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
+        <property name="validateConfigAttributes" value="true" />
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="accessDecisionManager" ref="accessDecisionManager" />
+<!--
+        <property name="objectDefinitionSource">
+            <value>
+                example.chapter10.Service.createOrder=ROLE_USER
+            </value>
+        </property>
+-->
+        <property name="objectDefinitionSource">
+            <bean class="org.acegisecurity.intercept.method.MethodDefinitionAttributes">
+                <property name="attributes">
+                    <bean class="org.acegisecurity.annotation.SecurityAnnotationAttributes" />
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>serviceSecurityInterceptor</value>
+            </list>
+        </property>
+        <property name="beanNames">
+            <list>
+                <value>service</value>
+            </list>
+        </property>
+    </bean>
+</beans>
