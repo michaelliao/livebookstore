@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <!-- 定义DataSource -->
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+        <property name="url" value="jdbc:hsqldb:mem:bookstore" />
+        <property name="username" value="sa" />
+        <property name="password" value="" />
+    </bean>
+
+    <!-- 直接使用Jdbc的DAO -->
+
+    <bean id="jdbcCodeBookDao" class="example.chapter5.JdbcCodeBookDao">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 使用JdbcTemplate的DAO -->
+
+    <bean id="jdbcTemplateBookDao" class="example.chapter5.JdbcTemplateBookDao">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 使用HibernateTemplate的DAO -->
+
+    <bean id="hibernateBookDao" class="example.chapter5.HibernateBookDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>example.chapter5.Book</value>
+            </list>
+        </property>
+        <property name="annotatedPackages">
+            <list>
+                <value>example.chapter5</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.jdbc.fetch_size">10</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+            </props>
+        </property>
+        <property name="eventListeners">
+            <map>
+                <entry key="pre-update">
+                    <bean class="org.hibernate.validator.event.ValidatePreUpdateEventListener" />
+                </entry>
+                <entry key="pre-insert">
+                    <bean class="org.hibernate.validator.event.ValidatePreInsertEventListener" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 使用iBatis实现的DAO -->
+
+    <bean id="iBatisBookDao" class="example.chapter5.IBatisBookDao">
+        <property name="sqlMapClient">
+            <bean class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+                <property name="configLocation" value="ibatis-sql-map-config.xml" />
+                <property name="dataSource" ref="dataSource" />
+            </bean>
+        </property>
+    </bean>
+
+</beans>

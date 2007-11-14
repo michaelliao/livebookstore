@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Book">
+
+    <typeAlias alias="Book" type="example.chapter5.Book" />
+
+    <select id="queryAll" resultClass="Book">
+        select * from Book
+    </select>
+
+    <select id="queryByAuthor" parameterClass="java.lang.String" resultClass="Book">
+        select * from Book where author=#value#
+    </select>
+
+    <insert id="create" parameterClass="Book">
+        insert into Book (id, name, author) values (#id#, #name#, #author#)
+    </insert>
+
+    <delete id="updateBook" parameterClass="Book">
+        update Book set name=#name#, author=#author# where id=#id#
+    </delete>
+
+    <delete id="deleteBook" parameterClass="java.lang.String">
+        delete from Book where id=#value#
+    </delete>
+
+</sqlMap>
