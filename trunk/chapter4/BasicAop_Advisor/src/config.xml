@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <!-- 配置UserServiceImpl -->
+
+    <bean id="userServiceTarget" class="example.chapter4.UserServiceImpl">
+        <property name="userDao">
+            <bean class="example.chapter4.UserDao" />
+        </property>
+    </bean>
+
+    <!-- 使用NameMatchMethodPointcutAdvisor来定义loginBeforeAdvisor -->
+    <bean id="loginBeforeAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+        <!--  指定切入方法为login -->
+        <property name="mappedName" value="login" />
+        <!-- 指定Advice -->
+        <property name="advice">
+            <bean class="example.chapter4.LoginMethodBeforeAdvice" />
+        </property>
+    </bean>
+
+    <!-- 使用RegexpMethodPointcutAdvisor来定义createAfterAdvisor -->
+    <bean id="createAfterAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <!-- 指定切入方法为.*create.*，拦截所有以create开头的方法 -->
+        <property name="pattern" value=".*create.*" />
+        <!-- 指定Advice -->
+        <property name="advice">
+            <bean class="example.chapter4.CreateAfterReturningAdvice" />
+        </property>
+    </bean>
+
+    <!-- 配置AOP -->
+    <bean id="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames">
+            <list>
+                <value>loginBeforeAdvisor</value>
+                <value>createAfterAdvisor</value>
+            </list>
+        </property>
+        <property name="target" ref="userServiceTarget" />
+    </bean>
+
+</beans>
