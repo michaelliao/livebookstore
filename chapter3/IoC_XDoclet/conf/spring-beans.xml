@@ -1,0 +1,8 @@
+
+<!-- pre-defined beans -->
+
+<bean id="date" class="java.util.Date" />
+
+<bean id="systemStartTime" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="java:comp/env/systemStartTime" />
+</bean>

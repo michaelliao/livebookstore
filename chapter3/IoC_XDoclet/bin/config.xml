@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+
+       default-autowire="no"
+       default-lazy-init="false"
+       default-dependency-check="none"
+>
+			<bean
+					id="constructorBean"
+				class="example.chapter3.ConstructorBean"
+			>
+
+						<constructor-arg
+								type="int"
+						>
+								<value>100</value>
+						</constructor-arg>
+						<constructor-arg
+								type="int"
+						>
+								<value>200</value>
+						</constructor-arg>
+
+			</bean>
+
+			<bean
+					id="listBean"
+				class="example.chapter3.ListBean"
+			>
+
+						<property name="children">
+								<list>
+										<ref bean="basicBean"/>
+										<ref bean="constructorBean"/>
+								</list>
+						</property>
+						<property name="prices">
+								<list>
+										<value>2.32</value>
+										<value>9.23</value>
+										<value>10.3</value>
+								</list>
+						</property>
+						<property name="fibonacci">
+								<list>
+										<value>1</value>
+										<value>1</value>
+										<value>2</value>
+										<value>3</value>
+										<value>5</value>
+										<value>8</value>
+								</list>
+						</property>
+
+			</bean>
+
+			<bean
+					id="setBean"
+				class="example.chapter3.SetBean"
+			>
+
+						<property name="cups">
+								<set>
+										<ref bean="basicBean"/>
+										<ref bean="constructorBean"/>
+										<ref bean="listBean"/>
+								</set>
+						</property>
+
+			</bean>
+
+			<bean
+					id="pi"
+				class="example.chapter3.PiFactoryBean"
+			>
+
+			</bean>
+
+			<bean
+					id="refBean"
+				class="example.chapter3.RefBean"
+			>
+
+			</bean>
+
+			<bean
+					id="basicBean"
+				class="example.chapter3.BasicBean"
+					scope="prototype"
+			>
+
+						<property name="useCache">
+								<value>true</value>
+						</property>
+						<property name="maxSize">
+								<value>100</value>
+						</property>
+						<property name="title">
+								<value>A Basic Bean</value>
+						</property>
+						<property name="file">
+								<value>config.xml</value>
+						</property>
+
+			</bean>
+
+			<bean
+					id="exampleBean"
+				class="example.chapter3.ExampleBean"
+					init-method="init"
+			>
+
+						<property name="size">
+								<value>200</value>
+						</property>
+						<property name="version">
+								<value>1.0_beta</value>
+						</property>
+
+			</bean>
+
+<!-- pre-defined beans -->
+
+<bean id="date" class="java.util.Date" />
+
+<bean id="systemStartTime" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="java:comp/env/systemStartTime" />
+</bean>
+
+</beans>
