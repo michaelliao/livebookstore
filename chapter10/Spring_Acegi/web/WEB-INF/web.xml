@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+    <!-- Acegi配置文件位置 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/security.xml</param-value>
+    </context-param>
+
+    <!-- 启动Spring容器 -->
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+    <!-- Acegi过滤器 -->
+    <filter>
+        <filter-name>acegiFilterChain</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+        </init-param>
+        <!-- 或者使用targetBean
+        <init-param>
+            <param-name>targetBean</param-name>
+            <param-value>filterChainProxy</param-value>
+        </init-param>
+        -->
+    </filter>
+
+    <!-- Acegi过滤器URL映射 -->
+    <filter-mapping>
+        <filter-name>acegiFilterChain</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>acegiFilterChain</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+    <!-- Spring的DispatcherServlet -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
+</web-app>

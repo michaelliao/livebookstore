@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <!--========================================================================
+         认证管理器
+    =========================================================================-->
+
+    <bean id="authenticationManager" class="org.acegisecurity.providers.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref bean="daoAuthenticationProvider" />
+                <ref bean="rememberMeAuthenticationProvider" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- 基于DAO验证的AuthenticationProvider -->
+    <bean id="daoAuthenticationProvider"
+        class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService" />
+    </bean>
+
+    <bean id="rememberMeAuthenticationProvider"
+        class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
+        <property name="key" value="remember_Me" />
+    </bean>
+
+    <!-- 使用内存DAO,实际应用时可用JdbcDao代替 -->
+    <bean id="userDetailsService"
+        class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
+        <property name="userMap">
+            <value>
+                admin=password,enabled,ROLE_ADMIN,ROLE_USER
+                test=test,enabled,ROLE_USER
+                guest=guest,disabled,ROLE_USER
+            </value>
+        </property>
+    </bean>
+
+    <!--========================================================================
+         决策管理器
+    =========================================================================-->
+
+    <bean id="accessDecisionManager"
+        class="org.acegisecurity.vote.AffirmativeBased">
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.acegisecurity.vote.RoleVoter" />
+            </list>
+        </property>
+        <property name="allowIfAllAbstainDecisions" value="false" />
+    </bean>
+
+    <!--========================================================================
+         过滤器链
+    =========================================================================-->
+
+    <bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
+        <property name="filterInvocationDefinitionSource">
+            <value>
+                CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+                PATTERN_TYPE_APACHE_ANT
+                /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,rememberMeFilter,exceptionFilter,securityInterceptor
+            </value>
+        </property>
+    </bean>
+
+    <!-- 从Session中获得用户信息并放入SecurityContextHolder -->
+    <bean id="httpSessionContextIntegrationFilter"
+        class="org.acegisecurity.context.HttpSessionContextIntegrationFilter" />
+
+    <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
+        <!-- URL redirected to after logout -->
+        <constructor-arg value="/helloWorld.jsp" />
+        <constructor-arg>
+            <list>
+                <ref bean="rememberMeServices" />
+                <bean class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler" />
+            </list>
+        </constructor-arg>
+        <property name="filterProcessesUrl" value="/j_logout.do" />
+    </bean>
+
+    <!-- 验证用户身份 -->
+    <bean id="authenticationProcessingFilter"
+        class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="authenticationFailureUrl" value="/login.jsp?login_error=Login%20failed." />
+        <property name="defaultTargetUrl" value="/helloWorld.jsp" />
+        <property name="filterProcessesUrl" value="/j_login.do" />
+        <property name="rememberMeServices" ref="rememberMeServices" />
+    </bean>
+
+    <!-- 记住用户登录信息 -->
+    <bean id="rememberMeFilter" class="org.acegisecurity.ui.rememberme.RememberMeProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="rememberMeServices" ref="rememberMeServices" />
+    </bean>
+
+    <!-- 处理登录异常或权限异常的Filter -->
+    <bean id="exceptionFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
+        <!-- 出现AuthenticationException时的登录入口 -->
+        <property name="authenticationEntryPoint">
+            <bean class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+                <property name="loginFormUrl" value="/login.jsp" />
+                <property name="forceHttps" value="false" />
+            </bean>
+        </property>
+        <!-- 出现AccessDeniedException时的Handler -->
+        <property name="accessDeniedHandler">
+            <bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl" />
+            <!-- 可选属性: property name="errorPage" value="/denied.html" -->
+        </property>
+    </bean>
+
+    <!-- 基于URL的安全拦截器 -->
+    <bean id="securityInterceptor"
+        class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="accessDecisionManager" ref="accessDecisionManager" />
+        <property name="objectDefinitionSource">
+            <value>
+                CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+                PATTERN_TYPE_APACHE_ANT
+                /admin/**=ROLE_ADMIN
+                /user/**=ROLE_USER
+            </value>
+        </property>
+    </bean>
+
+    <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
+        <property name="userDetailsService" ref="userDetailsService" />
+        <property name="parameter" value="j_remember_me" />
+        <property name="key" value="remember_Me" />
+        <property name="tokenValiditySeconds" value="31536000" />
+    </bean>
+
+</beans>
