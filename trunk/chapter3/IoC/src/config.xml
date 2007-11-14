@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <!-- 配置bookDao和bookService -->
+
+    <bean id="bookService" class="example.chapter3.BookService">
+        <property name="bookDao" ref="bookDao" />
+    </bean>
+
+    <bean id="bookDao" class="example.chapter3.DbBookDao" />
+
+    <!-- 配置exampleBean并指定init-method -->
+
+    <bean id="exampleBean"
+          class="example.chapter3.ExampleBean"
+          init-method="init"
+    >
+        <property name="size" value="10" />
+        <property name="version" value="1.0_beta" />
+    </bean>
+
+    <!-- 配置basicBean并注入基本属性 -->
+
+    <bean id="basicBean" class="example.chapter3.BasicBean">
+        <property name="useCache" value="true" />
+        <property name="maxSize" value="100" />
+        <property name="title" value="A Basic Bean" />
+        <property name="file" value="config.xml" />
+    </bean>
+
+    <!-- 配置refBean并注入引用属性 -->
+
+    <bean id="refBean" class="example.chapter3.RefBean">
+        <property name="basic" ref="basicBean" />
+    </bean>
+
+    <!-- 配置listBean并注入List和数组 -->
+
+    <bean id="listBean" class="example.chapter3.ListBean">
+        <!-- 注入普通List -->
+        <property name="children">
+            <list>
+                <value>A String</value>
+                <ref bean="basicBean" />
+            </list>
+        </property>
+        <!-- 注入强类型的List<Float> -->
+        <property name="prices">
+            <list>
+                <value>12.54</value>
+                <value>82</value>
+                <value>27.9</value>
+            </list>
+        </property>
+        <!-- 注入int[]数组 -->
+        <property name="fibonacci">
+            <list>
+                <value>1</value>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+                <value>5</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置setBean并注入Set -->
+
+    <bean id="setBean" class="example.chapter3.SetBean">
+        <property name="cups">
+            <set>
+                <value>spring</value>
+                <value>hibernate</value>
+                <value>hibernate</value>
+                <ref bean="listBean" />
+            </set>
+        </property>
+    </bean>
+
+    <!-- 配置mapBean并注入Map -->
+
+    <bean id="mapBean" class="example.chapter3.MapBean">
+        <property name="weekday">
+            <map>
+                <!-- 用String作为key -->
+                <entry key="Monday">
+                    <value>do something</value>
+                </entry>
+                <entry key="Tuesday">
+                    <ref bean="setBean" />
+                </entry>
+                <!-- 用Bean作为key -->
+                <entry key-ref="basicBean" value="basic" />
+                <entry key-ref="listBean" value-ref="setBean" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- 配置propBean并注入Properties -->
+
+    <bean id="propBean" class="example.chapter3.PropBean">
+        <property name="env">
+            <props>
+                <prop key="target">1.5</prop>
+                <prop key="encoding">UTF-8</prop>
+                <prop key="debug">on</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 配置constructorBean并从构造方法中注入 -->
+
+    <bean id="constructorBean" class="example.chapter3.ConstructorBean">
+        <constructor-arg value="100" />
+        <constructor-arg value="200" />
+    </bean>
+
+    <!-- 作用域为prototype的date -->
+
+    <bean id="date"
+          class="java.util.Date"
+          scope="prototype"
+    />
+
+    <!-- 配置静态工厂，可以修改random的作用域查看输出结果 -->
+
+    <bean id="random"
+          class="example.chapter3.StaticFactoryBean"
+          factory-method="createRandom"
+          scope="prototype"
+    />
+
+    <!-- 配置实例工厂 -->
+
+    <bean id="instanceFactoryBean" class="example.chapter3.InstanceFactoryBean">
+        <property name="format" value="yyyy-MM-dd HH:mm:ss" />
+    </bean>
+
+    <bean id="currentTime"
+          factory-bean="instanceFactoryBean"
+          factory-method="createTime"
+    />
+
+    <!-- 配置FactoryBean -->
+
+    <bean id="pi" class="example.chapter3.PiFactoryBean" />
+
+    <!-- 配置JndiObjectFactoryBean -->
+
+    <bean id="systemStartTime" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/systemStartTime" />
+    </bean>
+
+    <!-- 基于模板的配置 -->
+
+    <bean id="abstractEmployee"
+          class="java.io.Serializable"
+          abstract="true"
+    >
+        <property name="company" value="Live Bookstore Inc." />
+        <property name="department" value="R&amp;D Center" />
+    </bean>
+
+    <bean id="engineer1" class="example.chapter3.Employee" parent="abstractEmployee">
+        <property name="name" value="Bill" />
+        <property name="title" value="Software Engineer" />
+    </bean>
+
+    <bean id="engineer2" class="example.chapter3.Employee" parent="abstractEmployee">
+        <property name="name" value="Steven" />
+        <property name="title" value="Hardware Engineer" />
+    </bean>
+
+    <bean id="manager" class="example.chapter3.Employee" parent="abstractEmployee">
+        <property name="name" value="Michael" />
+        <property name="title" value="Manager" />
+        <property name="department" value="HR" />
+    </bean>
+
+    <!-- 配置知道自己名字的Bean -->
+
+    <bean id="whoAmI" name="WHO-AM-I" class="example.chapter3.WhoAmI" />
+
+    <!-- 配置知道容器的Bean -->
+
+    <bean id="whereAmI" class="example.chapter3.WhereAmI" />
+
+    <!-- 配置有能力修改Bean的BeanPostProcessor -->
+
+    <bean id="myBeanPostProcessor" class="example.chapter3.MyBeanPostProcessor" />
+
+    <!-- 配置发送和接收事件的Bean -->
+
+    <bean id="messagePublisher" class="example.chapter3.MessagePublisher" />
+
+    <bean id="messageListener" class="example.chapter3.MessageListener" />
+
+</beans>
