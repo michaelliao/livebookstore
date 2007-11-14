@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+>
+
+    <!-- 使用JDO实现的DAO -->
+
+    <bean id="pmFactory" class="javax.jdo.JDOHelper"
+        factory-method="getPersistenceManagerFactory" destroy-method="close">
+        <constructor-arg value="jpox.properties" />
+    </bean>
+
+    <bean id="jdoTxManager" class="org.springframework.orm.jdo.JdoTransactionManager">
+        <property name="persistenceManagerFactory" ref="pmFactory" />
+    </bean>
+
+    <bean id="jdoBookDao" class="example.chapter5.JdoBookDao">
+        <property name="persistenceManagerFactory" ref="pmFactory" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="jdoTxManager" />
+
+</beans>
