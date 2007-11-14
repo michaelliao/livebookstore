@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <bean id="order" class="example.chapter3.Order">
+        <property name="id" value="12345678" />
+        <property name="contact" value="Xuefeng; 北京市海淀区; 100087" />
+    </bean>
+
+</beans>
