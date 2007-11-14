@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <!-- 配置UserServiceImpl -->
+
+    <bean id="userServiceTarget" class="example.chapter4.UserServiceImpl">
+        <property name="userDao">
+            <bean class="example.chapter4.UserDao" />
+        </property>
+    </bean>
+
+    <!-- 定义MethodBeforeAdvice -->
+
+    <bean id="loginMethodBeforeAdvice" class="example.chapter4.LoginMethodBeforeAdvice" />
+
+    <!-- 定义AfterReturningAdvice -->
+
+    <bean id="loginAfterReturningAdvice" class="example.chapter4.LoginAfterReturningAdvice" />
+
+    <!-- 定义ThrowsAdvice -->
+
+    <bean id="loginThrowsAdvice" class="example.chapter4.LoginThrowsAdvice" />
+
+    <!-- 定义MethodInterceptor -->
+
+    <bean id="loginAroundAdvice" class="example.chapter4.LoginAroundAdvice" />
+
+    <!-- 配置AOP -->
+
+    <bean id="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames">
+            <list>
+                <value>loginMethodBeforeAdvice</value>
+                <value>loginAfterReturningAdvice</value>
+                <value>loginThrowsAdvice</value>
+            </list>
+        </property>
+        <property name="target" ref="userServiceTarget" />
+    </bean>
+
+</beans>
