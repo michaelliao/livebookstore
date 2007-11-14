@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <bean id="child-1" class="java.lang.String">
+        <constructor-arg value="Test child 1 in config-2" />
+    </bean>
+
+    <bean id="child-2" class="java.lang.String">
+        <constructor-arg value="Test child 2 in config-2" />
+    </bean>
+
+    <bean id="child-3" class="java.lang.String">
+        <constructor-arg ref="parent-3" />
+    </bean>
+
+</beans>
