@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HelloWorld" default="gen-spring-conf" basedir=".">
+    <property name="src.dir"      value="src"      />
+    <property name="lib.dir"      value="lib"      />
+    <property name="conf.dir"     value="conf"     />
+    <property name="build.dir"    value="bin"      />
+	<property name="template.dir" value="template" />
+
+    <!-- 定义Classpath -->
+    <path id="master-classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+    </path>
+
+    <!-- 编译java源代码 -->
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" target="1.5" debug="on" debuglevel="lines">
+            <classpath refid="master-classpath"/>
+            <src path="${src.dir}"/>
+        </javac>
+    </target>
+
+    <!-- 使用XDoclet生成配置文件 -->
+    <target name="gen-spring-conf" depends="compile">
+        <!-- 定义Ant任务 -->
+        <taskdef name="springdoclet"
+            classname="xdoclet.modules.spring.SpringDocletTask"
+            classpathref="master-classpath"
+        />
+        <!-- 生成配置文件 -->
+        <springdoclet
+            destDir="${build.dir}"
+            mergeDir="${conf.dir}"
+            force="true"
+            excludedtags="@version,@author,@todo"
+        >
+            <fileset dir="${src.dir}" includes="**/*.java" />
+            <springxml
+                xmlencoding="UTF-8"
+                templateFile="${template.dir}/custom_spring_xml.xdt"
+                destinationFile="config.xml"
+            />
+        </springdoclet>
+    </target>
+
+</project>
