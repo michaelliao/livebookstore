@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <bean id="bookService" class="example.chapter7.BookServiceImpl" />
+
+    <bean id="listBooksAction" class="example.chapter7.webwork2.ListBooksAction" scope="prototype">
+        <property name="bookService" ref="bookService" />
+    </bean>
+
+    <bean id="bookDetailAction" class="example.chapter7.webwork2.BookDetailAction" scope="prototype">
+        <property name="bookService" ref="bookService" />
+    </bean>
+
+</beans>
