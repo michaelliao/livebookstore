@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <!-- 配置UserServiceImpl -->
+
+    <bean id="userService" class="example.chapter4.UserServiceImpl">
+        <property name="userDao">
+            <bean class="example.chapter4.UserDao" />
+        </property>
+    </bean>
+
+    <bean id="loginBeforeAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <!-- 限定切入点仅作用于UserService的login()方法 -->
+        <property name="pattern" value=".*UserService\.login" />
+        <property name="advice">
+            <bean class="example.chapter4.LoginMethodBeforeAdvice" />
+        </property>
+    </bean>
+
+    <bean id="createAfterAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <!-- 限定切入点仅作用于UserService的create()方法 -->
+        <property name="pattern" value=".*UserService\.create" />
+        <property name="advice">
+            <bean class="example.chapter4.CreateAfterReturningAdvice" />
+        </property>
+    </bean>
+
+    <!-- 配置BeanNameAutoProxyCreator -->
+<!--
+    <bean id="beanNameAutoProxy"
+        class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames" value="userService" />
+        <property name="interceptorNames">
+            <list>
+                <value>loginBeforeAdvisor</value>
+                <value>createAfterAdvisor</value>
+            </list>
+        </property>
+    </bean>
+-->
+    <!-- 配置DefaultAdvisorAutoProxyCreator -->
+   <bean id="defaultAutoProxy"
+        class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+
+</beans>
