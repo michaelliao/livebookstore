@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <bean id="amazonWebService" class="org.springframework.remoting.jaxrpc.JaxRpcPortProxyFactoryBean">
+        <property name="serviceInterface" value="example.chapter8.AmazonService" />
+        <property name="portInterface" value="com.amazon.ws.AWSECommerceServicePortType" />
+        <property name="wsdlDocumentUrl" value="http://webservices.amazon.com/AWSECommerceService/2005-03-23/US/AWSECommerceService.wsdl" />
+        <property name="namespaceUri" value="http://webservices.amazon.com/AWSECommerceService/2005-03-23" />
+        <property name="serviceName" value="AWSECommerceService" />
+        <property name="portName" value="AWSECommerceServicePort" />
+    </bean>
+
+</beans>
