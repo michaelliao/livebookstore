@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+>
+    <!-- 定义DataSource -->
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+        <property name="url" value="jdbc:hsqldb:mem:bookstore" />
+        <property name="username" value="sa" />
+        <property name="password" value="" />
+    </bean>
+
+    <!-- 定义TransactionManager -->
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 定义BookDao -->
+
+    <bean id="bookDao" class="example.chapter6.BookDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 将BookDao封装成具有事务功能 -->
+
+    <!-- 声明TxAdvice -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- 对以query开头的方法要求只读事务 -->
+            <tx:method name="query*" read-only="true" />
+            <!-- 对于其他方法要求事务 -->
+            <tx:method name="*" rollback-for="java.io.IOException" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <!-- 使用AspectJ语法定义Pointcut -->
+        <aop:pointcut id="bookDaoOperation" expression="execution(* example.chapter6.BookDao.*(..))" />
+        <!-- 织入 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="bookDaoOperation" />
+    </aop:config>
+
+</beans>
