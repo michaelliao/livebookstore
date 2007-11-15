@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 引用XFire预定义的Bean配置 -->
+    <import resource="classpath:org/codehaus/xfire/spring/xfire.xml" />
+
+    <!-- Web服务实现类 -->
+    <bean id="bookService" class="example.chapter8.BookServiceImpl" />
+
+    <!-- 定义URL映射 -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/BookService" value="bookExporter" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- bookExporter将处理来自客户端的调用 -->
+    <bean id="bookExporter" class="org.codehaus.xfire.spring.remoting.XFireExporter">
+        <!-- 对外提供的Web服务的接口 -->
+        <property name="serviceClass" value="example.chapter8.BookService" />
+        <!-- 实现Web服务的Bean -->
+        <property name="serviceBean" ref="bookService" />
+        <!-- 下面引用的Bean都已被import引入了 -->
+        <property name="serviceFactory" ref="xfire.serviceFactory" />
+        <property name="xfire" ref="xfire" />
+    </bean>
+
+</beans>
