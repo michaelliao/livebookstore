@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/lang
+       http://www.springframework.org/schema/lang/spring-lang-2.0.xsd"
+>
+
+    <lang:jruby id="jruby" script-source="classpath:Greeting.rb"
+        script-interfaces="example.chapter9.Greeting">
+        <lang:property name="message" value="Hello, JRuby!" />
+    </lang:jruby>
+
+    <lang:groovy id="groovy" script-source="classpath:Greeting.groovy">
+        <lang:property name="message" value="Hello, Groovy!" />
+    </lang:groovy>
+
+    <lang:bsh id="bsh" script-source="classpath:Greeting.bsh"
+        refresh-check-delay="3000"
+        script-interfaces="example.chapter9.Greeting">
+        <lang:property name="message" value="Hello, BeanShell!" />
+    </lang:bsh>
+
+</beans>
