@@ -1,0 +1,8 @@
+<beans xmlns="http://xfire.codehaus.org/config/1.0">
+    <service>
+        <name>BookService</name>
+        <namespace>http://www.livebookstore.net/BookService</namespace>
+        <serviceClass>example.chapter8.BookService</serviceClass>
+        <implementationClass>example.chapter8.BookServiceImpl</implementationClass>
+    </service>
+</beans>
