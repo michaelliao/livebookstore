@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+body {
+	background-color: #FFFFFF;
+	margin: 0px;
+	font-family: 宋体;
+	font-size: 13px;
+	color: #000000;
+	line-height: 150%;
+}
+
+img { border: 0px; vertical-align:middle; }
+
+table {
+	text-align: left;
+	word-break: break-all;
+}
+
+hr { color:#999999; }
+
+h1 {
+	font-size: 16px;
+	color: #000033;
+	line-height: 150%;
+}
+
+textarea {
+	font-family: "Courier New", Courier
+	font-size: 13px;
+	color: #333333;
+	line-height: normal;
+}
