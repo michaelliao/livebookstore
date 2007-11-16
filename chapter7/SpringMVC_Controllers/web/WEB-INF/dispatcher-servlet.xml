@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+
+       default-autowire="no"
+       default-lazy-init="false"
+       default-dependency-check="none"
+>
+			<bean
+					name="/login.do"
+				class="example.chapter7.LoginController"
+			>
+
+						<property name="userService">
+								<ref bean="userService"/>
+						</property>
+
+					<property name="commandClass">
+							<value>example.chapter7.User</value>
+					</property>
+					<property name="formView">
+							<value>login</value>
+					</property>
+					<property name="successView">
+							<value>loginSuccess</value>
+					</property>
+					<property name="validator">
+							<ref bean="loginValidator"/>
+					</property>
+			</bean>
+
+			<bean
+					name="/register.do"
+				class="example.chapter7.RegisterController"
+			>
+
+						<property name="userService">
+								<ref bean="userService"/>
+						</property>
+
+					<property name="commandClass">
+							<value>example.chapter7.User</value>
+					</property>
+					<property name="pages">
+							<list>
+									<value>registerStep0</value>
+									<value>registerStep1</value>
+									<value>registerStep2</value>
+							</list>
+					</property>
+			</bean>
+
+			<bean
+					id="handlerExceptionResolver"
+				class="example.chapter7.MyHandlerExceptionResolver"
+			>
+
+			</bean>
+
+			<bean
+					name="/*Profile.do"
+				class="example.chapter7.ViewProfileController"
+			>
+
+						<property name="userService">
+								<ref bean="userService"/>
+						</property>
+
+			</bean>
+
+			<bean
+					name="/image.do"
+				class="example.chapter7.ImageController"
+			>
+
+			</bean>
+
+			<bean
+					id="loginValidator"
+				class="example.chapter7.LoginValidator"
+			>
+
+			</bean>
+
+			<bean
+					id="userService"
+				class="example.chapter7.UserServiceImpl"
+			>
+
+			</bean>
+
+			<bean
+					name="/logout.do"
+				class="example.chapter7.LogoutController"
+			>
+
+			</bean>
+
+			<bean
+					id="performanceHandler"
+				class="example.chapter7.PerformanceHandlerInterceptor"
+			>
+
+			</bean>
+
+	<!-- pre-defined beans -->
+
+<bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+    <property name="interceptors">
+        <list>
+            <ref bean="performanceHandler" />
+        </list>
+    </property>
+</bean>
+
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+    <property name="prefix" value="/" />
+    <property name="suffix" value=".jsp" />
+</bean>
+
+<bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+    <property name="paramName" value="action" />
+    <property name="defaultMethodName" value="viewBasic" />
+</bean>
+
+</beans>

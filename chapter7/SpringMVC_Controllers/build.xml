@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SpringMVC_Controllers" default="gen-spring-conf" basedir=".">
+
+    <property name="src.dir"      value="src" />
+    <property name="conf.dir"     value="conf" />
+    <property name="web.dir"      value="web" />
+	<property name="ext-lib.dir"  value="lib" />
+    <property name="template.dir" value="template" />
+    <property name="lib.dir"      value="${web.dir}/WEB-INF/lib" />
+    <property name="build.dir"    value="${web.dir}/WEB-INF/classes" />
+
+    <!-- 定义编译期的classpath -->
+    <path id="master-classpath">
+        <!-- 包含${lib.dir} -->
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+        <!-- 包含servlet-api和xdoclet -->
+        <fileset dir="${ext-lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+        <!-- 包含${src.dir} -->
+        <pathelement path="${src.dir}"/>
+    </path>
+
+    <!-- 清理自动生成的资源 -->
+    <target name="clean">
+        <delete>
+            <fileset dir="${build.dir}" />
+            <filename>${web.dir}/WEB-INF/dispatcher-servlet.xml</filename>
+        </delete>
+    </target>
+
+    <!-- 编译源代码 -->
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" target="1.5" encoding="UTF-8" debug="on" debuglevel="lines">
+            <classpath refid="master-classpath"/>
+            <src path="${src.dir}"/>
+        </javac>
+    </target>
+
+    <!-- 生成Spring配置文件 -->
+    <target name="gen-spring-conf" depends="compile">
+        <!-- 定义Ant任务 -->
+        <taskdef name="springdoclet"
+            classname="xdoclet.modules.spring.SpringDocletTask"
+            classpathref="master-classpath"
+        />
+        <!-- 生成配置文件 -->
+        <springdoclet
+            destDir="${web.dir}/WEB-INF"
+            mergeDir="${conf.dir}"
+            force="true"
+            excludedtags="@version,@author,@todo"
+        >
+            <fileset dir="${src.dir}" includes="**/*.java" />
+            <springxml
+                xmlencoding="UTF-8"
+                templateFile="${template.dir}/custom_spring_xml.xdt"
+                destinationFile="dispatcher-servlet.xml"
+            />
+        </springdoclet>
+    </target>
+
+</project>
