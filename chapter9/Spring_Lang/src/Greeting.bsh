@@ -1,0 +1,11 @@
+// file: Greeting.bsh
+
+String msg;
+
+String getMessage() {
+    return msg;
+}
+
+void setMessage(String aMsg) {
+    msg = aMsg;
+}
