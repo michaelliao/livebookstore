@@ -1,0 +1,2747 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Hibernate Annotations</title><link rel="stylesheet" href="../shared/css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="d0e1"></a>Hibernate Annotations</h1></div><div><h2 class="subtitle">Reference Guide</h2></div><div><p class="releaseinfo">3.2.0.GA</p></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#preface">Preface</a></span></dt><dt><span class="chapter"><a href="#d0e33">1. Setting up an annotations project</a></span></dt><dd><dl><dt><span class="section"><a href="#setup-requirements">1.1. Requirements</a></span></dt><dt><span class="section"><a href="#setup-configuration">1.2. Configuration</a></span></dt></dl></dd><dt><span class="chapter"><a href="#entity">2. Entity Beans</a></span></dt><dd><dl><dt><span class="sect1"><a href="#entity-overview">2.1. Intro</a></span></dt><dt><span class="sect1"><a href="#entity-mapping">2.2. Mapping with EJB3/JPA Annotations</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d0e161">2.2.1. Declaring an entity bean</a></span></dt><dd><dl><dt><span class="sect3"><a href="#d0e198">2.2.1.1. Defining the table</a></span></dt><dt><span class="sect3"><a href="#d0e242">2.2.1.2. Versioning for optimistic locking</a></span></dt></dl></dd><dt><span class="sect2"><a href="#d0e262">2.2.2. Mapping simple properties</a></span></dt><dd><dl><dt><span class="sect3"><a href="#d0e265">2.2.2.1. Declaring basic property mappings</a></span></dt><dt><span class="sect3"><a href="#d0e368">2.2.2.2. Declaring column attributes</a></span></dt><dt><span class="sect3"><a href="#d0e492">2.2.2.3. Embedded objects (aka components)</a></span></dt><dt><span class="sect3"><a href="#d0e589">2.2.2.4. Non-annotated property defaults</a></span></dt></dl></dd><dt><span class="sect2"><a href="#entity-mapping-identifier">2.2.. Mapping identifier properties</a></span></dt><dt><span class="sect2"><a href="#d0e749">2.2.4. Mapping inheritance</a></span></dt><dd><dl><dt><span class="sect3"><a href="#d0e769">2.2.4.1. Table per class</a></span></dt><dt><span class="sect3"><a href="#d0e790">2.2.4.2. Single table per class hierarchy</a></span></dt><dt><span class="sect3"><a href="#d0e826">2.2.4.3. Joined subclasses</a></span></dt><dt><span class="sect3"><a href="#d0e859">2.2.4.4. Inherit properties from superclasses</a></span></dt></dl></dd><dt><span class="sect2"><a href="#entity-mapping-association">2.2.5. Mapping entity bean associations/relationships</a></span></dt><dd><dl><dt><span class="sect3"><a href="#d0e959">2.2.5.1. One-to-one</a></span></dt><dt><span class="sect3"><a href="#d0e1097">2.2.5.2. Many-to-one</a></span></dt><dt><span class="sect3"><a href="#entity-mapping-association-collections">2.2.5.3. Collections</a></span></dt><dt><span class="sect3"><a href="#d0e1546">2.2.5.4. Transitive persistence with cascading</a></span></dt><dt><span class="sect3"><a href="#d0e1570">2.2.5.5. Association fetching</a></span></dt></dl></dd><dt><span class="sect2"><a href="#d0e1593">2.2.6. Mapping composite primary and foreign keys</a></span></dt><dt><span class="sect2"><a href="#d0e1651">2.2.7. Mapping secondary tables</a></span></dt></dl></dd><dt><span class="sect1"><a href="#entity-mapping-query">2.3. Mapping Queries</a></span></dt><dd><dl><dt><span class="sect2"><a href="#entity-mapping-query-hql">2.3.Mapping JPAQL/HQL queries. Mapping JPAQL/HQL queries</a></span></dt><dt><span class="sect2"><a href="#entity-mapping-query-native">2.3.2. Mapping native queries</a></span></dt></dl></dd><dt><span class="sect1"><a href="#entity-hibspec">2.4. Hibernate Annotation Extensions</a></span></dt><dd><dl><dt><span class="sect2"><a href="#entity-hibspec-entity">2.4.1. Entity</a></span></dt><dt><span class="sect2"><a href="#entity-hibspec-identifier">2.4.Identifier. Identifier</a></span></dt><dt><span class="sect2"><a href="#entity-hibspec-property">2.4.3. Property</a></span></dt><dd><dl><dt><span class="sect3"><a href="#d0e2040">2.4.3.1. Access type</a></span></dt><dt><span class="sect3"><a href="#d0e2094">2.4.3.2. Formula</a></span></dt><dt><span class="sect3"><a href="#d0e2103">2.4.3.3. Type</a></span></dt><dt><span class="sect3"><a href="#d0e2126">2.4.3.4. Index</a></span></dt><dt><span class="sect3"><a href="#d0e2136">2.4.3.5. @Parent</a></span></dt><dt><span class="sect3"><a href="#d0e2143">2.4.3.6. Generated properties</a></span></dt></dl></dd><dt><span class="sect2"><a href="#entity-hibspec-inheritance">2.4.4. Inheritance</a></span></dt><dt><span class="sect2"><a href="#entity-hibspec-singleassoc">2.4.5. Single Association related annotations</a></span></dt><dd><dl><dt><span class="sect3"><a href="#d0e2230">2.4.5.1. Lazy options and fetching modes</a></span></dt></dl></dd><dt><span class="sect2"><a href="#entity-hibspec-collection">2.4.6. Collection related annotations</a></span></dt><dd><dl><dt><span class="sect3"><a href="#entity-hibspec-collection-enhance">2.4.6.1. Enhance collection settings</a></span></dt><dt><span class="sect3"><a href="#entity-hibspec-collection-extratype">2.4.6.2. Extra collection types</a></span></dt></dl></dd><dt><span class="sect2"><a href="#d0e2543">2.4.7. Cache</a></span></dt><dt><span class="sect2"><a href="#entity-hibspec-filters">2.4.8. Filters</a></span></dt><dt><span class="sect2"><a href="#entity-hibspec-query">2.4.9. Queries</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#xml-overriding">Overriding metadata through XML. Overriding metadata through XML</a></span></dt><dd><dl><dt><span class="section"><a href="#xml-overriding-principles">Overriding metadata through XML.1. Principles</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e2685">Overriding metadata through XML.1.1. Global level metadata</a></span></dt><dt><span class="section"><a href="#xml-overriding-principles-entity">Overriding metadata through XML.1.2. Entity level metadata</a></span></dt><dt><span class="section"><a href="#d0e2875">Overriding metadata through XML.1.3. Property level metadata</a></span></dt><dt><span class="section"><a href="#d0e2920">Overriding metadata through XML.1.4. Association level metadata</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#validator">4. Hibernate Validator</a></span></dt><dd><dl><dt><span class="sect1"><a href="#validator-constraints">4.1. Constraints</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d0e2999">4.1.1. What is a constraint?</a></span></dt><dt><span class="sect2"><a href="#d0e3004">4.1.2. Built in constraints</a></span></dt><dt><span class="sect2"><a href="#validator-constraints-error">4.1.3. Error messages</a></span></dt><dt><span class="sect2"><a href="#d0e3164">4.1.4. Writing your own constraints</a></span></dt><dt><span class="sect2"><a href="#d0e3230">4.1.5. Annotating your domain model</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d0e3247">4.2. Using the Validator framework</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d0e3252">4.2.1. Database schema-level validation</a></span></dt><dt><span class="sect2"><a href="#d0e3263">4.2.2. Hibernate event-based validation</a></span></dt><dt><span class="sect2"><a href="#d0e3286">4.2.3. Application-level validation</a></span></dt><dt><span class="sect2"><a href="#d0e3309">4.2.4. Validation informations</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#lucene">5. Hibernate Lucene Integration</a></span></dt><dd><dl><dt><span class="section"><a href="#lucene-mapping">5.1. Mapping the entities to the index</a></span></dt><dt><span class="section"><a href="#lucene-configuration">5.2. Configuration</a></span></dt><dd><dl><dt><span class="section"><a href="#lucene-configuration-directory">5.2.1. directory configuration</a></span></dt><dt><span class="section"><a href="#lucene-configuration-event">5.2.2. Enabling automatic indexing</a></span></dt></dl></dd></dl></dd></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="preface"></a>Preface</h2></div></div><div></div></div><p>Hibernate, like all other object/relational mapping tools, requires
+    metadata that governs the transformation of data from one representation
+    to the other (and vice versa). In Hibernate 2.x, mapping metadata is most
+    of the time declared in XML text files. Another option is XDoclet,
+    utilizing Javadoc source code annotations and a preprocessor at compile
+    time. The same kind of annotation support is now available in the standard
+    JDK, although more powerful and better supported by tools. IntelliJ IDEA,
+    and Eclipse for example, support auto-completion and syntax highlighting
+    of JDK 5.0 annotations. Annotations are compiled into the bytecode and
+    read at runtime (in Hibernate's case on startup) using reflection, so no
+    external XML files are needed.</p><p>The EJB3 specification recognizes the interest and the success of
+    the transparent object/relational mapping paradigm. The EJB3 specification
+    standardizes the basic APIs and the metadata needed for any
+    object/relational persistence mechanism. <span class="emphasis"><em>Hibernate
+    EntityManager</em></span> implements the programming interfaces and
+    lifecycle rules as defined by the EJB3 persistence specification. Together
+    with <span class="emphasis"><em>Hibernate Annotations</em></span>, this wrapper implements a
+    complete (and standalone) EJB3 persistence solution on top of the mature
+    Hibernate core. You may use a combination of all three together,
+    annotations without EJB3 programming interfaces and lifecycle, or even
+    pure native Hibernate, depending on the business and technical needs of
+    your project. You can at all times fall back to Hibernate native APIs, or
+    if required, even to native JDBC and SQL.</p><p>This release is based on the final release of the EJB 3.0 / JPA
+    specification (aka JSP-220) and support all the specification features
+    (including the optional ones). Most of the Hibernate features and
+    extensions are also available through Hibernate specific annotations
+    compared to the specification are also available. While the Hibernate
+    feature coverage is now very high, some are still missing. The eventual
+    goal is to cover all of them. See the JIRA road map section for more
+    informations.</p><p>If you are moving from previous Hibernate Annotations versions,
+    please have a look at <tt class="uri">http://www.hibernate.org/371.html</tt> for a
+    migration guide.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="d0e33"></a>Chapter&nbsp;1.&nbsp;Setting up an annotations project</h2></div></div><div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="setup-requirements"></a>1.1.&nbsp;Requirements</h2></div></div><div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Download and unpack the Hibernate Annotations distribution from
+        the Hibernate website.</p></li><li><p><span class="emphasis"><em>This release requires Hibernate 3.2.0.GA and above.
+        Do not use this release of Hibernate Annotations with an older version
+        of Hibernate 3.x!</em></span></p></li><li><p>This release is known to work on Hibernate core 3.2.0.CR5 
+		and 3.2.0.GA</p></li><li><p>Make sure you have JDK 5.0 installed. You can of course continue
+        using XDoclet and get some of the benefits of annotation-based
+        metadata with older JDK versions. Note that this document only
+        describes JDK 5.0 annotations and you have to refer to the XDoclet
+        documentation for more information.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="setup-configuration"></a>1.2.&nbsp;Configuration</h2></div></div><div></div></div><p>First, set up your classpath (after you have created a new project
+    in your favorite IDE): </p><div class="itemizedlist"><ul type="disc"><li><p>Copy all Hibernate3 core and required 3rd party library files
+          (see lib/README.txt in Hibernate).</p></li><li><p>Copy <tt class="filename">hibernate-annotations.jar</tt> and
+          <tt class="filename">lib/ejb3-persistence.jar</tt> from the Hibernate
+          Annotations distribution to your classpath as well.</p></li><li><p>To use the <a href="#lucene" title="Chapter&nbsp;5.&nbsp;Hibernate Lucene Integration">Chapter&nbsp;5, <i>Hibernate Lucene Integration</i></a>, add the lucene jar
+          file.</p></li></ul></div><p>We also recommend a small wrapper class to startup Hibernate in a
+    static initializer block, known as <tt class="classname">HibernateUtil</tt>.
+    You might have seen this class in various forms in other areas of the
+    Hibernate documentation. For Annotation support you have to enhance this
+    helper class as follows: </p><pre class="programlisting">package hello;
+
+import org.hibernate.*;
+import org.hibernate.cfg.*;
+import test.*;
+import test.animals.Dog;
+
+public class HibernateUtil {
+
+private static final SessionFactory sessionFactory;
+
+    static {
+        try {
+
+            sessionFactory = new <span class="bold"><b>AnnotationConfiguration()</b></span>.buildSessionFactory();
+        } catch (Throwable ex) {
+            // Log exception!
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static Session getSession()
+            throws HibernateException {
+        return sessionFactory.openSession();
+    }
+}
+            </pre><p>Interesting here is the use of
+    <tt class="classname">AnnotationConfiguration</tt>. The packages and annotated
+    classes are declared in your regular XML configuration file (usually
+    <tt class="filename">hibernate.cfg.xml</tt>). Here is the equivalent of the
+    above declaration:</p><pre class="programlisting">&lt;!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;
+
+        &lt;hibernate-configuration&gt;
+          &lt;session-factory&gt;
+            <span class="bold"><b>&lt;mapping package="test.animals"/&gt;
+            &lt;mapping class="test.Flight"/&gt;
+            &lt;mapping class="test.Sky"/&gt;
+            &lt;mapping class="test.Person"/&gt;
+            &lt;mapping class="test.animals.Dog"/&gt;</b></span>
+<span class="bold"><b>            &lt;mapping resource="test/animals/orm.xml"/&gt;</b></span>
+          &lt;/session-factory&gt;
+        &lt;/hibernate-configuration&gt;
+        </pre><p>Note that you can mix the hbm.xml use and the new annotation one.
+    The resource element can be either an hbm file or an EJB3 XML deployment
+    descriptor. The distinction is transparent for your configuration
+    process.</p><p>Alternatively, you can define the annotated classes and packages
+    using the programmatic API</p><pre class="programlisting">            sessionFactory = new <span class="bold"><b>AnnotationConfiguration()
+                    .addPackage("test.animals") //the fully qualified package name
+                    .addAnnotatedClass(Flight.class)
+                    .addAnnotatedClass(Sky.class)
+                    .addAnnotatedClass(Person.class)
+                    .addAnnotatedClass(Dog.class)</b></span>
+<span class="bold"><b>                    .addResource("test/animals/orm.xml")</b></span>
+                    .buildSessionFactory();</pre><p>You can also use the Hibernate EntityManager which has its own
+    configuration mechanism. Please refer to this project documentation for
+    more details.</p><p>There is no other difference in the way you use Hibernate APIs with
+    annotations, except for this startup routine change or in the
+    configuration file. You can use your favorite configuration method for
+    other properties ( <tt class="filename">hibernate.properties</tt>,
+    <tt class="filename">hibernate.cfg.xml</tt>, programmatic APIs, etc). You can
+    even mix annotated persistent classes and classic
+    <tt class="filename">hbm.cfg.xml</tt> declarations with the same
+    <tt class="classname">SessionFactory</tt>. You can however not declare a class
+    several times (whether annotated or through hbm.xml). You cannot mix
+    configuration strategies (hbm vs annotations) in a mapped entity hierarchy
+    either.</p><p>To ease the migration process from hbm files to annotations, the
+    configuration mechanism detects the mapping duplication between
+    annotations and hbm files. HBM files are then prioritized over annotated
+    metadata on a class to class basis. You can change the priority using
+    <tt class="literal">hibernate.mapping.precedence</tt> property. The default is
+    <tt class="literal">hbm, class</tt>, changing it to <tt class="literal">class,
+    hbm</tt> will prioritize the annotated classes over hbm files when a
+    conflict occurs.</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="entity"></a>Chapter&nbsp;2.&nbsp;Entity Beans</h2></div></div><div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="entity-overview"></a>2.1.&nbsp;Intro</h2></div></div><div></div></div><p>This section covers EJB 3.0 (aka JPA) entity annotations and
+    Hibernate-specific extensions.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="entity-mapping"></a>2.2.&nbsp;Mapping with EJB3/JPA Annotations</h2></div></div><div></div></div><p>EJB3 entities are plain POJOs. Actually they represent the exact
+    same concept as the Hibernate persistent entities. Their mappings are
+    defined through JDK 5.0 annotations (an XML descriptor syntax for
+    overriding is defined in the EJB3 specification). Annotations can be split
+    in two categories, the logical mapping annotations (allowing you to
+    describe the object model, the class associations, etc.) and the physical
+    mapping annotations (describing the physical schema, tables, columns,
+    indexes, etc). We will mix annotations from both categories in the
+    following code examples.</p><p>EJB3 annotations are in the <tt class="literal">javax.persistence.*</tt>
+    package. Most JDK 5 compliant IDE (like Eclipse, IntelliJ IDEA and
+    Netbeans) can autocomplete annotation interfaces and attributes for you
+    (even without a specific "EJB3" module, since EJB3 annotations are plain
+    JDK 5 annotations).</p><p>For more and runnable concrete examples read the JBoss EJB 3.0
+    tutorial or review the Hibernate Annotations test suite. Most of the unit
+    tests have been designed to represent a concrete example and be a
+    inspiration source.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e161"></a>2.2.1.&nbsp;Declaring an entity bean</h3></div></div><div></div></div><p>Every bound persistent POJO class is an entity bean and is
+      declared using the <tt class="literal">@Entity</tt> annotation (at the class
+      level):</p><pre class="programlisting">
+@Entity
+public class Flight implements Serializable {
+    Long id;
+
+    @Id
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
+}
+         </pre><p><tt class="literal">@Entity</tt> declares the class as an entity bean
+      (i.e. a persistent POJO class), <tt class="literal">@Id</tt> declares the
+      identifier property of this entity bean. The other mapping declarations
+      are implicit. This configuration by exception concept is central to the
+      new EJB3 specification and a major improvement. The class Flight is
+      mapped to the Flight table, using the column id as its primary key
+      column.</p><p>Depending on whether you annotate fields or methods, the access
+      type used by Hibernate will be <tt class="literal">field</tt> or
+      <tt class="literal">property</tt>. The EJB3 spec requires that you declare
+      annotations on the element type that will be accessed, i.e. the getter
+      method if you use <tt class="literal">property</tt> access, the field if you
+      use <tt class="literal">field</tt> access. Mixing EJB3 annotations in both
+      fields and methods should be avoided. Hibernate will guess the access
+      type from the position of <tt class="literal">@Id</tt> or
+      <tt class="literal">@EmbeddedId</tt>.</p><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e198"></a>2.2.1.1.&nbsp;Defining the table</h4></div></div><div></div></div><p><tt class="literal">@Table</tt> is set at the class level; it allows
+        you to define the table, catalog, and schema names for your entity
+        bean mapping. If no <tt class="literal">@Table</tt> is defined the default
+        values are used: the unqualified class name of the entity.</p><pre class="programlisting">
+@Entity
+@Table(name="tbl_sky")
+public class Sky implements Serializable {
+...
+            </pre><p>The <tt class="literal">@Table</tt> element also contains a
+        <tt class="literal">schema</tt> and a <tt class="literal">catalog</tt> attributes,
+        if they need to be defined. You can also define unique constraints to
+        the table using the <tt class="literal">@UniqueConstraint</tt> annotation in
+        conjunction with <tt class="literal">@Table</tt> (for a unique constraint
+        bound to a single column, refer to <tt class="literal">@Column</tt>).</p><pre class="programlisting">@Table(name="tbl_sky",
+    <span class="bold"><b>uniqueConstraints = {@UniqueConstraint(columnNames={"month", "day"})}</b></span>
+)</pre><p>A unique constraint is applied to the tuple month, day. Note
+        that the <tt class="literal">columnNames</tt> array refers to the logical
+        column names.</p><i><span class="remark">The logical column name is defined by the Hibernate
+        NamingStrategy implementation. The default EJB3 naming strategy use
+        the physical column name as the logical column name. Note that this
+        may be different than the property name (if the column name is
+        explicit). Unless you override the NamingStrategy, you shouldn't worry
+        about that.</span></i></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e242"></a>2.2.1.2.&nbsp;Versioning for optimistic locking</h4></div></div><div></div></div><p>You can add optimistic locking capability to an entity bean
+        using the <tt class="literal">@Version</tt> annotation:</p><pre class="programlisting">
+@Entity
+public class Flight implements Serializable {
+...
+    @Version
+    @Column(name="OPTLOCK")
+    public Integer getVersion() { ... }
+}           </pre><p>The version property will be mapped to the
+        <tt class="literal">OPTLOCK</tt> column, and the entity manager will use it
+        to detect conflicting updates (preventing lost updates you might
+        otherwise see with the last-commit-wins strategy).</p><p>The version column may be a numeric (the recommended solution)
+        or a timestamp as per the EJB3 spec. Hibernate support any kind of
+        type provided that you define and implement the appropriate
+        <tt class="classname">UserVersionType</tt>.</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e262"></a>2.2.2.&nbsp;Mapping simple properties</h3></div></div><div></div></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e265"></a>2.2.2.1.&nbsp;Declaring basic property mappings</h4></div></div><div></div></div><p>Every non static non transient property (field or method) of an
+        entity bean is considered persistent, unless you annotate it as
+        <tt class="literal">@Transient</tt>. Not having an annotation for your
+        property is equivalent to the appropriate <tt class="literal">@Basic</tt>
+        annotation. The <tt class="literal">@Basic</tt> annotation allows you to
+        declare the fetching strategy for a property:</p><pre class="programlisting">public transient int counter; //transient property
+
+private String firstname; //persistent property
+
+@Transient
+String getLengthInMeter() { ... } //transient property
+
+String getName() {... } // persistent property
+
+@Basic
+int getLength() { ... } // persistent property
+
+@Basic(fetch = FetchType.LAZY)
+String getDetailedComment() { ... } // persistent property
+
+@Temporal(TemporalType.TIME)
+java.util.Date getDepartureTime() { ... } // persistent property           
+
+@Enumerated(STRING)
+Starred getNote() { ... } //enum persisted as String in database</pre><p><tt class="literal">counter</tt>, a transient field, and
+        <tt class="literal">lengthInMeter</tt>, a method annotated as
+        <tt class="literal">@Transient</tt>, and will be ignored by the entity
+        manager. <tt class="literal">name</tt>, <tt class="literal">length</tt>, and
+        <tt class="literal">firstname</tt> properties are mapped persistent and
+        eagerly fetched (the default for simple properties). The
+        <tt class="literal">detailedComment</tt> property value will be lazily
+        fetched from the database once a lazy property of the entity is
+        accessed for the first time. Usually you don't need to lazy simple
+        properties (not to be confused with lazy association fetching).</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>To enable property level lazy fetching, your classes have to
+          be instrumented: bytecode is added to the original one to enable
+          such feature, please refer to the Hibernate reference documentation.
+          If your classes are not instrumented, property level lazy loading is
+          silently ignored.</p></div><p>The recommended alternative is to use the projection capability
+        of EJB-QL or Criteria queries.</p><p>EJB3 support property mapping of all basic types supported by
+        Hibernate (all basic Java types , their respective wrappers and
+        serializable classes). Hibernate Annotations support out of the box
+        Enum type mapping either into a ordinal column (saving the enum
+        ordinal) or a string based column (saving the enum string
+        representation): the persistence representation, defaulted to ordinal,
+        can be overriden through the <tt class="literal">@Enumerated</tt> annotation
+        as shown in the <tt class="literal">note</tt> property example.</p><p>In core Java APIs, the temporal precision is not defined. When
+        dealing with temporal data you might want to describe the expected
+        precision in database. Temporal data can have <tt class="literal">DATE</tt>,
+        <tt class="literal">TIME</tt>, or <tt class="literal">TIMESTAMP</tt> precision (ie
+        the actual date, only the time, or both). Use the
+        <tt class="literal">@Temporal</tt> annotation to fine tune that.</p><p><tt class="literal">@Lob</tt> indicates that the property should be
+        persisted in a Blob or a Clob depending on the property type:
+        <tt class="classname">java.sql.Clob</tt>,
+        <tt class="classname">Character[]</tt>, <tt class="classname">char[]</tt> and
+        java.lang.<tt class="classname">String</tt> will be persisted in a Clob.
+        <tt class="classname">java.sql.Blob</tt>, <tt class="classname">Byte[]</tt>,
+        <tt class="classname">byte[] </tt>and serializable type will be persisted
+        in a Blob.</p><pre class="programlisting">
+@Lob
+public String getFullText() {
+    return fullText;
+}
+
+@Lob 
+public byte[] getFullCode() {
+    return fullCode;
+}
+ </pre><p>If the property type implements
+        <tt class="classname">java.io.Serializable</tt> and is not a basic type,
+        and if the property is not annotated with <tt class="literal">@Lob</tt>,
+        then the Hibernate <tt class="literal">serializable</tt> type is
+        used.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e368"></a>2.2.2.2.&nbsp;Declaring column attributes</h4></div></div><div></div></div><p>The column(s) used for a property mapping can be defined using
+        the <tt class="literal">@Column</tt> annotation. Use it to override default
+        values (see the EJB3 specification for more information on the
+        defaults). You can use this annotation at the property level for
+        properties that are:</p><div class="itemizedlist"><ul type="disc"><li><p>not annotated at all</p></li><li><p>annotated with <tt class="literal">@Basic</tt></p></li><li><p>annotated with <tt class="literal">@Version</tt></p></li><li><p>annotated with <tt class="literal">@Lob</tt></p></li><li><p>annotated with <tt class="literal">@Temporal</tt></p></li><li><p>annotated with
+            <tt class="literal">@org.hibernate.annotations.CollectionOfElements</tt>
+            (for Hibernate only)</p></li></ul></div><pre class="programlisting">
+@Entity
+public class Flight implements Serializable {
+...
+@Column(updatable = false, name = "flight_name", nullable = false, length=50)
+public String getName() { ... }
+            </pre><p>The <tt class="literal">name</tt> property is mapped to the
+        <tt class="literal">flight_name</tt> column, which is not nullable, has a
+        length of 50 and is not updatable (making the property
+        immutable).</p><p>This annotation can be applied to regular properties as well as
+        <tt class="literal">@Id</tt> or <tt class="literal">@Version</tt>
+        properties.</p><div class="programlistingco"><pre class="programlisting">@Column(
+    name="columnName";                                <span class="co">(1)</span>
+    boolean unique() default false;                   <span class="co">(2)</span>
+    boolean nullable() default true;                  <span class="co">(3)</span>
+    boolean insertable() default true;                <span class="co">(4)</span>
+    boolean updatable() default true;                 <span class="co">(5)</span>
+    String columnDefinition() default "";             <span class="co">(6)</span>
+    String table() default "";                        <span class="co">(7)</span>
+    int length() default 255;                         <span class="co">(8)</span>
+    int precision() default 0; // decimal precision   <span class="co">(9)</span>
+    int scale() default 0; // decimal scale</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left">(1)</td><td valign="top" align="left"><p><tt class="literal">name</tt> (optional): the column name
+              (default to the property name)</p></td></tr><tr><td width="5%" valign="top" align="left">(2)</td><td valign="top" align="left"><p><tt class="literal">unique</tt> (optional): set a unique
+              constraint on this column or not (default false)</p></td></tr><tr><td width="5%" valign="top" align="left">(3)</td><td valign="top" align="left"><p><tt class="literal">nullable</tt> (optional): set the column as
+              nullable (default false).</p></td></tr><tr><td width="5%" valign="top" align="left">(4)</td><td valign="top" align="left"><p><tt class="literal">insertable</tt> (optional): whether or not
+              the column will be part of the insert statement (default
+              true)</p></td></tr><tr><td width="5%" valign="top" align="left">(5)</td><td valign="top" align="left"><p><tt class="literal">updatable</tt> (optional): whether or not
+              the column will be part of the update statement (default
+              true)</p></td></tr><tr><td width="5%" valign="top" align="left">(6)</td><td valign="top" align="left"><p><tt class="literal">columnDefinition</tt> (optional): override
+              the sql DDL fragment for this particular column (non
+              portable)</p></td></tr><tr><td width="5%" valign="top" align="left">(7)</td><td valign="top" align="left"><p><tt class="literal">table</tt> (optional): define the targeted
+              table (default primary table)</p></td></tr><tr><td width="5%" valign="top" align="left">(8)</td><td valign="top" align="left"><p><tt class="literal"><tt class="literal">length</tt></tt> (optional):
+              column length (default 255)</p></td></tr><tr><td width="5%" valign="top" align="left">(8)</td><td valign="top" align="left"><p><tt class="literal"><tt class="literal">precision</tt></tt>
+              (optional): column decimal precision (default 0)</p></td></tr><tr><td width="5%" valign="top" align="left">(10)</td><td valign="top" align="left"><p><tt class="literal"><tt class="literal">scale</tt></tt> (optional):
+              column decimal scale if useful (default 0)</p></td></tr></table></div></div></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e492"></a>2.2.2.3.&nbsp;Embedded objects (aka components)</h4></div></div><div></div></div><p>It is possible to declare an embedded component inside an entity
+        and even override its column mapping. Component classes have to be
+        annotated at the class level with the <tt class="literal">@Embeddable</tt>
+        annotation. It is possible to override the column mapping of an
+        embedded object for a particular entity using the
+        <tt class="literal">@Embedded</tt> and <tt class="literal">@AttributeOverride</tt>
+        annotation in the associated property:</p><pre class="programlisting">
+@Entity
+public class Person implements Serializable {
+
+    // Persistent component using defaults
+    Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="iso2", column = @Column(name="bornIso2") ),
+            @AttributeOverride(name="name", column = @Column(name="bornCountryName") )
+    } )
+    Country bornIn;
+    ...
+}
+            </pre><pre class="programlisting">
+@Embeddable
+public class Address implements Serializable {
+    String city;
+    Country nationality; //no overriding here
+}
+            </pre><pre class="programlisting">
+@Embeddable
+public class Country implements Serializable {
+    private String iso2;
+    @Column(name="countryName") private String name;
+
+    public String getIso2() { return iso2; }
+    public void setIso2(String iso2) { this.iso2 = iso2; }
+
+    
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    ...
+}
+            </pre><p>A embeddable object inherit the access type of its owning entity
+        (note that you can override that using the Hibernate specific
+        <tt class="literal">@AccessType</tt> annotations (see <a href="#entity-hibspec">Hibernate Annotation Extensions</a>).</p><p>The <tt class="literal">Person</tt> entity bean has two component
+        properties, <tt class="literal">homeAddress</tt> and
+        <tt class="literal">bornIn</tt>. <tt class="literal">homeAddress</tt> property has
+        not been annotated, but Hibernate will guess that it is a persistent
+        component by looking for the <tt class="literal">@Embeddable</tt> annotation
+        in the Address class. We also override the mapping of a column name
+        (to <tt class="literal">bornCountryName</tt>) with the
+        <tt class="literal">@Embedded</tt> and <tt class="literal">@AttributeOverride
+        </tt>annotations for each mapped attribute of
+        <tt class="literal">Country</tt>. As you can see, <tt class="literal">Country
+        </tt>is also a nested component of <tt class="literal">Address</tt>,
+        again using auto-detection by Hibernate and EJB3 defaults. Overriding
+        columns of embedded objects of embedded objects is currently not
+        supported in the EJB3 spec, however, Hibernate Annotations supports it
+        through dotted expressions.</p><pre class="programlisting">    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="city", column = @Column(name="fld_city") )
+            @AttributeOverride(name="<span class="bold"><b>nationality.iso2</b></span>", column = @Column(name="nat_Iso2") ),
+            @AttributeOverride(name="<span class="bold"><b>nationality.name</b></span>", column = @Column(name="nat_CountryName") )
+            //nationality columns in homeAddress are overridden
+    } )
+    Address homeAddress;</pre><p>Hibernate Annotations supports one
+        more feature that is not explicitly supported by the EJB3
+        specification. You can annotate a embedded object with the
+        <tt class="literal">@MappedSuperclass</tt> annotation to make the superclass
+        properties persistent (see <tt class="literal">@MappedSuperclass</tt> for
+        more informations).</p><p>While not supported by the EJB3 specification, Hibernate
+        Annotations allows you to use association annotations in an embeddable
+        object (ie <tt class="literal">@*ToOne</tt> nor
+        <tt class="literal">@*ToMany</tt>). To override the association columns you
+        can use <tt class="literal">@AssociationOverride</tt>.</p><p>If you want to have the same embeddable object type twice in the
+        same entity, the column name defaulting will not work: at least one of
+        the columns will have to be explicit. Hibernate goes beyond the EJB3
+        spec and allows you to enhance the defaulting mechanism through the
+        <tt class="classname">NamingStrategy</tt>.
+        <tt class="classname">DefaultComponentSafeNamingStrategy</tt> is a small
+        improvement over the default EJB3NamingStrategy that allows embedded
+        objects to be defaulted even if used twice in the same entity.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e589"></a>2.2.2.4.&nbsp;Non-annotated property defaults</h4></div></div><div></div></div><p>If a property is not annotated, the following rules
+        apply:</p><div class="itemizedlist"><ul type="disc"><li>
+             If the property is of a single type, it is mapped as @Basic 
+          </li><li>
+             Otherwise, if the type of the property is annotated as @Embeddable, it is mapped as @Embedded 
+          </li><li>
+             Otherwise, if the type of the property is Serializable, it is mapped as @Basic in a column holding the object in its serialized version 
+          </li><li>
+             Otherwise, if the type of the property is java.sql.Clob or java.sql.Blob, it is mapped as @Lob with the appropriate LobType 
+          </li></ul></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-mapping-identifier"></a>2.2..&nbsp;Mapping identifier properties</h3></div></div><div></div></div><p>The <tt class="literal">@Id</tt> annotation lets you define which
+      property is the identifier of your entity bean. This property can be set
+      by the application itself or be generated by Hibernate (preferred). You
+      can define the identifier generation strategy thanks to the
+      <tt class="literal">@GeneratedValue</tt> annotation:</p><div class="itemizedlist"><ul type="disc"><li>
+           AUTO - either identity column, sequence or table depending on the underlying DB 
+        </li><li>
+           TABLE - table holding the id 
+        </li><li>
+           IDENTITY - identity column 
+        </li><li>
+           SEQUENCE - sequence 
+        </li></ul></div><p>Hibernate provides more id generators than the basic EJB3 ones.
+      Check <a href="#entity-hibspec">Hibernate Annotation Extensions</a> for more informations.</p><p>The following example shows a sequence generator using the
+      SEQ_STORE configuration (see below)</p><pre class="programlisting">
+@Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_STORE")
+public Integer getId() { ... }
+         </pre><p>The next example uses the identity generator:</p><pre class="programlisting">
+@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+public Long getId() { ... }
+         </pre><p>The <tt class="literal">AUTO</tt> generator is the preferred type for
+      portable applications (across several DB vendors). The identifier
+      generation configuration can be shared for several
+      <tt class="literal">@Id</tt> mappings with the generator attribute. There are
+      several configurations available through
+      <tt class="literal">@SequenceGenerator</tt> and
+      <tt class="literal">@TableGenerator</tt>. The scope of a generator can be the
+      application or the class. Class-defined generators are not visible
+      outside the class and can override application level generators.
+      Application level generators are defined at XML level (see <a href="#xml-overriding" title="Chapter&nbsp;Overriding metadata through XML.&nbsp;Overriding metadata through XML">Chapter&nbsp;Overriding metadata through XML, <i>Overriding metadata through XML</i></a>):</p><pre class="programlisting">&lt;table-generator name="EMP_GEN"
+            table="GENERATOR_TABLE"
+            pk-column-name="key"
+            value-column-name="hi"
+            pk-column-value="EMP"
+            allocation-size="20"/&gt;
+
+//and the annotation equivalent
+
+@javax.persistence.TableGenerator(
+    name="EMP_GEN",
+    table="GENERATOR_TABLE",
+    pkColumnName = "key",
+    valueColumnName = "hi"
+    pkColumnValue="EMP",
+    allocationSize=20
+)
+
+&lt;sequence-generator name="SEQ_GEN" 
+    sequence-name="my_sequence"
+    allocation-size="20"/&gt;
+
+//and the annotation equivalent
+
+@javax.persistence.SequenceGenerator(
+    name="SEQ_GEN",
+    sequenceName="my_sequence",
+    allocationSize=20
+)
+         </pre><p>If JPA XML (like <tt class="filename">META-INF/orm.xml</tt>) is used to
+      define thegenerators, <tt class="literal">EMP_GEN</tt> and
+      <tt class="literal">SEQ_GEN</tt> are application level generators.
+      <tt class="literal">EMP_GEN</tt> defines a table based id generator using the
+      hilo algorithm with a <tt class="literal">max_lo</tt> of 20. The hi value is
+      kept in a <tt class="literal">table</tt> "<tt class="literal">GENERATOR_TABLE</tt>".
+      The information is kept in a row where <tt class="literal">pkColumnName</tt>
+      "key" is equals to <tt class="literal">pkColumnValue</tt>
+      "<tt class="literal">EMP</tt>" and column <tt class="literal">valueColumnName</tt>
+      "<tt class="literal">hi</tt>" contains the the next high value used.</p><p><tt class="literal">SEQ_GEN</tt> defines a sequence generator using a
+      sequence named <tt class="literal">my_sequence</tt>. The allocation size used
+      for this sequence based hilo algorithm is 20. Note that this version of
+      Hibernate Annotations does not handle <tt class="literal">initialValue</tt> in
+      the sequence generator. The default allocation size is 50, so if you
+      want to use a sequence and pickup the value each time, you must set the
+      allocation size to 1.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Package level definition is no longer supported by the EJB 3.0
+        specification. However, you can use the
+        <tt class="literal">@GenericGenerator</tt> at the package level (see <a href="#entity-hibspec-identifier" title="2.4.Identifier.&nbsp;Identifier">Section&nbsp;2.4.Identifier, &#8220;Identifier&#8221;</a>).</p></div><p>The next example shows the definition of a sequence generator in a
+      class scope:</p><pre class="programlisting">
+@Entity
+@javax.persistence.SequenceGenerator(
+    name="SEQ_STORE",
+    sequenceName="my_sequence"
+)
+public class Store implements Serializable {
+    private Long id;
+
+    @Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_STORE")
+    public Long getId() { return id; }
+}
+         </pre><p>This class will use a sequence named my_sequence and the SEQ_STORE
+      generator is not visible in other classes. Note that you can check the
+      Hibernate Annotations tests in the org.hibernate.test.metadata.id
+      package for more examples.</p><p>You can define a composite primary key through several
+      syntaxes:</p><div class="itemizedlist"><ul type="disc"><li>
+           annotate the component property as @Id and make the component class @Embeddable 
+        </li><li>
+           annotate the component property as @EmbeddedId 
+        </li><li>
+           annotate the class as @IdClass and annotate each property of the entity involved in the primary key with @Id 
+        </li></ul></div><p>While quite common to the EJB2 developer,
+      <tt class="literal">@IdClass</tt> is likely new for Hibernate users. The
+      composite primary key class corresponds to multiple fields or properties
+      of the entity class, and the names of primary key fields or properties
+      in the primary key class and those of the entity class must match and
+      their types must be the same. Let's look at an example:</p><pre class="programlisting">@Entity
+<span class="bold"><b>@IdClass(FootballerPk.class)</b></span>
+public class Footballer {
+    //part of the id key
+    <span class="bold"><b>@Id</b></span> public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    //part of the id key
+    <span class="bold"><b>@Id</b></span> public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getClub() {
+        return club;
+    }
+
+    public void setClub(String club) {
+        this.club = club;
+    }
+
+    //appropriate equals() and hashCode() implementation
+}
+
+@Embeddable
+public class FootballerPk implements Serializable {
+    //same name and type as in Footballer
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    //same name and type as in Footballer
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    //appropriate equals() and hashCode() implementation
+}
+</pre><p>As you may have seen, <tt class="literal">@IdClass</tt> points to the
+      corresponding primary key class.</p><p>While not supported by the EJB3 specification, Hibernate allows
+      you to define associations inside a composite identifier. Simply use the
+      regular annotations for that</p><pre class="programlisting">@Entity
+@AssociationOverride( name="id.channel", joinColumns = @JoinColumn(name="chan_id") )
+public class TvMagazin {
+    @EmbeddedId public TvMagazinPk id;
+    @Temporal(TemporalType.TIME) Date time;
+}
+
+@Embeddable
+public class TvMagazinPk implements Serializable {
+    @ManyToOne
+    public Channel channel;
+    public String name;
+    @ManyToOne
+    public Presenter presenter;
+}
+</pre></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e749"></a>2.2.4.&nbsp;Mapping inheritance</h3></div></div><div></div></div><p>EJB3 supports the three types of inheritance:</p><div class="itemizedlist"><ul type="disc"><li>
+           Table per Class Strategy: the &lt;union-class&gt; element in Hibernate 
+        </li><li>
+           Single Table per Class Hierarchy Strategy: the &lt;subclass&gt; element in Hibernate 
+        </li><li>
+           Joined Subclass Strategy: the &lt;joined-subclass&gt; element in Hibernate 
+        </li></ul></div><p>The chosen strategy is declared at the class level of the top
+      level entity in the hierarchy using the <tt class="literal">@Inheritance</tt>
+      annotation.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Annotating interfaces is currently not supported.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e769"></a>2.2.4.1.&nbsp;Table per class</h4></div></div><div></div></div><p>This strategy has many drawbacks (esp. with polymorphic queries
+        and associations) explained in the EJB3 spec, the Hibernate reference
+        documentation, Hibernate in Action, and many other places. Hibernate
+        work around most of them implementing this strategy using <tt class="literal">SQL
+        UNION</tt> queries. It is commonly used for the top level of an
+        inheritance hierarchy:</p><pre class="programlisting">
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Flight implements Serializable {
+            </pre><p>This strategy support one to many associations provided that
+        they are bidirectional. This strategy does not support the
+        <tt class="literal">IDENTITY</tt> generator strategy: the id has to be
+        shared across several tables. Consequently, when using this strategy,
+        you should not use <tt class="literal">AUTO </tt>nor
+        <tt class="literal">IDENTITY</tt>.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e790"></a>2.2.4.2.&nbsp;Single table per class hierarchy</h4></div></div><div></div></div><p>All properties of all super- and subclasses are mapped into the
+        same table, instances are distinguished by a special discriminator
+        column:</p><pre class="programlisting">
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name="planetype",
+    discriminatorType=DiscriminatorType.STRING
+)
+@DiscriminatorValue("Plane")
+public class Plane { ... }
+
+@Entity
+@DiscriminatorValue("A320")
+public class A320 extends Plane { ... }
+            </pre><p><tt class="classname">Plane</tt> is the superclass, it defines the
+        inheritance strategy <tt class="literal">InheritanceType.SINGLE_TABLE</tt>.
+        It also defines the discriminator column through the
+        <tt class="literal">@DiscriminatorColumn</tt> annotation, a discriminator
+        column can also define the discriminator type. Finally, the
+        <tt class="literal">@DiscriminatorValue</tt> annotation defines the value
+        used to differentiate a class in the hierarchy. All of these
+        attributes have sensible default values. The default name of the
+        discriminator column is <tt class="literal">DTYPE</tt>. The default
+        discriminator value is the entity name (as defined in
+        <tt class="literal">@Entity.name</tt>) for DiscriminatorType.STRING.
+        <tt class="classname">A320</tt> is a subclass; you only have to define
+        discriminator value if you don't want to use the default value. The
+        strategy and the discriminator type are implicit.</p><p><tt class="literal">@Inheritance</tt> and
+        <tt class="literal">@DiscriminatorColumn</tt> should only be defined at the
+        top of the entity hierarchy.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e826"></a>2.2.4.3.&nbsp;Joined subclasses</h4></div></div><div></div></div><p>The<tt class="literal"> @PrimaryKeyJoinColumn</tt> and
+        <tt class="literal">@PrimaryKeyJoinColumns</tt> annotations define the
+        primary key(s) of the joined subclass table:</p><pre class="programlisting">
+@Entity
+@Inheritance(strategy=InheritanceType.JOINED)
+public class Boat implements Serializable { ... }
+
+@Entity
+public class Ferry extends Boat { ... }
+
+@Entity
+@PrimaryKeyJoinColumn(name="BOAT_ID")
+public class AmericaCupClass  extends Boat { ... }
+            </pre><p>All of the above entities use the <tt class="literal">JOINED</tt>
+        strategy, the <tt class="literal">Ferry</tt> table is joined with the
+        <tt class="literal">Boat</tt> table using the same primary key names. The
+        <tt class="literal">AmericaCupClass</tt> table is joined with
+        <tt class="literal">Boat</tt> using the join condition <tt class="code">Boat.id =
+        AmericaCupClass.BOAT_ID</tt>.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e859"></a>2.2.4.4.&nbsp;Inherit properties from superclasses</h4></div></div><div></div></div><p>This is sometimes useful to share common properties through a
+        technical or a business superclass without including it as a regular
+        mapped entity (ie no specific table for this entity). For that purpose
+        you can map them as <tt class="literal">@MappedSuperclass</tt>.</p><pre class="programlisting">@MappedSuperclass
+public class BaseEntity {
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getLastUpdate() { ... }
+    public String getLastUpdater() { ... }
+    ...
+}
+
+@Entity class Order extends BaseEntity {
+    @Id public Integer getId() { ... }
+    ...
+}</pre><p>In database, this hierarchy will be represented as an
+        <tt class="literal">Order</tt> table having the <tt class="literal">id</tt>,
+        <tt class="literal">lastUpdate</tt> and <tt class="literal">lastUpdater</tt>
+        columns. The embedded superclass property mappings are copied into
+        their entity subclasses. Remember that the embeddable superclass is
+        not the root of the hierarchy though.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Properties from superclasses not mapped as
+          <tt class="literal">@MappedSuperclass</tt> are ignored.</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>The access type (field or methods), is inherited from the root
+          entity, unless you use the Hibernate annotation
+          <tt class="literal">@AccessType</tt></p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>The same notion can be applied to
+          <tt class="literal">@Embeddable</tt> objects to persist properties from
+          their superclasses. You also need to use
+          <tt class="literal">@MappedSuperclass</tt> to do that (this should not be
+          considered as a standard EJB3 feature though)</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>It is allowed to mark a class as
+          <tt class="literal">@MappedSuperclass</tt> in the middle of the mapped
+          inheritance hierarchy.</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Any class in the hierarchy non annotated with
+          <tt class="literal">@MappedSuperclass</tt> nor <tt class="literal">@Entity</tt>
+          will be ignored.</p></div><p>You can override columns defined in entity superclasses at the
+        root entity level using the <tt class="literal">@AttributeOverride</tt>
+        annotation.</p><pre class="programlisting">@MappedSuperclass
+public class FlyingObject implements Serializable {
+
+    public int getAltitude() {
+        return altitude;
+    }
+
+    @Transient
+    public int getMetricAltitude() {
+        return metricAltitude;
+    }
+
+    @ManyToOne
+    public PropulsionType getPropulsion() {
+        return metricAltitude;
+    }
+    ...
+}
+
+@Entity
+@AttributeOverride( name="altitude", column = @Column(name="fld_altitude") )
+@AssociationOverride( name="propulsion", joinColumns = @JoinColumn(name="fld_propulsion_fk") )
+public class Plane extends FlyingObject {
+    ...
+}</pre><p>The <tt class="literal">altitude</tt> property will be persisted in an
+        <tt class="literal">fld_altitude</tt> column of table
+        <tt class="literal">Plane</tt> and the propulsion association will be
+        materialized in a <tt class="literal">fld_propulsion_fk</tt> foreign key
+        column.</p><p>You can define <tt class="literal">@AttributeOverride</tt>(s) and
+        <tt class="literal">@AssociationOverride</tt>(s) on
+        <tt class="literal">@Entity</tt> classes,
+        <tt class="literal">@MappedSuperclass</tt> classes and properties pointing
+        to an <tt class="literal">@Embeddable</tt> object.</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-mapping-association"></a>2.2.5.&nbsp;Mapping entity bean associations/relationships</h3></div></div><div></div></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e959"></a>2.2.5.1.&nbsp;One-to-one</h4></div></div><div></div></div><p>You can associate entity beans through a one-to-one relationship
+        using <tt class="literal">@OneToOne</tt>. There are three cases for
+        one-to-one associations: either the associated entities share the same
+        primary keys values, a foreign key is held by one of the entities
+        (note that this FK column in the database should be constrained unique
+        to simulate one-to-one multiplicity), or a association table is used
+        to store the link between the 2 entities (a unique constraint has to
+        be defined on each fk to ensure the one to one multiplicity)</p><p>First, we map a real one-to-one association using shared primary
+        keys:</p><pre class="programlisting">
+@Entity
+public class Body {
+    @Id
+    public Long getId() { return id; }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public Heart getHeart() {
+        return heart;
+    }
+    ...
+}
+            </pre><pre class="programlisting">
+@Entity
+public class Heart {
+    @Id
+    public Long getId() { ...}
+}
+            </pre><p>The one to one is marked as true by using the
+        <tt class="literal">@PrimaryKeyJoinColumn</tt> annotation.</p><p>In the following example, the associated entities are linked
+        through a foreign key column:</p><pre class="programlisting">
+@Entity
+public class Customer implements Serializable {
+    @OneToOne(cascade = CascadeType.ALL)
+    <span class="bold"><b>@JoinColumn(name="passport_fk")</b></span>
+    public Passport getPassport() {
+        ...
+    }
+
+@Entity
+public class Passport implements Serializable {
+    @OneToOne(<span class="bold"><b>mappedBy = "passport"</b></span>)
+    public Customer getOwner() {
+    ...
+}
+            </pre><p>A <tt class="classname">Customer</tt> is linked to a
+        <tt class="classname">Passport</tt>, with a foreign key column named
+        <tt class="literal">passport_fk</tt> in the <tt class="literal">Customer</tt>
+        table. The join column is declared with the
+        <tt class="literal">@JoinColumn</tt> annotation which looks like the
+        <tt class="literal">@Column</tt> annotation. It has one more parameters
+        named <tt class="literal">referencedColumnName</tt>. This parameter declares
+        the column in the targeted entity that will be used to the join. Note
+        that when using
+        <tt class="literal"><tt class="literal">referencedColumnName</tt></tt> to a non
+        primary key column, the associated class has to be
+        <tt class="classname">Serializable</tt>. Also note that the
+        <tt class="literal"><tt class="literal">referencedColumnName</tt></tt> to a non
+        primary key column has to be mapped to a property having a single
+        column (other cases might not work).</p><p>The association may be bidirectional. In a bidirectional
+        relationship, one of the sides (and only one) has to be the owner: the
+        owner is responsible for the association column(s) update. To declare
+        a side as <span class="emphasis"><em>not</em></span> responsible for the relationship,
+        the attribute <tt class="literal">mappedBy</tt> is used.
+        <tt class="literal">mappedBy</tt> refers to the property name of the
+        association on the owner side. In our case, this is
+        <tt class="literal">passport</tt>. As you can see, you don't have to (must
+        not) declare the join column since it has already been declared on the
+        owners side.</p><p>If no <tt class="literal">@JoinColumn</tt> is declared on the owner
+        side, the defaults apply. A join column(s) will be created in the
+        owner table and its name will be the concatenation of the name of the
+        relationship in the owner side, <span><b class="keycap">_</b></span> (underscore), and
+        the name of the primary key column(s) in the owned side. In this
+        example <tt class="literal">passport_id</tt> because the property name is
+        <tt class="literal">passport</tt> and the column id of <tt class="literal">Passport
+        </tt>is <tt class="literal">id</tt>.</p><p>The third possibility (using an association table) is very
+        exotic.</p><pre class="programlisting">
+@Entity
+public class Customer implements Serializable {
+    @OneToOne(cascade = CascadeType.ALL)
+    <span class="bold"><b>@JoinTable(name = "CustomerPassports"
+        joinColumns = @JoinColumn(name="customer_fk"),
+        inverseJoinColumns = @JoinColumns(name="passport_fk")</b></span>
+    )
+    public Passport getPassport() {
+        ...
+    }
+
+@Entity
+public class Passport implements Serializable {
+    @OneToOne(<span class="bold"><b>mappedBy = "passport"</b></span>)
+    public Customer getOwner() {
+    ...
+}
+            </pre><p>A <tt class="classname">Customer</tt> is linked to a
+        <tt class="classname">Passport</tt> through a association table named
+        <tt class="literal">CustomerPassports</tt> ; this association table has a
+        foreign key column named <tt class="literal">passport_fk</tt> pointing to
+        the <tt class="literal">Passport</tt> table (materialized by the
+        <tt class="literal">inverseJoinColumn</tt>, and a foreign key column named
+        <tt class="literal">customer_fk</tt> pointing to the
+        <tt class="literal">Customer</tt> table materialized by the
+        <tt class="literal">joinColumns</tt> attribute.</p><p>You must declare the join table name and the join columns
+        explicitly in such a mapping.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e1097"></a>2.2.5.2.&nbsp;Many-to-one</h4></div></div><div></div></div><p>Many-to-one associations are declared at the property level with
+        the annotation <tt class="literal">@ManyToOne</tt>:</p><pre class="programlisting">
+@Entity()
+public class Flight implements Serializable {
+    <span class="bold"><b>@ManyToOne</b></span>( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @JoinColumn(name="COMP_ID")
+    public Company getCompany() {
+        return company;
+    }
+    ...
+}
+            </pre><p>The <tt class="literal">@JoinColumn</tt> attribute is optional, the
+        default value(s) is like in one to one, the concatenation of the name
+        of the relationship in the owner side, <span><b class="keycap">_</b></span>
+        (underscore), and the name of the primary key column in the owned
+        side. In this example <tt class="literal">company_id</tt> because the
+        property name is <tt class="literal">company</tt> and the column id of
+        Company is <tt class="literal">id</tt>.</p><p><tt class="literal">@ManyToOne</tt> has a parameter named
+        <tt class="literal">targetEntity</tt> which describes the target entity
+        name. You usually don't need this parameter since the default value
+        (the type of the property that stores the association) is good in
+        almost all cases. However this is useful when you want to use
+        interfaces as the return type instead of the regular entity.</p><pre class="programlisting">
+@Entity()
+public class Flight implements Serializable {
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, <span class="bold"><b>targetEntity=CompanyImpl.class</b></span> )
+    @JoinColumn(name="COMP_ID")
+    public Company getCompany() {
+        return company;
+    }
+    ...
+}
+
+public interface Company {
+    ...
+            </pre><p>You can alse map a many to one association through an
+        association table. This association table described by the
+        <tt class="literal">@JoinTable</tt> annotation will contains a foreign key
+        referencing back the entity table (through
+        <tt class="literal">@JoinTable.joinColumns</tt>) and a a foreign key
+        referencing the target entity table (through
+        <tt class="literal">@JoinTable.inverseJoinColumns</tt>).</p><pre class="programlisting">
+@Entity()
+public class Flight implements Serializable {
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    <span class="bold"><b>@JoinTable(name="Flight_Company",
+        joinColumns = @JoinColumn(name="FLIGHT_ID"),
+        inverseJoinColumns = @JoinColumns(name="COMP_ID")
+    )</b></span>
+    public Company getCompany() {
+        return company;
+    }
+    ...
+}
+            </pre></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="entity-mapping-association-collections"></a>2.2.5.3.&nbsp;Collections</h4></div></div><div></div></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="entity-mapping-association-collections-overview"></a>2.2.5.3.1.&nbsp;Overview</h5></div></div><div></div></div><p>You can map <tt class="classname">Collection</tt>,
+          <tt class="literal">List</tt> (ie ordered lists, not indexed lists),
+          <tt class="literal">Map</tt> and <tt class="classname">Set</tt>. The EJB3
+          specification describes how to map an ordered list (ie a list
+          ordered at load time) using
+          <tt class="literal">@javax.persistence.OrderBy</tt> annotation: this
+          annotation takes into parameter a list of comma separated (target
+          entity) properties to order the collection by (eg <tt class="code">firstname
+          asc, age desc</tt>), if the string is empty, the collection will
+          be ordered by id. <tt class="literal">@OrderBy</tt> currently works only
+          on collections having no association table. For true indexed
+          collections, please refer to the <a href="#entity-hibspec">Hibernate Annotation Extensions</a>.
+          EJB3 allows you to map Maps using as a key one of the target entity
+          property using <tt class="literal">@MapKey(name="myProperty")</tt>
+          (myProperty is a property name in the target entity). When using
+          <tt class="literal">@MapKey</tt> (without property name), the target
+          entity primary key is used. The map key uses the same column as the
+          property pointed out: there is no additional column defined to hold
+          the map key, and it does make sense since the map key actually
+          represent a target property. Be aware that once loaded, the key is
+          no longer kept in sync with the property, in other words, if you
+          change the property value, the key will not change automatically in
+          your Java model (for true map support please refers to <a href="#entity-hibspec">Hibernate Annotation Extensions</a>). Many people confuse
+          <tt class="literal">&lt;map&gt;</tt> capabilities and
+          <tt class="literal">@MapKey</tt> ones. These are two different features.
+          <tt class="literal">@MapKey</tt> still has some limitations, please check
+          the forum or the JIRA tracking system for more informations.</p><p>Hibernate has several notions of collections.</p><p></p><div class="table"><a name="d0e1206"></a><p class="title"><b>Table&nbsp;2.1.&nbsp;Collections semantics</b></p><table summary="Collections semantics" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Semantic</th><th>java representation</th><th>annotations</th></tr></thead><tbody><tr><td>Bag semantic</td><td>java.util.List, java.util.Collection</td><td>@org.hibernate.annotations.CollectionOfElements or
+                  @OneToMany or @ManyToMany</td></tr><tr><td>Bag semantic with primary key (withtout the
+                  limitations of Bag semantic)</td><td>java.util.List, java.util.Collection</td><td>(@org.hibernate.annotations.CollectionOfElements or
+                  @OneToMany or @ManyToMany) and @CollectionId</td></tr><tr><td>List semantic</td><td>java.util.List</td><td>(@org.hibernate.annotations.CollectionOfElements or
+                  @OneToMany or @ManyToMany) and
+                  @org.hibernate.annotations.IndexColumn</td></tr><tr><td>Set semantic</td><td>java.util.Set</td><td>@org.hibernate.annotations.CollectionOfElements or
+                  @OneToMany or @ManyToMany</td></tr><tr><td>Map semantic</td><td>java.util.Map</td><td>(@org.hibernate.annotations.CollectionOfElements or
+                  @OneToMany or @ManyToMany) and (nothing or
+                  @org.hibernate.annotations.MapKey/MapKeyManyToMany for true
+                  map support, OR @javax.persistence.MapKey</td></tr></tbody></table></div><i><span class="remark">So specifically, java.util.List collections without
+          @org.hibernate.annotations.IndexColumn are going to be considered as
+          bags.</span></i><p>Collection of primitive, core type or embedded objects is not
+          supported by the EJB3 specification. Hibernate Annotations allows
+          them however (see <a href="#entity-hibspec">Hibernate Annotation Extensions</a>).</p><pre class="programlisting">@Entity public class City {
+    @OneToMany(mappedBy="city")
+    <span class="bold"><b>@OrderBy("streetName")</b></span>
+    public List&lt;Street&gt; getStreets() {
+        return streets;
+    }
+...
+}
+
+@Entity public class Street {
+    <span class="bold"><b>public String getStreetName()</b></span> {
+        return streetName;
+    }
+
+    @ManyToOne
+    public City getCity() {
+        return city;
+    }
+    ...
+}
+
+
+@Entity
+public class Software {
+    @OneToMany(mappedBy="software")
+    <span class="bold"><b>@MapKey(name="codeName")</b></span>
+    public Map&lt;String, Version&gt; getVersions() {
+        return versions;
+    }
+...
+}
+
+@Entity
+@Table(name="tbl_version")
+public class Version {
+    <span class="bold"><b>public String getCodeName()</b></span> {...}
+
+    @ManyToOne
+    public Software getSoftware() { ... }
+...
+}</pre><p>So <tt class="literal">City</tt> has a collection of
+          <tt class="literal">Street</tt>s that are ordered by
+          <tt class="literal">streetName</tt> (of <tt class="literal">Street</tt>) when
+          the collection is loaded. <tt class="literal">Software</tt> has a map of
+          <tt class="literal">Version</tt>s which key is the
+          <tt class="literal">Version</tt> <tt class="literal">codeName</tt>.</p><p>Unless the collection is a generic, you will have to define
+          <tt class="literal">targetEntity</tt>. This is a annotation attribute that
+          take the target entity class as a value.</p></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="entity-mapping-association-collection-onetomany"></a>2.2.5.3.2.&nbsp;One-to-many</h5></div></div><div></div></div><p>One-to-many associations are declared at the property level
+          with the annotation <tt class="literal">@OneToMany</tt>. One to many
+          associations may be bidirectional.</p><div class="sect5" lang="en"><div class="titlepage"><div><div><h6 class="title"><a name="d0e1316"></a>2.2.5.3.2.1.&nbsp;Bidirectional</h6></div></div><div></div></div><p>Since many to one are (almost) always the owner side of a
+            bidirectional relationship in the EJB3 spec, the one to many
+            association is annotated by <tt class="literal">@OneToMany( mappedBy=...
+            )</tt></p><pre class="programlisting">@Entity
+public class Troop {
+    @OneToMany(mappedBy="troop")
+    public Set&lt;Soldier&gt; getSoldiers() {
+    ...
+}
+
+@Entity
+public class Soldier {
+    @ManyToOne
+    @JoinColumn(name="troop_fk")
+    public Troop getTroop() {
+    ...
+}              </pre><p><tt class="classname">Troop</tt> has a bidirectional one to many
+            relationship with <tt class="literal">Soldier</tt> through the
+            <tt class="literal">troop</tt> property. You don't have to (must not)
+            define any physical mapping in the <tt class="literal">mappedBy</tt>
+            side.</p><p>To map a bidirectional one to many, with the one-to-many
+            side as the owning side, you have to remove the
+            <tt class="literal">mappedBy</tt> element and set the many to one
+            <tt class="literal">@JoinColumn</tt> as insertable and updatable to
+            false. This solution is obviously not optimized and will produce
+            some additional UPDATE statements.</p><pre class="programlisting">@Entity
+public class Troop {
+    @OneToMany
+    @JoinColumn(name="troop_fk") //we need to duplicate the physical information
+    public Set&lt;Soldier&gt; getSoldiers() {
+    ...
+}
+
+@Entity
+public class Soldier {
+    @ManyToOne
+    @JoinColumn(name="troop_fk", insertable=false, updatable=false)
+    public Troop getTroop() {
+    ...
+}</pre></div><div class="sect5" lang="en"><div class="titlepage"><div><div><h6 class="title"><a name="d0e1348"></a>2.2.5.3.2.2.&nbsp;Unidirectional</h6></div></div><div></div></div><p>A unidirectional one to many using a foreign key column in
+            the owned entity is not that common and not really recommended. We
+            strongly advise you to use a join table for this kind of
+            association (as explained in the next section). This kind of
+            association is described through a
+            <tt class="literal">@JoinColumn</tt></p><pre class="programlisting">
+@Entity
+public class Customer implements Serializable {
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="CUST_ID")
+    public Set&lt;Ticket&gt; getTickets() {
+    ...
+}
+
+@Entity
+public class Ticket implements Serializable {
+    ... //no bidir
+}
+               </pre><p><tt class="literal">Customer</tt> describes a unidirectional
+            relationship with <tt class="literal">Ticket</tt> using the join column
+            <tt class="literal">CUST_ID</tt>.</p></div><div class="sect5" lang="en"><div class="titlepage"><div><div><h6 class="title"><a name="d0e1367"></a>2.2.5.3.2.3.&nbsp;Unidirectional with join table</h6></div></div><div></div></div><p>A unidirectional one to many with join table is much
+            preferred. This association is described through an
+            <tt class="literal">@JoinTable</tt>.</p><pre class="programlisting">
+@Entity
+public class Trainer {
+    @OneToMany
+    @JoinTable(
+            name="TrainedMonkeys",
+            joinColumns = { @JoinColumn( name="trainer_id") },
+            inverseJoinColumns = @JoinColumn( name="monkey_id")
+    )
+    public Set&lt;Monkey&gt; getTrainedMonkeys() {
+    ...
+}
+
+@Entity
+public class Monkey {
+    ... //no bidir
+}
+               </pre><p><tt class="literal">Trainer</tt> describes a unidirectional
+            relationship with <tt class="classname">Monkey</tt> using the join
+            table <tt class="classname">TrainedMonkeys</tt>, with a foreign key
+            <tt class="literal">trainer_id</tt> to <tt class="literal">Trainer</tt>
+            (<tt class="literal">joinColumns</tt>) and a foreign key
+            <tt class="literal">monkey_id</tt> to <tt class="literal">Monkey</tt>
+            (<tt class="literal">inversejoinColumns</tt>).</p></div><div class="sect5" lang="en"><div class="titlepage"><div><div><h6 class="title"><a name="entity-mapping-association-collection-manytomany-default"></a>2.2.5.3.2.4.&nbsp;Defaults</h6></div></div><div></div></div><p>Without describing any physical mapping, a unidirectional
+            one to many with join table is used. The table name is the
+            concatenation of the owner table name, <span><b class="keycap">_</b></span>, and the
+            other side table name. The foreign key name(s) referencing the
+            owner table is the concatenation of the owner table,
+            <span><b class="keycap">_</b></span>, and the owner primary key column(s) name. The
+            foreign key name(s) referencing the other side is the
+            concatenation of the owner property name, <span><b class="keycap">_</b></span>, and
+            the other side primary key column(s) name. A unique constraint is
+            added to the foreign key referencing the other side table to
+            reflect the one to many.</p><pre class="programlisting">
+@Entity
+public class Trainer {
+    @OneToMany
+    public Set&lt;Tiger&gt; getTrainedTigers() {
+    ...
+}
+
+@Entity
+public class Tiger {
+    ... //no bidir
+}
+               </pre><p><tt class="classname">Trainer</tt> describes a unidirectional
+            relationship with <tt class="classname">Tiger</tt> using the join
+            table <tt class="literal">Trainer_Tiger</tt>, with a foreign key
+            <tt class="literal">trainer_id</tt> to <tt class="literal">Trainer</tt> (table
+            name, <span><b class="keycap">_</b></span>, trainer id) and a foreign key
+            <tt class="literal">trainedTigers_id</tt> to <tt class="literal">Monkey</tt>
+            (property name, <span><b class="keycap">_</b></span>, Tiger primary column).</p></div></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="eentity-mapping-association-collection-manytomany"></a>2.2.5.3.3.&nbsp;Many-to-many</h5></div></div><div></div></div><div class="sect5" lang="en"><div class="titlepage"><div><div><h6 class="title"><a name="d0e1452"></a>2.2.5.3.3.1.&nbsp;Definition</h6></div></div><div></div></div><p>A many-to-many association is defined logically using the
+            <tt class="literal">@ManyToMany</tt> annotation. You also have to
+            describe the association table and the join conditions using the
+            <tt class="literal">@JoinTable</tt> annotation. If the association is
+            bidirectional, one side has to be the owner and one side has to be
+            the inverse end (ie. it will be ignored when updating the
+            relationship values in the association table):</p><pre class="programlisting">
+@Entity
+public class Employer implements Serializable {
+    @ManyToMany(
+        targetEntity=org.hibernate.test.metadata.manytomany.Employee.class,
+        cascade={CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinTable(
+        name="EMPLOYER_EMPLOYEE",
+        joinColumns={@JoinColumn(name="EMPER_ID")},
+        inverseJoinColumns={@JoinColumn(name="EMPEE_ID")}
+    )
+    public Collection getEmployees() {
+        return employees;
+    }
+    ...
+}
+               </pre><pre class="programlisting">
+@Entity
+public class Employee implements Serializable {
+    @ManyToMany(
+        cascade={CascadeType.PERSIST, CascadeType.MERGE},
+        mappedBy="employees"
+        targetEntity=Employer.class
+    )
+    public Collection getEmployers() {
+        return employers;
+    }
+}
+               </pre><p>We've already shown the many declarations and the detailed
+            attributes for associations. We'll go deeper in the
+            <tt class="literal">@JoinTable</tt> description, it defines a
+            <tt class="literal">name</tt>, an array of join columns (an array in
+            annotation is defined using { A, B, C }), and an array of inverse
+            join columns. The latter ones are the columns of the association
+            table which refer to the <tt class="classname">Employee</tt> primary
+            key (the "other side").</p><p>As seen previously, the other side don't have to (must not)
+            describe the physical mapping: a simple
+            <tt class="literal">mappedBy</tt> argument containing the owner side
+            property name bind the two.</p></div><div class="sect5" lang="en"><div class="titlepage"><div><div><h6 class="title"><a name="d0e1483"></a>2.2.5.3.3.2.&nbsp;Default values</h6></div></div><div></div></div><p>As any other annotations, most values are guessed in a many
+            to many relationship. Without describing any physical mapping in a
+            unidirectional many to many the following rules applied. The table
+            name is the concatenation of the owner table name,
+            <span><b class="keycap">_</b></span> and the other side table name. The foreign key
+            name(s) referencing the owner table is the concatenation of the
+            owner table name, <span><b class="keycap">_</b></span> and the owner primary key
+            column(s). The foreign key name(s) referencing the other side is
+            the concatenation of the owner property name, <span><b class="keycap">_</b></span>,
+            and the other side primary key column(s). These are the same rules
+            used for a unidirectional one to many relationship.</p><pre class="programlisting">
+@Entity
+public class Store {
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    public Set&lt;City&gt; getImplantedIn() {
+        ...
+    }
+}
+
+@Entity
+public class City {
+    ... //no bidirectional relationship
+}
+               </pre><p>A <tt class="literal">Store_City</tt> is used as the join table.
+            The <tt class="literal">Store_id</tt> column is a foreign key to the
+            <tt class="literal">Store</tt> table. The
+            <tt class="literal">implantedIn_id</tt> column is a foreign key to the
+            <tt class="literal">City</tt> table.</p><p>Without describing any physical mapping in a bidirectional
+            many to many the following rules applied. The table name is the
+            concatenation of the owner table name, <span><b class="keycap">_</b></span> and the
+            other side table name. The foreign key name(s) referencing the
+            owner table is the concatenation of the other side property name,
+            <span><b class="keycap">_</b></span>, and the owner primary key column(s). The
+            foreign key name(s) referencing the other side is the
+            concatenation of the owner property name, <span><b class="keycap">_</b></span>, and
+            the other side primary key column(s). These are the same rules
+            used for a unidirectional one to many relationship.</p><pre class="programlisting">
+@Entity
+public class Store {
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set&lt;Customer&gt; getCustomers() {
+        ...
+    }
+}
+
+@Entity
+public class Customer {
+    @ManyToMany(mappedBy="customers")
+    public Set&lt;Store&gt; getStores() {
+        ...
+    }
+}
+               </pre><p>A <tt class="literal">Store_Customer</tt> is used as the join
+            table. The <tt class="literal">stores_id</tt> column is a foreign key to
+            the <tt class="literal">Store</tt> table. The
+            <tt class="literal">customers_id</tt> column is a foreign key to the
+            <tt class="literal">Customer</tt> table.</p></div></div></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e1546"></a>2.2.5.4.&nbsp;Transitive persistence with cascading</h4></div></div><div></div></div><p>You probably have noticed the <tt class="literal">cascade</tt>
+        attribute taking an array of <tt class="classname">CascadeType</tt> as a
+        value. The cascade concept in EJB3 is very is similar to the
+        transitive persistence and cascading of operations in Hibernate, but
+        with slightly different semantics and cascading types:</p><div class="itemizedlist"><ul type="disc"><li>
+             CascadeType.PERSIST: cascades the persist (create) operation to associated entities persist() is called or if the entity is managed 
+          </li><li>
+             CascadeType.MERGE: cascades the merge operation to associated entities if merge() is called or if the entity is managed 
+          </li><li>
+             CascadeType.REMOVE: cascades the remove operation to associated entities if delete() is called 
+          </li><li>
+             CascadeType.REFRESH: cascades the refresh operation to associated entities if refresh() is called 
+          </li><li>
+             CascadeType.ALL: all of the above 
+          </li></ul></div><p>Please refer to the chapter 6.3 of the EJB3 specification for
+        more information on cascading and create/merge semantics.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e1570"></a>2.2.5.5.&nbsp;Association fetching</h4></div></div><div></div></div><p>You have the ability to either eagerly or lazily fetch
+        associated entities. The <tt class="literal">fetch</tt> parameter can be set
+        to <tt class="literal">FetchType.LAZY</tt> or
+        <tt class="literal">FetchType.EAGER</tt>. <tt class="literal">EAGER</tt> will try
+        to use an outer join select to retrieve the associated object, while
+        <tt class="literal">LAZY</tt> is the default and will only trigger a select
+        when the associated object is accessed for the first time. EJBQL also
+        has a <tt class="literal">fetch</tt> keyword that allows you to override
+        laziness when doing a particular query. This is very useful to improve
+        performance and is decided on a use case to use case basis.</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1593"></a>2.2.6.&nbsp;Mapping composite primary and foreign keys</h3></div></div><div></div></div><p>Composite primary keys use a embedded class as the primary key
+      representation, so you'd use the <tt class="literal">@Id</tt> and
+      <tt class="literal">@Embeddable</tt> annotations. Alternatively, you can use
+      the <tt class="literal">@EmbeddedId</tt> annotation. Note that the dependent
+      class has to be serializable and implements
+      <tt class="methodname">equals()</tt>/<tt class="methodname">hashCode()</tt>.
+      You can also use <tt class="literal">@IdClass</tt> as described in <a href="#entity-mapping-identifier">Mapping identifier properties</a>.</p><pre class="programlisting">
+@Entity
+public class RegionalArticle implements Serializable {
+
+    @Id
+    public RegionalArticlePk getPk() { ... }
+}
+
+@Embeddable
+public class RegionalArticlePk implements Serializable { ... }
+         </pre><p>or alternatively</p><pre class="programlisting">
+@Entity
+public class RegionalArticle implements Serializable {
+
+    @EmbeddedId
+    public RegionalArticlePk getPk() { ... }
+}
+
+public class RegionalArticlePk implements Serializable { ... }
+         </pre><p><tt class="literal">@Embeddable</tt> inherit the access type of its
+      owning entity unless the Hibernate specific annotation
+      <tt class="literal">@AccessType</tt> is used. Composite foreign keys (if not
+      using the default sensitive values) are defined on associations using
+      the <tt class="literal">@JoinColumns</tt> element, which is basically an array
+      of <tt class="literal">@JoinColumn</tt>. It is considered a good practice to
+      express <tt class="literal">referencedColumnNames</tt> explicitly. Otherwise,
+      Hibernate will suppose that you use the same order of columns as in the
+      primary key declaration.</p><pre class="programlisting">
+@Entity
+public class Parent implements Serializable {
+    @Id
+    public ParentPk id;
+    public int age;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumns ({
+        @JoinColumn(name="parentCivility", referencedColumnName = "isMale"),
+        @JoinColumn(name="parentLastName", referencedColumnName = "lastName"),
+        @JoinColumn(name="parentFirstName", referencedColumnName = "firstName")
+    })
+    public Set&lt;Child&gt; children; //unidirectional
+    ...
+}
+         </pre><pre class="programlisting">
+@Entity
+public class Child implements Serializable {
+    @Id @GeneratedValue
+    public Integer id;
+
+    @ManyToOne
+    @JoinColumns ({
+        @JoinColumn(name="parentCivility", referencedColumnName = "isMale"),
+        @JoinColumn(name="parentLastName", referencedColumnName = "lastName"),
+        @JoinColumn(name="parentFirstName", referencedColumnName = "firstName")
+    })
+    public Parent parent; //unidirectional
+}
+         </pre><pre class="programlisting">
+@Embeddable
+public class ParentPk implements Serializable {
+    String firstName;
+    String lastName;
+    ...
+}
+         </pre><p>Note the explicit usage of the
+      <tt class="literal">referencedColumnName</tt>.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1651"></a>2.2.7.&nbsp;Mapping secondary tables</h3></div></div><div></div></div><p>You can map a single entity bean to several tables using the
+      <tt class="literal">@SecondaryTable</tt> or
+      <tt class="literal">@SecondaryTables</tt> class level annotations. To express
+      that a column is in a particular table, use the <tt class="literal">table</tt>
+      parameter of <tt class="literal">@Column</tt> or
+      <tt class="literal">@JoinColumn</tt>.</p><pre class="programlisting">
+@Entity
+@Table(name="MainCat")
+<span class="bold"><b>@SecondaryTables({
+    @SecondaryTable(name="Cat1", pkJoinColumns={
+        @PrimaryKeyJoinColumn(name="cat_id", referencedColumnName="id")
+    ),
+    @SecondaryTable(name="Cat2", uniqueConstraints={@UniqueConstraint(columnNames={"storyPart2"})})
+})</b></span>
+public class Cat implements Serializable {
+
+    private Integer id;
+    private String name;
+    private String storyPart1;
+    private String storyPart2;
+
+    @Id @GeneratedValue
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    <span class="bold"><b>@Column(table="Cat1")</b></span>
+    public String getStoryPart1() {
+        return storyPart1;
+    }
+
+    <span class="bold"><b>@Column(table="Cat2")</b></span>
+    public String getStoryPart2() {
+        return storyPart2;
+    }
+</pre><p>In this example, <tt class="literal">name</tt> will be in
+      <tt class="literal">MainCat</tt>. <tt class="literal">storyPart1</tt> will be in
+      <tt class="literal">Cat1</tt> and <tt class="literal">storyPart2</tt> will be in
+      <tt class="literal">Cat2</tt>. <tt class="literal">Cat1</tt> will be joined to
+      <tt class="literal">MainCat</tt> using the <tt class="literal">cat_id</tt> as a
+      foreign key, and <tt class="literal">Cat2</tt> using <tt class="literal">id</tt> (ie
+      the same column name, the <tt class="literal">MainCat</tt> id column has).
+      Plus a unique constraint on <tt class="literal">storyPart2</tt> has been
+      set.</p><p>Check out the JBoss EJB 3 tutorial or the Hibernate Annotations
+      unit test suite for more examples.</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="entity-mapping-query"></a>2.3.&nbsp;Mapping Queries</h2></div></div><div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-mapping-query-hql"></a>2.3.Mapping JPAQL/HQL queries.&nbsp;Mapping JPAQL/HQL queries</h3></div></div><div></div></div><p>You can map EJBQL/HQL queries using annotations.
+      <tt class="literal">@NamedQuery</tt> and <tt class="literal">@NamedQueries</tt> can
+      be defined at the class level or in a JPA XML file. However their
+      definitions are global to the session factory/entity manager factory
+      scope. A named query is defined by its name and the actual query
+      string.</p><pre class="programlisting">&lt;entity-mappings&gt;
+    &lt;named-query name="plane.getAll"&gt;
+        &lt;query&gt;select p from Plane p&lt;/query&gt;
+    &lt;/named-query&gt;
+    ...
+&lt;/entity-mappings&gt;
+...
+
+@Entity
+@NamedQuery(name="night.moreRecentThan", query="select n from Night n where n.date &gt;= :date")
+public class Night {
+    ...
+}
+
+public class MyDao {
+    doStuff() {
+        Query q = s.getNamedQuery("night.moreRecentThan");
+        q.setDate( "date", aMonthAgo );
+        List results = q.list();
+        ...
+    }
+    ...
+}
+        </pre><p>You can also provide some hints to a query through an array of
+      <tt class="literal">QueryHint</tt> through a <tt class="literal">hints</tt>
+      attribute.</p><p>The availabe Hibernate hints are</p><p></p><div class="table"><a name="d0e1752"></a><p class="title"><b>Table&nbsp;2.2.&nbsp;Query hints</b></p><table summary="Query hints" border="1"><colgroup><col><col></colgroup><thead><tr><th>hint</th><th>description</th></tr></thead><tbody><tr><td>org.hibernate.cacheable</td><td>Whether the query should interact with the second level
+              cache (defualt to false)</td></tr><tr><td>org.hibernate.cacheRegion</td><td>Cache region name (default used otherwise)</td></tr><tr><td>org.hibernate.timeout</td><td>Query timeout</td></tr><tr><td>org.hibernate.fetchSize</td><td>resultset fetch size</td></tr><tr><td>org.hibernate.flushMode</td><td>Flush mode used for this query</td></tr><tr><td>org.hibernate.cacheMode</td><td>Cache mode used for this query</td></tr><tr><td>org.hibernate.readOnly</td><td>Entities loaded by this query should be in read only mode
+              or not (default to false)</td></tr><tr><td>org.hibernate.comment</td><td>Query comment added to the generated SQL</td></tr></tbody></table></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-mapping-query-native"></a>2.3.2.&nbsp;Mapping native queries</h3></div></div><div></div></div><p>You can also map a native query (ie a plain SQL query). To achieve
+      that, you need to describe the SQL resultset structure using
+      <tt class="literal">@SqlResultSetMapping</tt> (or
+      <tt class="literal">@SqlResultSetMappings</tt> if you plan to define several
+      resulset mappings). Like <tt class="literal">@NamedQuery</tt>, a
+      <tt class="literal">@SqlResultSetMapping</tt> can be defined at class level or
+      in a JPA XML file. However its scope is global to the
+      application.</p><p>As we will see, a <tt class="literal">resultSetMapping</tt> parameter is
+      defined in <tt class="literal">@NamedNativeQuery</tt>, it represents the name
+      of a defined <tt class="literal">@SqlResultSetMapping</tt>. The resultset
+      mapping declares the entities retrieved by this native query. Each field
+      of the entity is bound to an SQL alias (or column name). All fields of
+      the entity including the ones of subclasses and the foreign key columns
+      of related entities have to be present in the SQL query. Field
+      definitions are optional provided that they map to the same column name
+      as the one declared on the class property.</p><pre class="programlisting">@NamedNativeQuery(name="night&amp;area", query="select night.id nid, night.night_duration, "
+    + " night.night_date, area.id aid, night.area_id, area.name "
+    + "from Night night, Area area where night.area_id = area.id", <span class="bold"><b>resultSetMapping="joinMapping"</b></span>)
+@SqlResultSetMapping(name="joinMapping", entities={
+    @EntityResult(entityClass=org.hibernate.test.annotations.query.Night.class, fields = {
+        @FieldResult(name="id", column="nid"),
+        @FieldResult(name="duration", column="night_duration"),
+        @FieldResult(name="date", column="night_date"),
+        @FieldResult(name="area", column="area_id"),
+        discriminatorColumn="disc"
+    }),
+    @EntityResult(entityClass=org.hibernate.test.annotations.query.Area.class, fields = {
+        @FieldResult(name="id", column="aid"),
+        @FieldResult(name="name", column="name")
+    })
+    }
+)</pre><p>In the above example, the <tt class="literal">night&amp;area</tt> named
+      query use the <tt class="literal">joinMapping</tt> result set mapping. This
+      mapping returns 2 entities, <tt class="literal">Night</tt> and
+      <tt class="literal">Area</tt>, each property is declared and associated to a
+      column name, actually the column name retrieved by the query. Let's now
+      see an implicit declaration of the property / column.</p><pre class="programlisting">@Entity
+<span class="bold"><b>@SqlResultSetMapping(name="implicit", entities=@EntityResult(entityClass=org.hibernate.test.annotations.query.SpaceShip.class))
+@NamedNativeQuery(name="implicitSample", query="select * from SpaceShip", resultSetMapping="implicit")</b></span>
+public class SpaceShip {
+    private String name;
+    private String model;
+    private double speed;
+
+    @Id
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name="model_txt")
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+}</pre><p>In this example, we only describe the entity member of the result
+      set mapping. The property / column mappings is done using the entity
+      mapping values. In this case the <tt class="literal">model</tt> property is
+      bound to the <tt class="literal">model_txt </tt>column. If the association to
+      a related entity involve a composite primary key, a
+      <tt class="literal">@FieldResult</tt> element should be used for each foreign
+      key column. The <tt class="literal">@FieldResult</tt> name is composed of the
+      property name for the relationship, followed by a dot ("."), followed by
+      the name or the field or property of the primary key.</p><pre class="programlisting">@Entity
+@SqlResultSetMapping(name="compositekey",
+        entities=@EntityResult(entityClass=org.hibernate.test.annotations.query.SpaceShip.class,
+            fields = {
+                    @FieldResult(name="name", column = "name"),
+                    @FieldResult(name="model", column = "model"),
+                    @FieldResult(name="speed", column = "speed"),
+<span class="bold"><b>                    @FieldResult(name="captain.firstname", column = "firstn"),
+                    @FieldResult(name="captain.lastname", column = "lastn"),</b></span>
+                    @FieldResult(name="dimensions.length", column = "length"),
+                    @FieldResult(name="dimensions.width", column = "width")
+                    }),
+        columns = { @ColumnResult(name = "surface"),
+                    @ColumnResult(name = "volume") } )
+
+@NamedNativeQuery(name="compositekey",
+    query="select name, model, speed, lname as lastn, fname as firstn, length, width, length * width as surface from SpaceShip", 
+    resultSetMapping="compositekey")
+} )
+public class SpaceShip {
+    private String name;
+    private String model;
+    private double speed;
+    private Captain captain;
+    private Dimensions dimensions;
+
+    @Id
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumns( {
+            @JoinColumn(name="fname", referencedColumnName = "firstname"),
+            @JoinColumn(name="lname", referencedColumnName = "lastname")
+            } )
+    public Captain getCaptain() {
+        return captain;
+    }
+
+    public void setCaptain(Captain captain) {
+        this.captain = captain;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public Dimensions getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(Dimensions dimensions) {
+        this.dimensions = dimensions;
+    }
+}
+
+@Entity
+@IdClass(Identity.class)
+public class Captain implements Serializable {
+    private String firstname;
+    private String lastname;
+
+    @Id
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    @Id
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+}
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>If you look at the dimension property, you'll see that Hibernate
+        supports the dotted notation for embedded objects (you can even have
+        nested embedded objects). EJB3 implementations do not have to support
+        this feature, we do :-)</p></div><p>If you retrieve a single entity and if you use the default
+      mapping, you can use the <tt class="literal">resultClass</tt> attribute
+      instead of <tt class="literal">resultSetMapping</tt>:</p><pre class="programlisting"><span class="bold"><b>@NamedNativeQuery(name="implicitSample", query="select * from SpaceShip", 
+    resultClass=SpaceShip.class)</b></span>
+public class SpaceShip {</pre><p>In some of your native queries, you'll have to return scalar
+      values, for example when building report queries. You can map them in
+      the <tt class="literal">@SqlResultsetMapping</tt> through
+      <tt class="literal">@ColumnResult</tt>. You actually can even mix, entities
+      and scalar returns in the same native query (this is probably not that
+      common though).</p><pre class="programlisting"><span class="bold"><b>@SqlResultSetMapping(name="scalar", columns=@ColumnResult(name="dimension"))
+@NamedNativeQuery(name="scalar", query="select length*width as dimension from SpaceShip", resultSetMapping="scalar")</b></span></pre><p>An other query hint specific to native queries has been
+      introduced: <tt class="literal">org.hibernate.callable</tt> which can be true
+      or false depending on whether the query is a stored procedure or
+      not.</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="entity-hibspec"></a>2.4.&nbsp;Hibernate Annotation Extensions</h2></div></div><div></div></div><p>Hibernate 3.1 offers a variety of additional annotations that you
+    can mix/match with your EJB 3 entities. They have been designed as a
+    natural extension of EJB3 annotations.</p><p>To empower the EJB3 capabilities, hibernate provides specific
+    annotations that match hibernate features. The
+    <tt class="classname">org.hibernate.annotations</tt> package contains all
+    these annotations extensions.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-entity"></a>2.4.1.&nbsp;Entity</h3></div></div><div></div></div><p>You can fine tune some of the actions done by Hibernate on
+      entities beyond what the EJB3 spec offers.</p><p><tt class="classname">@org.hibernate.annotations.Entity</tt> adds
+      additional metadata that may be needed beyond what is defined in the
+      standard <tt class="literal">@Entity</tt> </p><div class="itemizedlist"><ul type="disc"><li>
+             mutable: whether this entity is mutable or not 
+          </li><li>
+             dynamicInsert: allow dynamic SQL for inserts 
+          </li><li>
+             dynamicUpdate: allow dynamic SQL for updates 
+          </li><li>
+             selectBeforeUpdate: Specifies that Hibernate should never perform an SQL UPDATE unless it is certain that an object is actually modified. 
+          </li><li>
+             polymorphism: whether the entity polymorphism is of PolymorphismType.IMPLICIT (default) or PolymorphismType.EXPLICIT 
+          </li><li>
+             persister: allow the overriding of the default persister implementation 
+          </li><li>
+             optimisticLock: optimistic locking strategy (OptimisticLockType.VERSION, OptimisticLockType.NONE, OptimisticLockType.DIRTY or OptimisticLockType.ALL) 
+          </li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>@javax.persistence.Entity is still mandatory,
+          @org.hibernate.annotations.Entity is not a replacement.</p></div><p>Here are some additional Hibernate annotation extensions</p><p><tt class="literal">@org.hibernate.annotations.BatchSize</tt> allows you
+      to define the batch size when fetching instances of this entity ( eg.
+      <tt class="literal">@BatchSize(size=4)</tt> ). When loading a given entity,
+      Hibernate will then load all the uninitialized entities of the same type
+      in the persistence context up to the batch size.</p><p><tt class="literal">@org.hibernate.annotations.Proxy</tt> defines the
+      laziness attributes of the entity. lazy (default to true) define whether
+      the class is lazy or not. proxyClassName is the interface used to
+      generate the proxy (default is the class itself).</p><p><tt class="literal">@org.hibernate.annotations.Where</tt> defines an
+      optional SQL WHERE clause used when instances of this class is
+      retrieved.</p><p><tt class="literal">@org.hibernate.annotations.Check</tt> defines an
+      optional check constraints defined in the DDL statetement.</p><p><tt class="literal">@OnDelete(action=OnDeleteAction.CASCADE)</tt> on
+      joined subclasses: use a SQL cascade delete on deletion instead of the
+      regular Hibernate mechanism.</p><p><tt class="literal">@Table(appliesTo="tableName", indexes = {
+      @Index(name="index1", columnNames={"column1", "column2"} ) } )</tt>
+      creates the defined indexes on the columns of table
+      <tt class="literal">tableName</tt>. This can be applied on the primary table
+      or any secondary table. The <tt class="literal">@Tables</tt> annotation allows
+      your to apply indexes on different tables. This annotation is expected
+      where <tt class="literal">@javax.persistence.Table</tt> or
+      <tt class="literal">@javax.persistence.SecondaryTable</tt>(s) occurs.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p><tt class="literal">@org.hibernate.annotations.Table</tt> is a
+        complement, not a replacement to
+        <tt class="literal">@javax.persistence.Table</tt>. Especially, if you want
+        to change the default name of a table, you must use
+        <tt class="literal">@javax.persistence.Table</tt>, not
+        <tt class="literal">@org.hibernate.annotations.Table</tt>.</p></div><pre class="programlisting">@Entity
+@BatchSize(size=5)
+@org.hibernate.annotations.Entity(
+        selectBeforeUpdate = true,
+        dynamicInsert = true, dynamicUpdate = true,
+        optimisticLock = OptimisticLockType.ALL,
+        polymorphism = PolymorphismType.EXPLICIT)
+@Where(clause="1=1")
+@org.hibernate.annotations.Table(name="Forest", indexes = { @Index(name="idx", columnNames = { "name", "length" } ) } )
+public class Forest { ... }</pre><pre class="programlisting">@Entity
+@Inheritance(
+    strategy=InheritanceType.JOINED
+)
+public class Vegetable { ... }
+
+@Entity
+@OnDelete(action=OnDeleteAction.CASCADE)
+public class Carrot extends Vegetable { ... }</pre></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-identifier"></a>2.4.Identifier.&nbsp;Identifier</h3></div></div><div></div></div><p><tt class="literal"><tt class="literal">@org.hibernate.annotations.GenericGenerator</tt>
+      allows you to define an Hibernate specific id
+      generator.</tt></p><pre class="programlisting">@Id @GeneratedValue(generator="system-uuid")
+@GenericGenerator(name="system-uuid", strategy = "uuid")
+public String getId() {
+
+@Id @GeneratedValue(generator="hibseq")
+@GenericGenerator(name="hibseq", strategy = "seqhilo",
+    parameters = {
+        @Parameter(name="max_lo", value = "5"),
+        @Parameter(name="sequence", value="heybabyhey")
+    }
+)
+public Integer getId() {</pre><p><tt class="literal">strategy</tt> is the short name of an Hibernate3
+      generator strategy or the fully qualified class name of an
+      <tt class="classname">IdentifierGenerator</tt> implementation. You can add
+      some parameters through the <tt class="literal">parameters</tt>
+      attribute.</p><p>Contrary to its standard counterpart,
+      <tt class="literal">@GenericGenerator</tt> can be used in package level
+      annotations, making it an application level generator (just like if it
+      were in a JPA XML file).</p><pre class="programlisting">@GenericGenerator(name="hibseq", strategy = "seqhilo",
+    parameters = {
+        @Parameter(name="max_lo", value = "5"),
+        @Parameter(name="sequence", value="heybabyhey")
+    }
+)
+package org.hibernate.test.model</pre></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-property"></a>2.4.3.&nbsp;Property</h3></div></div><div></div></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2040"></a>2.4.3.1.&nbsp;Access type</h4></div></div><div></div></div><p>The access type is guessed from the position of
+        <tt class="literal">@Id</tt> or <tt class="literal">@EmbeddedId</tt> in the entity
+        hierarchy. Sub-entities, embedded objects and mapped superclass
+        inherit the access type from the root entity.</p><p>In Hibernate, you can override the access type to:</p><div class="itemizedlist"><ul type="disc"><li><p>use a custom access type strategy</p></li><li><p>fine tune the access type at the class level or at the
+            property level</p></li></ul></div><p>An @AccessType annotation has been introduced to support this
+        behavior. You can define the access type on</p><div class="itemizedlist"><ul type="disc"><li><p>an entity</p></li><li><p>a superclass</p></li><li><p>an embeddable object</p></li><li><p>a property</p></li></ul></div><p>The access type is overriden for the annotated element, if
+        overriden on a class, all the properties of the given class inherit
+        the access type. For root entities, the access type is considered to
+        be the default one for the whole hierarchy (overridable at class or
+        property level).</p><p>If the access type is marked as "property", the getters are
+        scanned for annotations, if the access type is marked as "field", the
+        fields are scanned for annotations. Otherwise the elements marked with
+        @Id or @embeddedId are scanned.</p><p>You can override an access type for a property, but the element
+        to annotate will not be influenced: for example an entity having
+        access type <tt class="literal">field</tt>, can annotate a field with
+        <tt class="literal">@AccessType("property")</tt>, the access type will then
+        be property for this attribute, the the annotations still have to be
+        carried on the field.</p><p>If a superclass or an embeddable object is not annotated, the
+        root entity access type is used (even if an access type has been
+        define on an intermediate superclass or embeddable object). The
+        russian doll principle does not apply.</p><pre class="programlisting">@Entity
+public class Person implements Serializable {
+    @Id  @GeneratedValue //access type field
+    Integer id;
+
+    @Embedded
+    @AttributeOverrides({
+    @AttributeOverride(name = "iso2", column = @Column(name = "bornIso2")),
+    @AttributeOverride(name = "name", column = @Column(name = "bornCountryName"))
+            })
+    Country bornIn;
+}
+
+@Embeddable
+<span class="bold"><b>@AccessType("property")</b></span> //override access type for all properties in Country
+public class Country implements Serializable {
+    private String iso2;
+    private String name;
+
+    public String getIso2() {
+        return iso2;
+    }
+
+    public void setIso2(String iso2) {
+        this.iso2 = iso2;
+    }
+
+    @Column(name = "countryName")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+</pre></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2094"></a>2.4.3.2.&nbsp;Formula</h4></div></div><div></div></div><p>Sometimes, you want the Database to do some computation for you
+        rather than in the JVM, you might also create some kind of virtual
+        column. You can use a SQL fragment (aka formula) instead of mapping a
+        property into a column. This kind of property is read only (its value
+        is calculated by your formula fragment).</p><pre class="programlisting">@Formula("obj_length * obj_height * obj_width")
+public long getObjectVolume()</pre><p>The SQL fragment can be as complex as you want avec even include
+        subselects.</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2103"></a>2.4.3.3.&nbsp;Type</h4></div></div><div></div></div><p><tt class="literal">@org.hibernate.annotations.Type</tt> overrides the
+        default hibernate type used: this is generally not necessary since the
+        type is correctly inferred by Hibernate. Please refer to the Hibernate
+        reference guide for more informations on the Hibernate types.</p><p><tt class="literal">@org.hibernate.annotations.TypeDef</tt> and
+        <tt class="literal">@org.hibernate.annotations.TypeDefs</tt> allows you to
+        declare type definitions. These annotations are placed at the class or
+        package level. Note that these definitions will be global for the
+        session factory (even at the class level) and that type definition has
+        to be defined before any usage.</p><pre class="programlisting">@TypeDefs(
+    {
+    @TypeDef(
+        name="caster",
+        typeClass = CasterStringType.class,
+        parameters = {
+            @Parameter(name="cast", value="lower")
+        }
+    )
+    }
+)
+package org.hibernate.test.annotations.entity;
+
+...
+public class Forest {
+    @Type(type="caster")
+    public String getSmallText() {
+    ...
+}
+         </pre><p>When using composite user type, you will have to express column
+        definitions. The <tt class="literal">@Columns</tt> has been introduced for
+        that purpose.</p><pre class="programlisting">@Type(type="org.hibernate.test.annotations.entity.MonetaryAmountUserType")
+@Columns(columns = {
+    @Column(name="r_amount"),
+    @Column(name="r_currency")
+})
+public MonetaryAmount getAmount() {
+    return amount;
+}
+
+
+public class MonetaryAmount implements Serializable {
+    private BigDecimal amount;
+    private Currency currency;
+    ...
+}</pre></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2126"></a>2.4.3.4.&nbsp;Index</h4></div></div><div></div></div><p>You can define an index on a particular column using the
+        <tt class="literal">@Index</tt> annotation on a one column property, the
+        columnNames attribute will then be ignored</p><pre class="programlisting">@Column(secondaryTable="Cat1")
+@Index(name="story1index")
+public String getStoryPart1() {
+    return storyPart1;
+}</pre></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2136"></a>2.4.3.5.&nbsp;@Parent</h4></div></div><div></div></div><p>When inside an embeddable object, you can define one of the
+        properties as a pointer back to the owner element.</p><pre class="programlisting">@Entity
+public class Person {
+    @Embeddable public Address address;
+    ...
+}
+
+@Embeddable
+public class Address {
+    @Parent public Person owner;
+    ...
+}
+
+
+person == person.address.owner</pre></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2143"></a>2.4.3.6.&nbsp;Generated properties</h4></div></div><div></div></div><p>Some properties are generated at insert or update time by your
+        database. Hibernate can deal with such properties and triggers a
+        subsequent select to read these properties.</p><pre class="programlisting">@Entity
+public class Antenna {
+    @Id public Integer id;
+    @Generated(GenerationTime.ALWAYS) @Column(insertable = false, updatable = false)
+    public String longitude;
+
+    @Generated(GenerationTime.INSERT) @Column(insertable = false)
+    public String latitude;
+}</pre><p>Annotate your property as <tt class="literal">@Generated</tt> You have
+        to make sure your insertability or updatability does not conflict with
+        the generation strategy you have chosen. When GenerationTime.INSERT is
+        chosen, the property must not contains insertable columns, when
+        GenerationTime.ALWAYS is chosen, the property must not contains
+        insertable nor updatable columns.</p><p><tt class="literal">@Version</tt> properties cannot be
+        <tt class="literal">@Generated(INSERT)</tt> by design, it has to be either
+        <tt class="literal">NEVER</tt> or <tt class="literal">ALWAYS</tt>.</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-inheritance"></a>2.4.4.&nbsp;Inheritance</h3></div></div><div></div></div><p>SINGLE_TABLE is a very powerful strategy but sometimes, and
+      especially for legacy systems, you cannot add an additional
+      discriminator column. For that purpose Hibernate has introduced the
+      notion of discriminator formula:
+      <tt class="literal">@DiscriminatorFormula</tt> is a replacement of
+      <tt class="literal">@DiscriminatorColumn</tt> and use a SQL fragment as a
+      formula for discriminator resolution (no need to have a dedicated
+      column).</p><pre class="programlisting">@Entity
+@DiscriminatorForumla("case when forest_type is null then 0 else forest_type end")
+public class Forest { ... }</pre><p>By default, when querying the top entities, Hibernate does not put
+      a restriction clause on the discriminator column. This can be
+      inconvenient if this column contains values not mapped in your hierarchy
+      (through <tt class="literal">@DiscriminatorValue</tt>). To work around that
+      you can use <tt class="literal">@ForceDiscriminator</tt> (at the class level,
+      next to <tt class="literal">@DiscriminatorColumn</tt>). Hibernate will then
+      list the available values when loading the entities.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-singleassoc"></a>2.4.5.&nbsp;Single Association related annotations</h3></div></div><div></div></div><p>By default, when Hibernate cannot resolve the association because
+      the expected associated element is not in database (wrong id on the
+      association column), an exception is raised by Hibernate. This might be
+      inconvenient for lecacy and badly maintained schemas. You can ask
+      Hibernate to ignore such elements instead of raising an exception using
+      the <tt class="literal">@NotFound</tt> annotation. This annotation can be used
+      on a <tt class="literal">@OneToOne</tt> (with FK),
+      <tt class="literal">@ManyToOne</tt>, <tt class="literal">@OneToMany</tt> or
+      <tt class="literal">@ManyToMany</tt> association.</p><pre class="programlisting">@Entity
+public class Child {
+    ...
+    @ManyToOne
+    @NotFound(action=NotFoundAction.IGNORE)
+    public Parent getParent() { ... }
+    ...
+}</pre><p>Sometimes you want to delegate to your database the deletion of
+      cascade when a given entity is deleted.</p><pre class="programlisting">@Entity
+public class Child {
+    ...
+    @ManyToOne
+    @OnDelete(action=OnDeleteAction.CASCADE)
+    public Parent getParent() { ... }
+    ...
+}</pre><p>In this case Hibernate generates a cascade delete constraint at
+      the database level.</p><p>Foreign key constraints, while generated by Hibernate, have a
+      fairly unreadable name. You can override the constraint name by use
+      <tt class="literal">@ForeignKey</tt>.</p><pre class="programlisting">@Entity
+public class Child {
+    ...
+    @ManyToOne
+    <span class="bold"><b>@ForeignKey(name="FK_PARENT")</b></span>
+    public Parent getParent() { ... }
+    ...
+}
+
+alter table Child add constraint FK_PARENT foreign key (parent_id) references Parent</pre><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2230"></a>2.4.5.1.&nbsp;Lazy options and fetching modes</h4></div></div><div></div></div><p>EJB3 comes with the <tt class="literal">fetch</tt> option to define
+        lazy loading and fetching modes, however Hibernate has a much more
+        option set in this area. To fine tune the lazy loading and fetching
+        strategies, some additional annotations have been introduced:</p><div class="itemizedlist"><ul type="disc"><li><p><tt class="literal">@LazyToOne</tt>: defines the lazyness option
+            on <tt class="literal">@ManyToOne</tt> and <tt class="literal">@OneToOne</tt>
+            associations. <tt class="literal">LazyToOneOption</tt> can be
+            <tt class="literal">PROXY</tt> (ie use a proxy based lazy loading),
+            <tt class="literal">NO_PROXY</tt> (use a bytecode enhancement based lazy
+            loading - note that build time bytecode processing is necessary)
+            and <tt class="literal">FALSE</tt> (association not lazy)</p></li><li><p><tt class="literal">@LazyCollection</tt>: defines the lazyness
+            option on <tt class="literal">@ManyTo</tt>Many and
+            <tt class="literal">@OneToMany</tt> associations. LazyCollectionOption
+            can be <tt class="literal">TRUE</tt> (the collection is lazy and will be
+            loaded when its state is accessed), <tt class="literal">EXTRA</tt> (the
+            collection is lazy and all operations will try to avoid the
+            collection loading, this is especially useful for huge collections
+            when loading all the elements is not necessary) and FALSE
+            (association not lazy)</p></li><li><p><tt class="literal">@Fetch</tt>: defines the fetching strategy
+            used to load the association. <tt class="literal">FetchMode</tt> can be
+            <tt class="literal">SELECT</tt> (a select is triggered when the
+            association needs to be loaded), <tt class="literal">SUBSELECT</tt>
+            (only available for collections, use a subselect strategy - please
+            refers to the Hibernate Reference Documentation for more
+            information) or <tt class="literal">JOIN</tt> (use a SQL JOIN to load
+            the association while loading the owner entity).
+            <tt class="literal">JOIN</tt> overrides any lazy attribute (an
+            association loaded through a <tt class="literal">JOIN</tt> strategy
+            cannot be lazy).</p></li></ul></div><p>The Hibernate annotations overrides the EJB3 fetching
+        options.</p><div class="table"><a name="d0e2304"></a><p class="title"><b>Table&nbsp;2.3.&nbsp;Lazy and fetch options equivalent</b></p><table summary="Lazy and fetch options equivalent" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Annotations</th><th>Lazy</th><th>Fetch</th></tr></thead><tbody><tr><td>@[One|Many]ToOne](fetch=FetchType.LAZY)</td><td>@LazyToOne(PROXY)</td><td>@Fetch(SELECT)</td></tr><tr><td>@[One|Many]ToOne](fetch=FetchType.EAGER)</td><td>@LazyToOne(FALSE)</td><td>@Fetch(JOIN)</td></tr><tr><td>@ManyTo[One|Many](fetch=FetchType.LAZY)</td><td>@LazyCollection(TRUE)</td><td>@Fetch(SELECT)</td></tr><tr><td>@ManyTo[One|Many](fetch=FetchType.EAGER)</td><td>@LazyCollection(FALSE)</td><td>@Fetch(JOIN)</td></tr></tbody></table></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-collection"></a>2.4.6.&nbsp;Collection related annotations</h3></div></div><div></div></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="entity-hibspec-collection-enhance"></a>2.4.6.1.&nbsp;Enhance collection settings</h4></div></div><div></div></div><p>It is possible to set </p><div class="itemizedlist"><ul type="disc"><li>
+               the batch size for collections using @BatchSize 
+            </li><li>
+               the where clause, using @Where (applied on the target entity) or @WhereJoinTable (applied on the association table)
+            </li><li>
+               the check clause, using @Check 
+            </li><li>
+               the SQL order by clause, using @OrderBy 
+            </li><li>
+               the delete cascade strategy through @OnDelete(action=OnDeleteAction.CASCADE) 
+            </li></ul></div><p>You can also declare a sort comparator. Use the
+        <tt class="literal">@Sort</tt> annotation. Expressing the comparator type
+        you want between unsorted, natural or custom comparator. If you want
+        to use your own comparator implementation, you'll also have to express
+        the implementation class using the <tt class="literal">comparator</tt>
+        attribute. Note that you need to use either a
+        <tt class="classname">SortedSet</tt> or a <tt class="classname">SortedMap</tt>
+        interface.</p><pre class="programlisting">    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="CUST_ID")
+    @Sort(type = SortType.COMPARATOR, comparator = TicketComparator.class)
+    @Where(clause="1=1")
+    @OnDelete(action=OnDeleteAction.CASCADE)
+    public SortedSet&lt;Ticket&gt; getTickets() {
+        return tickets;
+    }</pre><p>Please refer to the previous descriptions of these annotations
+        for more informations.</p><p>Foreign key constraints, while generated by Hibernate, have a
+        fairly unreadable name. You can override the constraint name by use
+        <tt class="literal">@ForeignKey</tt>. Note that this annotation has to be
+        placed on the owning side of the relationship,
+        <tt class="literal">inverseName</tt> referencing to the other side
+        constraint.</p><pre class="programlisting">@Entity
+public class Woman {
+    ...
+    @ManyToMany(cascade = {CascadeType.ALL})
+    <span class="bold"><b>@ForeignKey(name = "TO_WOMAN_FK", inverseName = "TO_MAN_FK")</b></span>
+    public Set&lt;Man&gt; getMens() {
+        return mens;
+    }
+}
+
+alter table Man_Woman add constraint TO_WOMAN_FK foreign key (woman_id) references Woman
+alter table Man_Woman add constraint TO_MAN_FK foreign key (man_id) references Man</pre></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="entity-hibspec-collection-extratype"></a>2.4.6.2.&nbsp;Extra collection types</h4></div></div><div></div></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e2398"></a>2.4.6.2.1.&nbsp;List</h5></div></div><div></div></div><p>Beyond EJB3, Hibernate Annotations supports true
+          <tt class="classname">List</tt> and <tt class="classname">Array</tt>. Map
+          your collection the same way as usual and add the
+          @<tt class="literal">IndexColumn</tt>. This annotation allows you to
+          describe the column that will hold the index. You can also declare
+          the index value in DB that represent the first element (aka as base
+          index). The usual value is <tt class="literal">0</tt> or
+          <tt class="literal">1</tt>.</p><pre class="programlisting">@OneToMany(cascade = CascadeType.ALL)
+@IndexColumn(name = "drawer_position", base=1)
+public List&lt;Drawer&gt; getDrawers() {
+    return drawers;
+}</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>If you forgot to set <tt class="literal">@IndexColumn</tt>, the
+            bag semantic is applied. If you want the bag semantic without the
+            limitations of it, consider using
+            <tt class="literal">@CollectionId</tt>.</p></div></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e2429"></a>2.4.6.2.2.&nbsp;Map</h5></div></div><div></div></div><p>Hibernate Annotations also supports true Map mappings, if
+          <tt class="literal">@javax.persistence.MapKey</tt> is not set, hibernate
+          will map the key element or embeddable object in its/their own
+          columns. To overrides the default columns, you can use
+          <tt class="literal">@org.hibernate.annotations.MapKey</tt> if your key is
+          a basic type (defaulted to <tt class="literal">mapkey</tt>) or an
+          embeddable object, or you can use
+          <tt class="literal">@org.hibernate.annotations.MapKeyManyToMany</tt> if
+          your key is an entity.</p></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="entity-hibspec-collection-extratype-indexbidir"></a>2.4.6.2.3.&nbsp;Bidirectional association with indexed collections</h5></div></div><div></div></div><p>A bidirectional association where one end is represented as a
+          <tt class="literal">@IndexColumn</tt> or
+          <tt class="literal">@org.hibernate.annotations.MapKey[ManyToMany]</tt>
+          requires special consideration. If there is a property of the child
+          class which maps to the index column, no problem, we can continue
+          using <tt class="literal">mappedBy</tt> on the collection mapping:</p><pre class="programlisting">@Entity
+public class Parent {
+    @OneToMany(mappedBy="parent")
+    @org.hibernate.annotations.MapKey(columns=@Column(name="name"))
+    private Map&lt;String, Child&gt; children;
+    ...
+}
+
+@Entity
+public class Parent {
+    ...
+    @Basic
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name="parent_id", nullable=false)
+    private Parent parent;
+    ...
+}</pre><p>But, if there is no such property on the child class, we can't
+          think of the association as truly bidirectional (there is
+          information available at one end of the association that is not
+          available at the other end). In this case, we can't map the
+          collection <tt class="literal">mappedBy</tt>. Instead, we could use the
+          following mapping:</p><pre class="programlisting">@Entity
+public class Parent {
+    @OneToMany
+    @org.hibernate.annotations.MapKey(columns=@Column(name="name"))
+    @JoinColumn(name="parent_id", nullable=false)
+    private Map&lt;String, Child&gt; children;
+    ...
+}
+
+@Entity
+public class Parent {
+    ...
+    @ManyToOne
+    @JoinColumn(name="parent_id", insertable=false, updatable=false, nullable=false)
+    private Parent parent;
+    ...
+}</pre><p>Note that in this mapping, the collection-valued end of the
+          association is responsible for updates to the foreign key.</p></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e2471"></a>2.4.6.2.4.&nbsp;Bag with primary key</h5></div></div><div></div></div><p>Another interesting feature is the ability to define a
+          surrogate primary key to a bag collection. This remove pretty much
+          all of the drawbacks of bags: update and removal are efficient, more
+          than one <tt class="literal">EAGER</tt> bag per query or per entity. This
+          primary key will be contained in a additional column of your
+          collection table but will not be visible to the Java application.
+          @CollectionId is used to mark a collection as id bag, it also allow
+          to override the primary key column(s), the primary key type and the
+          generator strategy. The strategy can be <tt class="literal">identity</tt>,
+          or any defined generator name of your application.</p><pre class="programlisting">@Entity
+@TableGenerator(name="ids_generator", table="IDS")
+public class Passport {
+    ...
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="PASSPORT_VISASTAMP")
+    <span class="bold"><b>@CollectionId(
+        columns = @Column(name="COLLECTION_ID"), 
+        type=@Type(type="long"), 
+        generator = "ids_generator"
+    )</b></span>
+    private Collection&lt;Stamp&gt; visaStamp = new ArrayList();
+    ...
+}</pre></div><div class="sect4" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e2487"></a>2.4.6.2.5.&nbsp;Collection of element or composite elements</h5></div></div><div></div></div><p>Hibernate Annotations also supports collections of core types
+          (Integer, String, Enums, ...), collections of embeddable objects and
+          even arrays of primitive types. This is known as collection of
+          elements.</p><p>A collection of elements has to be annotated as
+          <tt class="literal">@CollectionOfElements</tt> (as a replacement of
+          <tt class="literal">@OneToMany</tt>) To define the collection table, the
+          <tt class="literal">@JoinTable</tt> annotation is used on the association
+          property, <tt class="literal">joinColumns</tt> defines the join columns
+          between the entity primary table and the collection table
+          (inverseJoincolumn is useless and should be left empty). For
+          collection of core types or array of primitive types, you can
+          override the element column definition using a
+          <tt class="literal">@Column</tt> on the association property. You can also
+          override the columns of a collection of embeddable object using
+          <tt class="literal">@AttributeOverride</tt>. To reach the collection
+          element, you need to append "element" to the attribute override name
+          (eg "element" for core types, or "element.serial" for the serial
+          property of an embeddable element). To reach the index/key of a
+          collection, append "key" instead.</p><pre class="programlisting">@Entity
+public class Boy {
+    private Integer id;
+    private Set&lt;String&gt; nickNames = new HashSet&lt;String&gt;();
+    private int[] favoriteNumbers;
+    private Set&lt;Toy&gt; favoriteToys = new HashSet&lt;Toy&gt;();
+    private Set&lt;Character&gt; characters = new HashSet&lt;Character&gt;();
+
+    @Id @GeneratedValue
+    public Integer getId() {
+        return id;
+    }
+
+    <span class="bold"><b>@CollectionOfElements
+    public Set&lt;String&gt;</b></span> getNickNames() {
+        return nickNames;
+    }
+
+    <span class="bold"><b>@CollectionOfElements
+    @JoinTable(
+            table=@Table(name="BoyFavoriteNumbers"),
+            joinColumns = @JoinColumn(name="BoyId")
+    )
+    @Column(name="favoriteNumber", nullable=false)</b></span>
+    @IndexColumn(name="nbr_index")
+    public int[] getFavoriteNumbers() {
+        return favoriteNumbers;
+    }
+
+    <span class="bold"><b>@CollectionOfElements
+    @AttributeOverride( name="element.serial", column=@Column(name="serial_nbr") )</b></span>
+    public Set&lt;Toy&gt; getFavoriteToys() {
+        return favoriteToys;
+    }
+
+    <span class="bold"><b>@CollectionOfElements
+    public Set&lt;Character&gt;</b></span> getCharacters() {
+        return characters;
+    }
+    ...
+}
+
+public enum Character {
+    GENTLE,
+    NORMAL,
+    AGGRESSIVE,
+    ATTENTIVE,
+    VIOLENT,
+    CRAFTY
+}
+
+@Embeddable
+public class Toy {
+    public String name;
+    public String serial;
+    public Boy owner;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    <span class="bold"><b>@Parent</b></span>
+    public Boy getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Boy owner) {
+        this.owner = owner;
+    }
+
+    public boolean equals(Object o) {
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+
+        final Toy toy = (Toy) o;
+
+        if ( !name.equals( toy.name ) ) return false;
+        if ( !serial.equals( toy.serial ) ) return false;
+
+        return true;
+    }
+
+    public int hashCode() {
+        int result;
+        result = name.hashCode();
+        result = 29 * result + serial.hashCode();
+        return result;
+    }
+}</pre><p>On a collection of embeddable objects, the embeddable object
+          can have a property annotated with <tt class="literal">@Parent</tt>. This
+          property will then point back to the entity containing the
+          collection.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Previous versions of Hibernate Annotations used the
+            <tt class="literal">@OneToMany</tt> to mark a collection of elements.
+            Due to semantic inconsistencies, we've introduced the annotation
+            <tt class="literal">@CollectionOfElements</tt>. Marking collections of
+            elements the old way still work but is considered deprecated and
+            is going to be unsupported in future releases</p></div></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2543"></a>2.4.7.&nbsp;Cache</h3></div></div><div></div></div><p>In order to optimize your database accesses, you can activave the
+      so called second level cache of Hibernate. This cache is configurable on
+      a per entity and per collection basis.</p><p><tt class="literal">@org.hibernate.annotations.Cache</tt> defines the
+      caching strategy and region of a given second level cache. This
+      annotation can be applied on the root entity (not the sub entities), and
+      on the collections.</p><pre class="programlisting">@Entity
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Forest { ... }</pre><pre class="programlisting">    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="CUST_ID")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    public SortedSet&lt;Ticket&gt; getTickets() {
+        return tickets;
+    }</pre><p></p><div class="programlistingco"><pre class="programlisting">@Cache(
+    CacheConcurrencyStrategy usage();                 <span class="co">(1)</span>
+    String region() default "";                       <span class="co">(2)</span>
+    String include() default "all";                   <span class="co">(3)</span>
+)</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left">(1)</td><td valign="top" align="left"><p>usage: the given cache concurrency strategy (NONE,
+            READ_ONLY, NONSTRICT_READ_WRITE, READ_WRITE, TRANSACTIONAL)</p></td></tr><tr><td width="5%" valign="top" align="left">(2)</td><td valign="top" align="left"><p>region (optional): the cache region (default to the fqcn of
+            the class or the fq role name of the collection)</p></td></tr><tr><td width="5%" valign="top" align="left">(3)</td><td valign="top" align="left"><p><tt class="literal">include</tt> (optional): all to include all
+            properties, non-lazy to only include non lazy properties (default
+            all).</p></td></tr></table></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-filters"></a>2.4.8.&nbsp;Filters</h3></div></div><div></div></div><p>Hibernate has the ability to apply arbitrary filters on top of
+      your data. Those filters are applied at runtime on a given session.
+      First, you need to define them.</p><p><tt class="literal">@org.hibernate.annotations.FilterDef</tt> or
+      <tt class="literal">@FilterDefs</tt> define filter definition(s) used by
+      filter(s) using the same name. A filter definition has a name() and an
+      array of parameters(). A parameter will allow you to adjust the behavior
+      of the filter at runtime. Each parameter is defined by a
+      <tt class="literal">@ParamDef</tt> which has a name and a type. You can also
+      define a defaultCondition() parameter for a given
+      <tt class="literal">@FilterDef</tt> to set the default condition to use when
+      none are defined in each individual <tt class="literal">@Filter</tt>. A
+      <tt class="literal">@FilterDef</tt>(s) can be defined at the class or package
+      level.</p><p>We now need to define the SQL filter clause applied to either the
+      entity load or the collection load. <tt class="literal">@Filter</tt> is used
+      and placed either on the entity or the collection element</p><pre class="programlisting">@Entity
+@FilterDef(name="minLength", parameters={ @ParamDef( name="minLength", type="integer" ) } )
+@Filters( {
+    @Filter(name="betweenLength", condition=":minLength &lt;= length and :maxLength &gt;= length"),
+    @Filter(name="minLength", condition=":minLength &lt;= length")
+} )
+public class Forest { ... }</pre><p>When the collection use an association table as a relational
+      representation, you might want to apply the filter condition to the
+      association table itself or to the target entity table. To apply the
+      constraint on the target entity, use the regular
+      <tt class="literal">@Filter</tt> annotation. However, if you wan to target the
+      association table, use the <tt class="literal">@FilterJoinTable</tt>
+      annotation.</p><pre class="programlisting">    @OneToMany
+    @JoinTable
+    //filter on the target entity table
+    @Filter(name="betweenLength", condition=":minLength &lt;= length and :maxLength &gt;= length")
+    //filter on the association table
+    @FilterJoinTable(name="security", condition=":userlevel &gt;= requredLevel")
+    public Set&lt;Forest&gt; getForests() { ... }</pre></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="entity-hibspec-query"></a>2.4.9.&nbsp;Queries</h3></div></div><div></div></div><p>Since Hibernate has more features on named queries than the one
+      defined in the EJB3 specification,
+      <tt class="literal">@org.hibernate.annotations.NamedQuery</tt>,
+      <tt class="literal">@org.hibernate.annotations.NamedQueries</tt>,
+      <tt class="literal">@org.hibernate.annotations.NamedNativeQuery</tt> and
+      <tt class="literal">@org.hibernate.annotations.NamedNativeQueries</tt> have
+      been introduced. They add some attributes to the standard version and
+      can be used as a replacement:</p><div class="itemizedlist"><ul type="disc"><li><p>flushMode: define the query flush mode (Always, Auto, Commit
+          or Never)</p></li><li><p>cacheable: whether the query should be cached or not</p></li><li><p>cacheRegion: cache region used if the query is cached</p></li><li><p>fetchSize: JDBC statement fetch size for this query</p></li><li><p>timeout: query time out</p></li><li><p>callable: for native queries only, to be set to true for
+          stored procedures</p></li><li><p>comment: if comments are activated, the comment seen when the
+          query is sent to the database.</p></li><li><p>cacheMode: Cache interaction mode (get, ignore, normal, put or
+          refresh)</p></li><li><p>readOnly: whether or not the elements retrievent from the
+          query are in read only mode.</p></li></ul></div><p>Those hints can be set in a standard
+      <tt class="literal">@javax.persistence.NamedQuery</tt> annotations through the
+      detyped <tt class="literal">@QueryHint</tt>. Another key advantage is the
+      ability to set those annotations at a package level.</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="xml-overriding"></a>Chapter&nbsp;Overriding metadata through XML.&nbsp;Overriding metadata through XML</h2></div></div><div></div></div><p>The primary target for metadata in EJB3 is annotations, but the EJB3
+  specification provides a way to override or replace the annotation defined
+  metadata through an XML deployment descriptor. In the current release only
+  pure EJB3 annotations overriding are supported. If you wish to use Hibernate
+  specific features in some entities, you'll have to either use annotations or
+  fallback to hbm files. You can of course mix and match annotated entities
+  and entities describes in hbm files.</p><p>The unit test suite shows some additional XML file samples.</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xml-overriding-principles"></a>Overriding metadata through XML.1.&nbsp;Principles</h2></div></div><div></div></div><p>The XML deployment descriptor structure has been designed to reflect
+    the annotations one. So if you know the annotations structure, using the
+    XML schema will be straightforward for you.</p><p>You can define one ot more XML files describing your metadata, these
+    files will be merged by the overriding engine.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2685"></a>Overriding metadata through XML.1.1.&nbsp;Global level metadata</h3></div></div><div></div></div><p>You can define global level metadata available for all XML files.
+      You must not define these metadata more than once per deployment.</p><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;entity-mappings 
+  xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_1_0.xsd"
+  version="1.0"&gt;
+
+    &lt;persistence-unit-metadata&gt;
+        &lt;xml-mapping-metadata-complete/&gt;
+        &lt;persistence-unit-defaults&gt;
+            &lt;schema&gt;myschema&lt;/schema&gt;
+            &lt;catalog&gt;mycatalog&lt;/catalog&gt;
+            &lt;cascade-persist/&gt;
+        &lt;/persistence-unit-defaults&gt;
+    &lt;/persistence-unit-metadata&gt;</pre><p><tt class="literal">xml-mapping-metadata-complete</tt> means that all
+      entity, mapped-superclasses and embeddable metadata should be picked up
+      from XML (ie ignore annotations).</p><p><tt class="literal">schema / catalog</tt> will override all default
+      definitions of schema and catalog in the metadata (both XML and
+      annotations).</p><p><tt class="literal">cascade-persist</tt> means that all associations
+      have PERSIST as a cascade type. We recommend you to not use this
+      feature.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xml-overriding-principles-entity"></a>Overriding metadata through XML.1.2.&nbsp;Entity level metadata</h3></div></div><div></div></div><p>You can either define or override metadata informations on a given
+      entity.</p><div class="programlistingco"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;entity-mappings                                                                    <span class="co">(1)</span>
+  xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_1_0.xsd"
+  version="1.0"&gt;
+
+    &lt;package&gt;org.hibernate.test.reflection.java.xml&lt;/package&gt;                       <span class="co">(2)</span>
+    &lt;entity class="Administration" access="PROPERTY" metadata-complete="true"&gt;      <span class="co">(3)</span>
+        &lt;table name="tbl_admin"&gt;                                                    <span class="co">(4)</span>
+            &lt;unique-constraint&gt;
+                &lt;column-name&gt;firstname&lt;/column-name&gt;
+                &lt;column-name&gt;lastname&lt;/column-name&gt;
+            &lt;/unique-constraint&gt;
+        &lt;/table&gt;
+        &lt;secondary-table name="admin2"&gt;                                             <span class="co">(5)</span>
+            &lt;primary-key-join-column name="admin_id" referenced-column-name="id"/&gt;
+            &lt;unique-constraint&gt;
+                &lt;column-name&gt;address&lt;/column-name&gt;
+            &lt;/unique-constraint&gt;
+        &lt;/secondary-table&gt;
+        &lt;id-class class="SocialSecurityNumber"/&gt;                                    <span class="co">(6)</span>
+        &lt;inheritance strategy="JOINED"/&gt;                                            <span class="co">(7)</span>
+        &lt;sequence-generator name="seqhilo" sequence-name="seqhilo"/&gt;                <span class="co">(8)</span>
+        &lt;table-generator name="table" table="tablehilo"/&gt;                           <span class="co">(9)</span>
+        ...
+    &lt;/entity&gt;
+
+    &lt;entity class="PostalAdministration"&gt;
+        &lt;primary-key-join-column name="id"/&gt;                                        <span class="co">(10)</span>
+        ...
+    &lt;/entity&gt;
+&lt;/entity-mappings&gt;</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left">(1)</td><td valign="top" align="left"><p><tt class="literal">entity-mappings</tt>: entity-mappings is the
+            root element for all XML files. You must declare the xml schema,
+            the schema file is included in the hibernate-annotations.jar file,
+            no internet access will be processed by Hibernate
+            Annotations.</p></td></tr><tr><td width="5%" valign="top" align="left">(2)</td><td valign="top" align="left"><p><tt class="literal">package</tt> (optional): default package used
+            for all non qualified class names in the given deployment
+            descriptor file.</p></td></tr><tr><td width="5%" valign="top" align="left">(3)</td><td valign="top" align="left"><p><tt class="literal">entity</tt>: desribes an entity.</p><p><tt class="literal">metadata-complete</tt> defines whether the
+            metadata description for this element is complete or not (in other
+            words, if annotations present at the class level should be
+            considered or not).</p><p>An entity has to have a <tt class="literal">class</tt> attribute
+            refering the java class the metadata applies on.</p><p>You can overrides entity name through the
+            <tt class="literal">name</tt> attribute, if none is defined and if an
+            <tt class="literal">@Entity.name</tt> is present, then it is used
+            (provided that metadata complete is not set).</p><p>For netadata complete (see below) element, you can define an
+            <tt class="literal">access</tt> (either <tt class="literal">FIELD</tt> or
+            <tt class="literal">PROPERTY</tt> (default)). For non medatada complete
+            element, if <tt class="literal">access</tt> is not defined, the @Id
+            position will lead position, if <tt class="literal">access</tt> is
+            defined, the value is used.</p></td></tr><tr><td width="5%" valign="top" align="left">(4)</td><td valign="top" align="left"><p><tt class="literal">table</tt>: you can declare table properties
+            (name, schema, catalog), if none is defined, the java annotation
+            is used.</p><p>You can define one or several unique constraints as seen in
+            the example</p></td></tr><tr><td width="5%" valign="top" align="left">(5)</td><td valign="top" align="left"><p><tt class="literal">secondary-table</tt>: defines a secondary
+            table very much like a regular table except that you can define
+            the primary key / foreign key column(s) through the
+            <tt class="literal">primary-key-join-column</tt> element. On non
+            metadata complete, annotation secondary tables are used only if
+            there is no <tt class="literal">secondary-table</tt> definition,
+            annotations are ignored otherwise.</p></td></tr><tr><td width="5%" valign="top" align="left">(6)</td><td valign="top" align="left"><p><tt class="literal">id-class</tt>: defines the id class in a
+            similar way <tt class="literal">@IdClass</tt> does</p></td></tr><tr><td width="5%" valign="top" align="left">(7)</td><td valign="top" align="left"><p><tt class="literal">inheritance</tt>: defines the inheritance
+            strategy (<tt class="literal">JOINED</tt>,
+            <tt class="literal">TABLE_PER_CLASS</tt>,
+            <tt class="literal">SINGLE_TABLE</tt>), Available only at the root
+            entity level</p></td></tr><tr><td width="5%" valign="top" align="left">(8)</td><td valign="top" align="left"><p><tt class="literal">sequence-generator</tt>: defines a sequence
+            generator</p></td></tr><tr><td width="5%" valign="top" align="left">(9)</td><td valign="top" align="left"><p><tt class="literal">table-generator</tt>: defines a table
+            generator</p></td></tr><tr><td width="5%" valign="top" align="left">(10)</td><td valign="top" align="left"><p><tt class="literal"><tt class="literal">primary-key-join-column</tt></tt>:
+            defines the primary key join column for sub entities when JOINED
+            inheritance strategy is used</p></td></tr></table></div></div><div class="programlistingco"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;entity-mappings 
+  xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_1_0.xsd"
+  version="1.0"&gt;
+
+    &lt;package&gt;org.hibernate.test.reflection.java.xml&lt;/package&gt;
+    &lt;entity class="Music" access="PROPERTY" metadata-complete="true"&gt;
+        &lt;discriminator-value&gt;Generic&lt;/discriminator-value&gt;                          <span class="co">(1)</span>
+        &lt;discriminator-column length="34"/&gt;
+        ...
+    &lt;/entity&gt;
+
+    &lt;entity class="PostalAdministration"&gt;
+        &lt;primary-key-join-column name="id"/&gt;
+        &lt;named-query name="adminById"&gt;                                              <span class="co">(2)</span>
+            &lt;query&gt;select m from Administration m where m.id = :id&lt;/query&gt;
+            &lt;hint name="org.hibernate.timeout" value="200"/&gt;
+        &lt;/named-query&gt;
+        &lt;named-native-query name="allAdmin" result-set-mapping="adminrs"&gt;           <span class="co">(3)</span>
+            &lt;query&gt;select *, count(taxpayer_id) as taxPayerNumber 
+            from Administration, TaxPayer
+            where taxpayer_admin_id = admin_id group by ...&lt;/query&gt;
+            &lt;hint name="org.hibernate.timeout" value="200"/&gt;
+        &lt;/named-native-query&gt;
+        &lt;sql-result-set-mapping name="adminrs"&gt;                                     <span class="co">(4)</span>
+            &lt;entity-result entity-class="Administration"&gt;
+                &lt;field-result name="name" column="fld_name"/&gt;
+            &lt;/entity-result&gt;
+            &lt;column-result name="taxPayerNumber"/&gt;
+        &lt;/sql-result-set-mapping&gt;
+        &lt;attribute-override name="ground"&gt;                                          <span class="co">(5)</span>
+            &lt;column name="fld_ground" unique="true" scale="2"/&gt;
+        &lt;/attribute-override&gt;
+        &lt;association-override name="referer"&gt;
+            &lt;join-column name="referer_id" referenced-column-name="id"/&gt;
+        &lt;/association-override&gt;
+        ...
+    &lt;/entity&gt;
+&lt;/entity-mappings&gt;</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left">(1)</td><td valign="top" align="left"><p><tt class="literal">discriminator-value /
+            discriminator-column</tt>: defines the discriminator value
+            and the column holding it when the SINGLE_TABLE inheritance
+            strategy is chosen</p></td></tr><tr><td width="5%" valign="top" align="left">(2)</td><td valign="top" align="left"><p><tt class="literal">named-query</tt>: defines named queries and
+            possibly the hints associated to them. Those definitions are
+            additive to the one defined in annotations, if two definitions
+            have the same name, the XML one has priority.</p></td></tr><tr><td width="5%" valign="top" align="left">(3)</td><td valign="top" align="left"><p><tt class="literal">named-native-query</tt>: defines an named
+            native query and its sql result set mapping. Alternatively, you
+            can define the <tt class="literal">result-class</tt>. Those definitions
+            are additive to the one defined in annotations, if two definitions
+            have the same name, the XML one has priority.</p></td></tr><tr><td width="5%" valign="top" align="left">(4)</td><td valign="top" align="left"><p><tt class="literal">sql-result-set-mapping</tt>: describes the
+            result set mapping structure. You can define both entity and
+            column mappings. Those definitions are additive to the one defined
+            in annotations, if two definitions have the same name, the XML one
+            has priority</p></td></tr><tr><td width="5%" valign="top" align="left">(5)</td><td valign="top" align="left"><p><tt class="literal">attribute-override /
+            association-override</tt>: defines a column or join column
+            overriding. This overriding is additive to the one defined in
+            annotations</p></td></tr></table></div></div><p>Same applies for <tt class="literal">&lt;embeddable&gt;</tt> and
+      <tt class="literal">&lt;mapped-superclass&gt;</tt>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2875"></a>Overriding metadata through XML.1.3.&nbsp;Property level metadata</h3></div></div><div></div></div><p>You can of course defines XML overriding for properties. If
+      metadata complete is defined, then additional properties (ie at the Java
+      level) will be ignored. Otherwise, once you start overriding a property,
+      all annotations on the given property are ignored. All property level
+      metadata behave in <tt class="literal">entity/attributes</tt>,
+      <tt class="literal">mapped-superclass/attributes</tt> or
+      <tt class="literal">embeddable/attributes</tt>.</p><pre class="programlisting">    &lt;attributes&gt;
+        &lt;id name="id"&gt;
+            &lt;column name="fld_id"/&gt;
+            &lt;generated-value generator="generator" strategy="SEQUENCE"/&gt;
+            &lt;temporal&gt;DATE&lt;/temporal&gt;
+            &lt;sequence-generator name="generator" sequence-name="seq"/&gt;
+        &lt;/id&gt;
+        &lt;version name="version"/&gt;
+        &lt;embedded name="embeddedObject"&gt;
+            &lt;attribute-override name"subproperty"&gt;
+                &lt;column name="my_column"/&gt;
+            &lt;/attribute-override&gt;
+        &lt;/embedded&gt;
+        &lt;basic name="status" optional="false"&gt;
+            &lt;enumerated&gt;STRING&lt;/enumerated&gt;
+        &lt;/basic&gt;
+        &lt;basic name="serial" optional="true"&gt;
+            &lt;column name="serialbytes"/&gt;
+            &lt;lob/&gt;
+        &lt;/basic&gt;
+        &lt;basic name="terminusTime" fetch="LAZY"&gt;
+            &lt;temporal&gt;TIMESTAMP&lt;/temporal&gt;
+        &lt;/basic&gt;
+    &lt;/attributes&gt;</pre><p>You can override a property through <tt class="literal">id</tt>,
+      <tt class="literal">embedded-id</tt>, <tt class="literal">version</tt>,
+      <tt class="literal">embedded</tt> and <tt class="literal">basic</tt>. Each of these
+      elements can have subelements accordingly: <tt class="literal">lob</tt>,
+      <tt class="literal">temporal</tt>, <tt class="literal">enumerated</tt>,
+      <tt class="literal">column</tt>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2920"></a>Overriding metadata through XML.1.4.&nbsp;Association level metadata</h3></div></div><div></div></div><p>You can define XML overriding for associations. All association
+      level metadata behave in <tt class="literal">entity/attributes</tt>,
+      <tt class="literal">mapped-superclass/attributes</tt> or
+      <tt class="literal">embeddable/attributes</tt>.</p><pre class="programlisting">    &lt;attributes&gt;
+        &lt;one-to-many name="players" fetch="EAGER"&gt;
+            &lt;map-key name="name"/&gt;
+            &lt;join-column name="driver"/&gt;
+            &lt;join-column name="number"/&gt;
+        &lt;/one-to-many&gt;
+        &lt;many-to-many name="roads" target-entity="Administration"&gt;
+            &lt;order-by&gt;maxSpeed&lt;/order-by&gt;
+            &lt;join-table name="bus_road"&gt;
+                &lt;join-column name="driver"/&gt;
+                &lt;join-column name="number"/&gt;
+                &lt;inverse-join-column name="road_id"/&gt;
+                &lt;unique-constraint&gt;
+                    &lt;column-name&gt;driver&lt;/column-name&gt;
+                    &lt;column-name&gt;number&lt;/column-name&gt;
+                &lt;/unique-constraint&gt;
+            &lt;/join-table&gt;
+        &lt;/many-to-many&gt;
+        &lt;many-to-many name="allTimeDrivers" mapped-by="drivenBuses"&gt;
+    &lt;/attributes&gt;</pre><p>You can override an association through
+      <tt class="literal">one-to-many</tt>, <tt class="literal">one-to-one</tt>,
+      <tt class="literal">many-to-one</tt>, and <tt class="literal">many-to-many</tt>.
+      Each of these elements can have subelements accordingly:
+      <tt class="literal">join-table</tt> (which can have
+      <tt class="literal">join-column</tt>s and
+      <tt class="literal">inverse-join-column</tt>s),
+      <tt class="literal"><tt class="literal">join-column</tt>s</tt>,
+      <tt class="literal">map-key</tt>, and <tt class="literal">order-by</tt>.
+      <tt class="literal">mapped-by</tt> and <tt class="literal">target-entity</tt> can be
+      defined as attributes when it makes sense. Once again the structure is
+      reflects the annotations structure. You can find all semantic
+      informations in the chapter describing annotations.</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="validator"></a>Chapter&nbsp;4.&nbsp;Hibernate Validator</h2></div></div><div></div></div><p>Annotations are a very convenient and elegant way to specify invariant
+  constraints for a domain model. You can, for example, express that a
+  property should never be null, that the account balance should be strictly
+  positive, etc. These domain model constraints are declared in the bean
+  itself by annotating its properties. A validator can then read them and
+  check for constraint violations. The validation mechanism can be executed in
+  different layers in your application without having to duplicate any of
+  these rules (presentation layer, data access layer). Hibernate Validator has
+  been designed for that purpose.</p><p>Hibernate Validator works at two levels. First, it is able to check
+  in-memory instances of a class for constraint violations. Second, it can
+  apply the constraints to the Hibernate metamodel and incorporate them into
+  the generated database schema.</p><p>Each constraint annotation is associated to a validator implementation
+  responsible for checking the constraint on the entity instance. A validator
+  can also (optionally) apply the constraint to the Hibernate metamodel,
+  allowing Hibernate to generate DDL that expresses the constraint. With the
+  appropriate event listener, you can execute the checking operation on
+  inserts and updates done by Hibernate. Hibernate Validator is not limited to
+  use with Hibernate. You can easily use it anywhere in your
+  application.</p><p>When checking instances at runtime, Hibernate Validator returns
+  information about constraint violations in an array of
+  <tt class="classname">InvalidValue</tt>s. Among other information, the
+  <tt class="classname">InvalidValue</tt> contains an error description message
+  that can embed the parameter values bundle with the annotation (eg. length
+  limit), and message strings that may be externalized to a
+  <tt class="classname">ResourceBundle</tt>.</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="validator-constraints"></a>4.1.&nbsp;Constraints</h2></div></div><div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2999"></a>4.1.1.&nbsp;What is a constraint?</h3></div></div><div></div></div><p>A constraint is represented by an annotation. A constraint usually
+      has some attributes used to parameterize the constraints limits. The
+      constraint apply to the annotated element.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3004"></a>4.1.2.&nbsp;Built in constraints</h3></div></div><div></div></div><p>Hibernate Validator comes with some built-in constraints, which
+      covers most basic data checks. As we'll see later, you're not limited to
+      them, you can in a minute write your own constraints.</p><div class="table"><a name="d0e3009"></a><p class="title"><b>Table&nbsp;4.1.&nbsp;Built-in constraints</b></p><table summary="Built-in constraints" border="1"><colgroup><col align="center"><col><col><col></colgroup><thead><tr><th align="center">Annotation</th><th>Apply on</th><th>Runtime checking</th><th>Hibernate Metadata impact</th></tr></thead><tbody><tr><td align="center">@Length(min=, max=)</td><td>property (String)</td><td>check if the string length match the range</td><td>Column length will be set to max</td></tr><tr><td align="center">@Max(value=)</td><td>property (numeric or string representation of a
+              numeric)</td><td>check if the value is less than or equals to max</td><td>Add a check constraint on the column</td></tr><tr><td align="center">@Min(value=)</td><td>property (numeric or string representation of a
+              numeric)</td><td>check if the value is more than or equals to min</td><td>Add a check constraint on the column</td></tr><tr><td align="center">@NotNull</td><td>property</td><td>check if the value is not null</td><td>Column(s) are not null</td></tr><tr><td align="center">@Past</td><td>property (date or calendar)</td><td>check if the date is in the past</td><td>Add a check constraint on the column</td></tr><tr><td align="center">@Future</td><td>property (date or calendar)</td><td>check if the date is in the future</td><td>none</td></tr><tr><td align="center">@Pattern(regex="regexp", flag=)</td><td>property (string)</td><td>check if the property match the regular expression given
+              a match flag (see <tt class="classname"> java.util.regex.Pattern
+              </tt> )</td><td>none</td></tr><tr><td align="center">@Range(min=, max=)</td><td>property (numeric or string representation of a
+              numeric)</td><td>check if the value is between min and max
+              (included)</td><td>Add a check constraint on the column</td></tr><tr><td align="center">@Size(min=, max=)</td><td>property (array, collection, map)</td><td>check if the element size is between min and max
+              (included)</td><td>none</td></tr><tr><td align="center">@AssertFalse</td><td>property</td><td>check that the method evaluates to false (useful for
+              constraints expressed in code rather than annotations)</td><td>none</td></tr><tr><td align="center">@AssertTrue</td><td>property</td><td>check that the method evaluates to true (useful for
+              constraints expressed in code rather than annotations)</td><td>none</td></tr><tr><td align="center">@Valid</td><td>property (object)</td><td>perform validation recursively on the associated object.
+              If the object is a Collection or an array, the elements are
+              validated recursively. If the object is a Map, the value
+              elements are validated recursively.</td><td>none</td></tr><tr><td align="center">@Email</td><td>property (String)</td><td>check whether the string is conform to the email address
+              specification</td><td>none</td></tr></tbody></table></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="validator-constraints-error"></a>4.1.3.&nbsp;Error messages</h3></div></div><div></div></div><p>Hibernate Validator comes with a default set of error messages
+      translated in about ten languages (if yours is not part of it, please
+      sent us a patch). You can override those messages by creating a
+      <tt class="filename">ValidatorMessages.properties</tt> or
+      (<tt class="filename">ValidatorMessages_loc.properties</tt>) and override the
+      needed keys. You can even add your own additional set of messages while
+      writing your validator annotations. If Hibernate Validator cannot
+      resolve a key from your resourceBundle nor from ValidatorMessage, it
+      falls back to the default built-in values.</p><p>Alternatively you can provide a
+      <tt class="classname">ResourceBundle</tt> while checking programmatically
+      the validation rules on a bean or if you want a completly different
+      interpolation mechanism, you can provide an implementation of
+      <tt class="literal">org.hibernate.validator.MessageInterpolator</tt> (check
+      the JavaDoc for more informations).</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3164"></a>4.1.4.&nbsp;Writing your own constraints</h3></div></div><div></div></div><p>Extending the set of built-in constraints is extremely easy. Any
+      constraint consists of two pieces: the constraint
+      <span class="emphasis"><em>descriptor</em></span> (the annotation) and the constraint
+      <span class="emphasis"><em>validator</em></span> (the implementation class). Here is a
+      simple user-defined descriptor:</p><pre class="programlisting">@ValidatorClass(CapitalizedValidator.class)
+@Target(METHOD) 
+@Retention(RUNTIME)
+@Documented
+public @interface Capitalized {
+    CapitalizeType type() default Capitalize.FIRST;
+    String message() default "has incorrect capitalization";
+}</pre><p><tt class="literal">type</tt> is a parameter describing how the property
+      should to be capitalized. This is a user parameter fully dependant on
+      the annotation business.</p><p><tt class="literal">message</tt> is the default string used to describe
+      the constraint violation and is mandatory. You can hard code the string
+      or you can externalize part/all of it through the Java ResourceBundle
+      mechanism. Parameters values are going to be injected inside the message
+      when the <tt class="literal">{parameter}</tt> string is found (in our example
+      <tt class="literal">Capitalization is not {type}</tt> would generate
+      <tt class="literal">Capitalization is not FIRST</tt>), externalizing the whole
+      string in <tt class="filename">ValidatorMessages.properties</tt> is
+      considered good practice. See <a href="#validator-constraints-error">Error messages</a>.</p><pre class="programlisting">@ValidatorClass(CapitalizedValidator.class)
+@Target(METHOD) 
+@Retention(RUNTIME)
+@Documented
+public @interface Capitalized {
+    CapitalizeType type() default Capitalize.FIRST;
+    String message() default "{validator.capitalized}";
+}
+
+...
+#in ValidatorMessages.properties
+validator.capitalized=<tt class="literal">Capitalization is not {type}</tt></pre><p>As you can see the {} notation is recursive.</p><p>To link a descriptor to its validator implementation, we use the
+      <tt class="literal">@ValidatorClass</tt> meta-annotation. The validator class
+      parameter must name a class which implements
+      <tt class="literal">Validator&lt;ConstraintAnnotation&gt;</tt>.</p><p>We now have to implement the validator (ie. the rule checking
+      implementation). A validation implementation can check the value of the
+      a property (by implementing <tt class="literal">PropertyConstraint</tt>)
+      and/or can modify the hibernate mapping metadata to express the
+      constraint at the database level (by implementing
+      <tt class="literal">PersistentClassConstraint</tt>).</p><pre class="programlisting">public class CapitalizedValidator 
+        implements Validator&lt;Capitalized&gt;, PropertyConstraint {
+    private CapitalizeType type;
+
+    //part of the Validator&lt;Annotation&gt; contract, 
+    //allows to get and use the annotation values
+    public void initialize(Capitalized parameters) {
+        type = parameters.type();
+    }
+
+    //part of the property constraint contract
+    public boolean isValid(Object value) {
+        if (value==null) return true;
+        if ( !(value instanceof String) ) return false;
+        String string = (String) value;
+        if (type == CapitalizeType.ALL) {
+            return string.equals( string.toUpperCase() );
+        }
+        else {
+            String first = string.substring(0,1);
+            return first.equals( first.toUpperCase();
+        }
+    }
+}</pre><p>The <tt class="literal">isValid()</tt> method should return false if the
+      constraint has been violated. For more examples, refer to the built-in
+      validator implementations.</p><p>We only have seen property level validation, but you can write a
+      Bean level validation annotation. Instead of receiving the return
+      instance of a property, the bean itself will be passed to the validator.
+      To activate the validation checking, just annotated the bean itself
+      instead. A small sample can be found in the unit test suite.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3230"></a>4.1.5.&nbsp;Annotating your domain model</h3></div></div><div></div></div><p>Since you are already familiar with annotations now, the syntax
+      should be very familiar.</p><pre class="programlisting">public class Address {
+    private String line1;
+    private String line2;
+    private String zip;
+    private String state;
+    private String country;
+    private long id;
+    
+    // a not null string of 20 characters maximum
+    @Length(max=20) 
+    @NotNull
+    public String getCountry() {
+        return country;
+    }
+    
+    // a non null string
+    @NotNull
+    public String getLine1() {
+        return line1;
+    }
+
+    //no constraint    
+    public String getLine2() {
+        return line2;
+    }
+    
+    // a not null string of 3 characters maximum
+    @Length(max=3) @NotNull
+    public String getState() {
+        return state;
+    }
+
+    // a not null numeric string of 5 characters maximum
+    // if the string is longer, the message will 
+    //be searched in the resource bundle at key 'long'
+    @Length(max=5, message="{long}")
+    @Pattern(regex="[0-9]+")
+    @NotNull
+    public String getZip() {
+        return zip;
+    }
+    
+    // should always be true
+    @AssertTrue
+    public boolean isValid() {
+        return true;
+    }
+
+    // a numeric between 1 and 2000
+    @Id @Min(1)
+    @Range(max=2000)
+    public long getId() {
+        return id;
+    }
+}</pre><p>While the example only shows public property validation, you can
+      also annotate fields of any kind of visibility.</p><pre class="programlisting">@MyBeanConstraint(max=45)
+public class Dog {
+    @AssertTrue private boolean isMale;
+    @NotNull protected String getName() { ... };
+    ...
+}</pre><p>You can also annotate interfaces. Hibernate Validator will check
+      all superclasses and interfaces extended or implemented by a given bean
+      to read the appropriate validator annotations.</p><pre class="programlisting">public interface Named {
+    @NotNull String getName();
+    ...
+}
+
+public class Dog implements Named {
+
+    @AssertTrue private boolean isMale;
+
+    public String getName() { ... };
+
+}</pre><p>The name property will be checked for nullity when the Dog bean is
+      validated.</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e3247"></a>4.2.&nbsp;Using the Validator framework</h2></div></div><div></div></div><p>Hibernate Validator is intended to be used to implement
+    multi-layered data validation, where we express constraints in one place
+    (the annotated domain model) and apply them at various different layers of
+    the application.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3252"></a>4.2.1.&nbsp;Database schema-level validation</h3></div></div><div></div></div><p>Out of the box, Hibernate Annotations will translate the
+      constraints you have defined for your entities into mapping metadata.
+      For example, if a property of your entity is annotated
+      <tt class="literal">@NotNull</tt>, its columns will be declared as
+      <tt class="literal">not null</tt> in the DDL schema generated by
+      Hibernate.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3263"></a>4.2.2.&nbsp;Hibernate event-based validation</h3></div></div><div></div></div><p>Hibernate Validator has two built-in Hibernate event listeners.
+      Whenever a <tt class="literal">PreInsertEvent</tt> or
+      <tt class="literal">PreUpdateEvent</tt> occurs, the listeners will verify all
+      constraints of the entity instance and throw an exception if any
+      constraint is violated. Basically, objects will be checked before any
+      inserts and before any updates made by Hibernate. This is the most
+      convenient and the easiest way to activate the validation process. On
+      constraint violation, the event will raise a runtime
+      <tt class="classname">InvalidStateException</tt> which contains an array of
+      <tt class="literal">InvalidValue</tt>s describing each failure.</p><pre class="programlisting">&lt;hibernate-configuration&gt;
+    ...
+    &lt;event type="pre-update"&gt;
+        &lt;listener 
+          class="org.hibernate.validator.event.ValidatePreUpdateEventListener"/&gt;
+    &lt;/event&gt;
+    &lt;event type="pre-insert"&gt;
+        &lt;listener 
+          class="org.hibernate.validator.event.ValidatePreInsertEventListener"/&gt;
+    &lt;/event&gt;
+&lt;/hibernate-configuration&gt;</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>When using Hibernate Entity Manager, the Validation framework
+          is activated out of the box. If the beans are not annotated with
+          validation annotations, there is no performance cost.</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3286"></a>4.2.3.&nbsp;Application-level validation</h3></div></div><div></div></div><p>Hibernate Validator can be applied anywhere in your application
+      code.</p><pre class="programlisting">ClassValidator personValidator = new ClassValidator( Person.class );
+ClassValidator addressValidator = new ClassValidator( Address.class, ResourceBundle.getBundle("messages", Locale.ENGLISH) );
+
+InvalidValue[] validationMessages = addressValidator.getInvalidValues(address);</pre><p>The first two lines prepare the Hibernate Validator for class
+      checking. The first one relies upon the error messages embedded in
+      Hibernate Validator (see <a href="#validator-constraints-error">Error messages</a>), the second one uses a
+      resource bundle for these messages. It is considered a good practice to
+      execute these lines once and cache the validator instances.</p><p>The third line actually validates the <tt class="literal">Address</tt>
+      instance and returns an array of <tt class="literal">InvalidValue</tt>s. Your
+      application logic will then be able to react to the failure.</p><p>You can also check a particular property instead of the whole
+      bean. This might be useful for property per property user
+      interaction</p><pre class="programlisting">ClassValidator addressValidator = new ClassValidator( Address.class, ResourceBundle.getBundle("messages", Locale.ENGLISH) );
+
+//only get city property invalid values
+InvalidValue[] validationMessages = addressValidator.getInvalidValues(address, "city");
+
+//only get potential city property invalid values
+InvalidValue[] validationMessages = addressValidator.getPotentialInvalidValues("city", "Paris")</pre></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3309"></a>4.2.4.&nbsp;Validation informations</h3></div></div><div></div></div><p>As a validation information carrier, hibernate provide an array of
+      <tt class="classname">InvalidValue</tt>. Each
+      <tt class="literal">InvalidValue</tt> has a buch of methods describing the
+      individual issues.</p><p><tt class="methodname">getBeanClass()</tt> retrieves the failing bean
+      type</p><p><tt class="methodname">getBean()</tt>retrieves the failing instance
+      (if any ie not when using
+      <tt class="methodname">getPotentianInvalidValues()</tt>)</p><p><tt class="methodname">getValue()</tt> retrieves the failing
+      value</p><p><tt class="methodname">getMessage()</tt> retrieves the proper
+      internationalized error message</p><p><tt class="methodname">getRootBean()</tt> retrieves the root bean
+      instance generating the issue (useful in conjunction with
+      <tt class="literal">@Valid</tt>), is null if getPotentianInvalidValues() is
+      used.</p><p><tt class="literal">getPropertyPath()</tt> retrieves the dotted path of
+      the failing property starting from the root bean</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="lucene"></a>Chapter&nbsp;5.&nbsp;Hibernate Lucene Integration</h2></div></div><div></div></div><p>Lucene is a high-performance Java search engine library available from
+  the Apache Software Foundation. Hibernate Annotations includes a package of
+  annotations that allows you to mark any domain model object as indexable and
+  have Hibernate maintain a Lucene index of any instances persisted via
+  Hibernate.</p><p>Hibernate Lucene is a work in progress and new features are cooking in
+  this area. So expect some compatibility changes in subsequent
+  versions.</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="lucene-mapping"></a>5.1.&nbsp;Mapping the entities to the index</h2></div></div><div></div></div><p>First, we must declare a persistent class as indexable. This is done
+    by annotating the class with <tt class="literal">@Indexed</tt>:</p><pre class="programlisting">@Entity
+@Indexed(index="indexes/essays")
+public class Essay {
+    ...
+}</pre><p>The <tt class="literal">index</tt> attribute tells Hibernate what the
+    lucene directory name is (usually a directory on your file system). If you
+    wish to define a base directory for all lucene indexes, you can use the
+    <tt class="literal">hibernate.lucene.default.indexDir</tt> property in your
+    configuration file.</p><p>Lucene indexes contain four kinds of fields:
+    <span class="emphasis"><em>keyword</em></span> fields, <span class="emphasis"><em>text</em></span> fields,
+    <span class="emphasis"><em>unstored</em></span> fields and <span class="emphasis"><em>unindexed</em></span>
+    fields. Hibernate Annotations provides annotations to mark a property of
+    an entity as one of the first three kinds of indexed fields.</p><pre class="programlisting">@Entity
+@Indexed(index="indexes/essays")
+public class Essay {
+    ...
+
+    @Id
+    @Keyword(id=true)
+    public Long getId() { return id; }
+    
+    @Text(name="Abstract")
+    public String getSummary() { return summary; }
+    
+    @Lob
+    @Unstored
+    public String getText() { return text; }
+    
+}</pre><p>These annotations define an index with three fields:
+    <tt class="literal">id</tt>, <tt class="literal">Abstract</tt> and
+    <tt class="literal">text</tt>. Note that by default the field name is
+    decapitalized, following the JavaBean specification.</p><p>Note: you <span class="emphasis"><em>must</em></span> specify
+    <tt class="literal">@Keyword(id=true)</tt> on the identifier property of your
+    entity class.</p><p>Lucene has the notion of <span class="emphasis"><em>boost factor</em></span>. It's a
+    way to give more weigth to a field or to an indexed element over an other
+    during the indexation process. You can use <tt class="literal">@Boost</tt> at
+    the field or the class level.</p><p>The analyzer class used to index the elements is configurable
+    through the <tt class="literal">hibernate.lucene.analyzer</tt> property. If none
+    defined,
+    <tt class="classname">org.apache.lucene.analysis.standard.StandardAnalyzer</tt>
+    is used as the default.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="lucene-configuration"></a>5.2.&nbsp;Configuration</h2></div></div><div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="lucene-configuration-directory"></a>5.2.1.&nbsp;directory configuration</h3></div></div><div></div></div><p>Lucene has a notion of Directory where the index is stored. The
+      Directory implementation can be customized but Lucene comes bundled with
+      a file system and a full memory implementation. Hibernate Lucene has the
+      notion of <tt class="literal">DirectoryProvider</tt> that handle the
+      configuration and the initialization of the Lucene Directory.</p><div class="table"><a name="d0e3437"></a><p class="title"><b>Table&nbsp;5.1.&nbsp;List of built-in Directory Providers</b></p><table summary="List of built-in Directory Providers" border="1"><colgroup><col><col><col></colgroup><thead><tr><th align="center">Class</th><th align="center">description</th><th align="center">Properties</th></tr></thead><tbody><tr><td>org.hibernate.lucene.store.FSDirectoryProvider</td><td>File system based directory. The directory used will be
+              &lt;indexBase&gt;/&lt;<tt class="literal">@Index.name</tt>&gt;</td><td><tt class="literal">indexBase</tt>: Base directory</td></tr><tr><td>org.hibernate.lucene.store.RAMDirectoryProvider</td><td>Memory based directory, the directory will be uniquely
+              indentified by the <tt class="literal">@Index.name</tt>
+              element</td><td>none</td></tr></tbody></table></div><p>If the built-in directory providers does not fit your needs, you
+      can write your own directory provider by implementing the
+      <tt class="classname">org.hibernate.store.DirectoryProvider</tt>
+      interface</p><p>Each indexed entity is associated to a Lucene index (an index can
+      be shared by several entities but this is not usually the case). You can
+      configure the index through properties prefixed by
+      <tt class="literal"><tt class="literal">hibernate.lucene.&lt;indexname&gt;</tt></tt>.
+      Default properties inherited to all indexes can be defined using the
+      prefix hibernate.lucene.default.</p><p>To define the directory provider of a given index, you use the
+      <tt class="literal">hibernate.lucene.&lt;indexname&gt;.directory_provider</tt></p><pre class="programlisting">hibernate.lucene.default.directory_provider org.hibernate.lucene.store.FSDirectoryProvider
+hibernate.lucene.default.indexDir=/usr/lucene/indexes
+
+hibernate.lucene.Rules.directory_provider org.hibernate.lucene.store.RAMDirectoryProvider
+</pre><p>applied on</p><pre class="programlisting">@Indexed(name="Status")
+public class Status { ... }
+
+@Indexed(name="Rules")
+public class Rule { ... }</pre><p>will create a file system directory in
+      <tt class="filename">/usr/lucene/indexes/Status</tt> where the Status
+      entities will be indexed, and use an in memory directory named
+      <tt class="literal">Rules</tt> where Rule entities will be indexed.</p><p>So you can easily defined common rules like the directory provider
+      and base directory, and overide those default later on on a per index
+      basis.</p><p>Writing your own DirectoryProvider, you can benefit this
+      configuration mechanism too.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="lucene-configuration-event"></a>5.2.2.&nbsp;Enabling automatic indexing</h3></div></div><div></div></div><p>Finally, we enable the <tt class="literal">LuceneEventListener</tt> for
+      the three Hibernate events that occur after changes are committed to the
+      database.</p><pre class="programlisting">&lt;hibernate-configuration&gt;
+    ...
+    &lt;event type="post-commit-update" 
+        &lt;listener  
+            class="org.hibernate.lucene.event.LuceneEventListener"/&gt;
+    &lt;/event&gt;
+    &lt;event type="post-commit-insert" 
+        &lt;listener 
+            class="org.hibernate.lucene.event.LuceneEventListener"/&gt;
+    &lt;/event&gt;
+    &lt;event type="post-commit-delete" 
+        &lt;listener 
+            class="org.hibernate.lucene.event.LuceneEventListener"/&gt;
+    &lt;/event&gt;
+&lt;/hibernate-configuration&gt;</pre></div></div></div></div></body></html>
