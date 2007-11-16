@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <bean id="userService" class="example.chapter8.UserServiceImpl" />				
+
+    <bean id="rmiService" class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="UserService" />
+        <property name="service" ref="userService" />
+        <property name="serviceInterface" value="example.chapter8.UserService" />
+        <property name="registryPort" value="1099" />
+    </bean>
+
+</beans>
