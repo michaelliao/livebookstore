@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <!-- 单一任务 -->
+
+    <bean id="reportTask" class="example.chapter9.ReportTimerTask" />
+
+    <!-- 周期性任务 -->
+
+    <bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <!-- 启动后等待10秒，然后开始执行 -->
+        <property name="delay" value="10000" />
+        <!-- 每60秒执行一次 -->
+        <property name="period" value="60000" />
+        <property name="timerTask" ref="reportTask" />
+    </bean>
+
+    <!-- 启动任务的工厂 -->
+
+    <bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
+        <property name="scheduledTimerTasks">
+            <list>
+                <ref bean="scheduledTask" />
+            </list>
+        </property>
+    </bean>
+
+</beans>
