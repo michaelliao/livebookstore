@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <!-- Job -->
+
+    <bean name="reportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="example.chapter9.Report" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="name" value="Micheal" />
+            </map>
+        </property>
+    </bean>
+
+    <bean name="checkDiskFreeSpace" class="example.chapter9.CheckDiskFreeSpace" />
+
+    <bean name="checkDiskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="checkDiskFreeSpace" />
+        <property name="targetMethod" value="check" />
+        <property name="concurrent" value="false" />
+    </bean>
+
+    <!-- Trigger -->
+
+    <!-- 周期性运行checkDiskJob -->
+    <bean id="repeatTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="checkDiskJob" />
+        <!-- 1分钟后启动 -->
+        <property name="startDelay" value="60000" />
+        <!-- 5分钟检查一次 -->
+        <property name="repeatInterval" value="300000" />
+    </bean>
+
+    <!-- 定时运行reportJob -->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="reportJob" />
+        <!-- 每周周一至周五中午12:00执行 -->
+        <property name="cronExpression" value="0 0 12 ? * MON-FRI" />
+    </bean>
+
+    <!-- 启动调度器 -->
+
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="repeatTrigger" />
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
+
+</beans>
