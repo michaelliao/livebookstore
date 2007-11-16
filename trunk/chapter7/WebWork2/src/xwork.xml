@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork 
+          PUBLIC 
+          "-//OpenSymphony Group//XWork 1.0//EN" 
+          "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+    <include file="webwork-default.xml"/>
+
+    <package name="default" extends="webwork-default">
+
+        <action name="listBooks" class="example.chapter7.webwork2.ListBooksAction">
+            <result name="success" type="dispatcher">/listBooks.jsp</result>
+        </action>
+
+        <action name="bookDetail" class="example.chapter7.webwork2.BookDetailAction">
+            <result name="success" type="dispatcher">/bookDetail.jsp</result>
+            <result name="error" type="dispatcher">/notFound.jsp</result>
+        </action>
+
+    </package>
+</xwork>
