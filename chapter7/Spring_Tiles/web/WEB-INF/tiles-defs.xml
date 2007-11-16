@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.3//EN"
+       "http://struts.apache.org/dtds/tiles-config_1_3.dtd">
+<tiles-definitions>
+
+    <definition name="default" path="/template.jsp">
+        <put name="title"  value="Default Title" />
+        <put name="header" value="/header.jsp" />
+        <put name="footer" value="/footer.jsp" />
+    </definition>
+
+    <definition name="login" extends="default" >
+        <put name="title" value="Please login" />
+        <put name="body"  value="/login.jsp" />
+    </definition>
+
+    <definition name="welcome" extends="default">
+        <put name="title" value="Welcome!" />
+        <put name="body"  value="/welcome.jsp" />
+    </definition>
+</tiles-definitions>
