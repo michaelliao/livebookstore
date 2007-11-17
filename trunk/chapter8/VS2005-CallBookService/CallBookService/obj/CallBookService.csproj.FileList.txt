@@ -1,0 +1,6 @@
+obj\Debug\ResolveAssemblyReference.cache
+bin\Debug\CallBookService.exe.config
+bin\Debug\CallBookService.exe
+bin\Debug\CallBookService.pdb
+obj\Debug\CallBookService.exe
+obj\Debug\CallBookService.pdb
