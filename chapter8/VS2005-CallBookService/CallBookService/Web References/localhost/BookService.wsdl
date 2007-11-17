@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns:tns="http://www.livebookstore.net/BookService" xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://chapter8.example" targetNamespace="http://www.livebookstore.net/BookService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.livebookstore.net/BookService">
+      <xsd:element name="search">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="in0" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="out" nillable="true" type="ns1:ArrayOfBook" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://chapter8.example">
+      <xsd:complexType name="ArrayOfBook">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Book" nillable="true" type="ns1:Book" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Book">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="author" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="name" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="searchRequest">
+    <wsdl:part name="parameters" element="tns:search" />
+  </wsdl:message>
+  <wsdl:message name="searchResponse">
+    <wsdl:part name="parameters" element="tns:searchResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BookServicePortType">
+    <wsdl:operation name="search">
+      <wsdl:input name="searchRequest" message="tns:searchRequest" />
+      <wsdl:output name="searchResponse" message="tns:searchResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BookServiceHttpBinding" type="tns:BookServicePortType">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="search">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="searchRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="searchResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BookService">
+    <wsdl:port name="BookServiceHttpPort" binding="tns:BookServiceHttpBinding">
+      <wsdlsoap:address location="http://localhost:8080/services/BookService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

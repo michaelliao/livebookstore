@@ -1,0 +1,5 @@
+这个工程是Visual Studio 2005的C# Console Application工程，用于演示如何调用ExportWS发布的Web服务，请用Visual Studio 2005打开CallWebService.sln文件。
+
+要在Visual Studio 2005中运行这个C#客户端程序，请先运行ExportWS工程下的start_resin.bat启动Resin服务器，然后在Visual Studio 2005中选择菜单Debug->Start Debugging，运行成功后，按任意键退出。
+
+要直接运行这个示例程序，请先运行ExportWS工程下的start_resin.bat启动Resin服务器，然后运行CallBookService/bin/Debug/CallBookService.exe，运行成功后，按任意键退出。
