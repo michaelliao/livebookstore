@@ -28,8 +28,7 @@ public class GlobalHandlerExceptionResolver implements HandlerExceptionResolver 
     @SuppressWarnings("unchecked")
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         String url = HttpUtil.getURL(request);
-        log.info("Exception from URL: " + url);
-        log.info("Exception: " + ex.getMessage());
+        log.warn("Exception from URL: " + url, ex);
         Map map = new HashMap();
         String message = ex.getMessage();
         map.put("url", url);
