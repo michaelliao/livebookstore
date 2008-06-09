@@ -24,7 +24,7 @@ public class AccountDaoImpl extends GenericHibernateDao<Account> implements Acco
     }
 
     public Account queryUserDetails(String username) {
-        Account account = (Account) queryForObject(
+        Account account = queryForObject(
                 "select new Account(a.username, a.password, a.email, a.privilege) from Account as a where a.username=?",
                 new Object[] {username}
         );
@@ -36,7 +36,6 @@ public class AccountDaoImpl extends GenericHibernateDao<Account> implements Acco
     private static final String QUERY_ACCOUNT_ASC = "select new Account(a.username, a.password, a.email, a.privilege, a.createdDate) from Account as a order by a.createdDate";
     private static final String QUERY_ACCOUNT_DESC = "select new Account(a.username, a.password, a.email, a.privilege, a.createdDate) from Account as a order by a.createdDate desc";
 
-    @SuppressWarnings("unchecked")
     public List<Account> query(Page page, boolean asc) {
         return queryForList(
                 "select count(*) from Account as a",

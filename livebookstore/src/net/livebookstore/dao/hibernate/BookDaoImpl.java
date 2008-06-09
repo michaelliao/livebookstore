@@ -22,7 +22,6 @@ public class BookDaoImpl extends GenericHibernateDao<Book> implements BookDao {
         super(Book.class);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Book> query(final Category c, final Page page) {
         return queryForList(
                 "select count(*) from Book as b where bitand(b.categoryId, ?) = ?",
@@ -32,7 +31,6 @@ public class BookDaoImpl extends GenericHibernateDao<Book> implements BookDao {
         );
     }
 
-    @SuppressWarnings("unchecked")
     public List<Book> queryFavorite(Account account, Page page) {
         return queryForList(
                 "select count(*) from FavoriteBook as fb inner join fb.book as b where fb.account=?",
@@ -43,7 +41,7 @@ public class BookDaoImpl extends GenericHibernateDao<Book> implements BookDao {
     }
 
     public boolean createFavorite(Account account, Book book) {
-        Long count = (Long)queryForObject(
+        Long count = queryForObject(
                 "select count(*) from FavoriteBook as fb where fb.account=? and fb.book=?",
                 new Object[] {account, book}
         );
@@ -71,7 +69,6 @@ public class BookDaoImpl extends GenericHibernateDao<Book> implements BookDao {
         hibernateTemplate.execute(action);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Book> queryTopSales(final Category c, final int max) {
         Page page = new Page(1, max);
         return queryForList(

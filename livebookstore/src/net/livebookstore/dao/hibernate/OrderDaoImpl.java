@@ -39,14 +39,12 @@ public class OrderDaoImpl extends GenericHibernateDao<Order> implements OrderDao
         order.setOrderItems(items);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Order> queryOrders(Account account, Page page) {
         String selectCount = "select count(*) from Order as o where o.account=?";
         String select = "select o from Order as o where o.account=? order by o.createdDate desc";
         return queryForList(selectCount, select, new Object[] {account}, page);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Order> queryOrders(Page page) {
         String selectCount = "select count(*) from Order as o";
         String select = "select o from Order as o order by o.createdDate desc";

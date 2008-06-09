@@ -19,7 +19,6 @@ public class CommentDaoImpl extends GenericHibernateDao<Comment> implements Comm
         super(Comment.class);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Comment> queryComments(Book book, Page page) {
         return queryForList(
                 "select count(*) from Comment as c where c.book=?",
@@ -32,7 +31,7 @@ public class CommentDaoImpl extends GenericHibernateDao<Comment> implements Comm
     @Override
     public void create(final Comment comment) {
         // check if already rated:
-        Long ratingCount = (Long)queryForObject(
+        Long ratingCount = queryForObject(
                 "select count(*) from Comment as c where c.book=? and c.account=?",
                 new Object[] {comment.getBook(), comment.getAccount()}
         );
@@ -41,11 +40,11 @@ public class CommentDaoImpl extends GenericHibernateDao<Comment> implements Comm
         if(alreadyRated)
             return;
         // update book's average rating and rating count:
-        Long sum = (Long)queryForObject(
+        Long sum = queryForObject(
                 "select sum(c.rating) from Comment as c where c.book=?",
                 new Object[] {comment.getBook()}
         ); 
-        Long count = (Long)queryForObject(
+        Long count = queryForObject(
                 "select count(*) from Comment as c where c.book=?",
                 new Object[] {comment.getBook()}
         );

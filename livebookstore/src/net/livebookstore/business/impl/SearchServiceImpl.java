@@ -12,6 +12,7 @@ import net.livebookstore.domain.Page;
 import org.apache.commons.logging.*;
 import org.compass.annotations.config.CompassAnnotationsConfiguration;
 import org.compass.core.Compass;
+import org.compass.core.CompassHighlighter;
 import org.compass.core.CompassHits;
 import org.compass.core.CompassSession;
 import org.compass.core.CompassTransaction;
@@ -64,6 +65,8 @@ public class SearchServiceImpl implements SearchService {
         compass = new CompassAnnotationsConfiguration()
                 .setConnection(directory)
                 .addClass(Book.class)
+                .setSetting("compass.engine.highlighter.default.formatter.simple.pre", "<span class=\"highlight\">")
+                .setSetting("compass.engine.highlighter.default.formatter.simple.post", "</span>")
                 .registerConverter("date", dateConverter)
                 .buildCompass();
     }
@@ -165,7 +168,15 @@ public class SearchServiceImpl implements SearchService {
                 end = count;
             List<Book> results = new ArrayList<Book>(end-start);
             for(int i=start; i<end; i++) {
-                results.add((Book)hits.data(i));
+                Book book = (Book) hits.data(i);
+                CompassHighlighter hl = hits.highlighter(i);
+                String name = hl.fragment("name");
+                String author = hl.fragment("author");
+                if(name!=null)
+                    book.setName(name);
+                if(author!=null)
+                    book.setAuthor(author);
+                results.add(book);
             }
             tx.commit();
             return results;
