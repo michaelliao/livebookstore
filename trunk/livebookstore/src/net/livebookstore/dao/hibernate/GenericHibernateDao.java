@@ -109,11 +109,11 @@ public abstract class GenericHibernateDao<T> {
      * @param values For prepared statements.
      * @param page Page object for store page information.
      */
-    protected List queryForList(final String selectCount, final String select, final Object[] values, final Page page) {
-        Long count = (Long)queryForObject(selectCount, values);
+    protected <K> List<K> queryForList(final String selectCount, final String select, final Object[] values, final Page page) {
+        Long count = queryForObject(selectCount, values);
         page.setTotalCount(count.intValue());
         if(page.isEmpty())
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         return queryForList(select, values, page);
     }
 
@@ -125,7 +125,8 @@ public abstract class GenericHibernateDao<T> {
      * @param values For prepared statements.
      * @param page Page object for store page information.
      */
-    protected List queryForList(final String select, final Object[] values, final Page page) {
+    @SuppressWarnings("unchecked")
+    protected <K> List<K> queryForList(final String select, final Object[] values, final Page page) {
         // select:
         HibernateCallback selectCallback = new HibernateCallback() {
             public Object doInHibernate(Session session) {
@@ -139,7 +140,7 @@ public abstract class GenericHibernateDao<T> {
                             .list();
             }
         };
-        return (List) hibernateTemplate.executeFind(selectCallback);
+        return (List<K>) hibernateTemplate.executeFind(selectCallback);
     }
 
     /**
@@ -148,7 +149,8 @@ public abstract class GenericHibernateDao<T> {
      * @param select HQL for "select * from ..." and should return unique object.
      * @param values For prepared statements.
      */
-    protected Object queryForObject(final String select, final Object[] values) {
+    @SuppressWarnings("unchecked")
+    protected <K> K queryForObject(final String select, final Object[] values) {
         HibernateCallback selectCallback = new HibernateCallback() {
             public Object doInHibernate(Session session) {
                 Query query = session.createQuery(select);
@@ -159,22 +161,24 @@ public abstract class GenericHibernateDao<T> {
                 return query.uniqueResult();
             }
         };
-        return hibernateTemplate.execute(selectCallback);
+        return (K) hibernateTemplate.execute(selectCallback);
     }
 
-    protected Object queryForObject(final DetachedCriteria dc) {
+    @SuppressWarnings("unchecked")
+    protected <K> K queryForObject(final DetachedCriteria dc) {
         HibernateCallback callback = new HibernateCallback() {
             public Object doInHibernate(Session session) {
                 return dc.getExecutableCriteria(session).uniqueResult();
             }
         };
-        return hibernateTemplate.execute(callback);
+        return (K) hibernateTemplate.execute(callback);
     }
 
     /**
      * Prepared for sub-class for convenience.
      */
-    protected List queryForList(final DetachedCriteria dc, final Page page) {
+    @SuppressWarnings("unchecked")
+    protected <K> List<K> queryForList(final DetachedCriteria dc, final Page page) {
         HibernateCallback callback = new HibernateCallback() {
             public Object doInHibernate(Session session) {
                 Criteria c = dc.getExecutableCriteria(session);
@@ -183,19 +187,20 @@ public abstract class GenericHibernateDao<T> {
                 return PaginationCriteria.query(c, page);
             }
         };
-        return hibernateTemplate.executeFind(callback);
+        return (List<K>) hibernateTemplate.executeFind(callback);
     }
 
     /**
      * Prepared for sub-class for convenience.
      */
-    protected Object uniqueResult(final DetachedCriteria dc) {
+    @SuppressWarnings("unchecked")
+    protected <K> K uniqueResult(final DetachedCriteria dc) {
         HibernateCallback callback = new HibernateCallback() {
             public Object doInHibernate(Session session) {
                 return dc.getExecutableCriteria(session).uniqueResult();
             }
         };
-        return hibernateTemplate.execute(callback);
+        return (K) hibernateTemplate.execute(callback);
     }
 
 }
@@ -212,6 +217,7 @@ class PaginationCriteria {
     private static Log log = LogFactory.getLog(PaginationCriteria.class);
     private static Field orderEntriesField = getField(Criteria.class, "orderEntries");
 
+    @SuppressWarnings("unchecked")
     public static List query(Criteria c, Page page) {
         // first we must detect if any Order defined:
         // Hibernate code: private List orderEntries = new ArrayList();

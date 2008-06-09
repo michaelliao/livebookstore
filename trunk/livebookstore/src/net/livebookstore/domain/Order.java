@@ -1,11 +1,19 @@
 package net.livebookstore.domain;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.hibernate.validator.*;
+import org.hibernate.annotations.Index;
+import org.hibernate.validator.Range;
 
 /**
  * An Order belongs to an Account and has 1:N relationship with OrderItem.
@@ -71,6 +79,7 @@ public class Order extends UUIDSupport {
     public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
 
     @Column(nullable=false, updatable=false)
+    @Index(name="INX_CREATEDDATE")
     public Date getCreatedDate() { return createdDate; }
     public void setCreatedDate(Date createdDate) { this.createdDate = createdDate; }
 

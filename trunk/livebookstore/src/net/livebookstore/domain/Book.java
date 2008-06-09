@@ -3,9 +3,15 @@ package net.livebookstore.domain;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.compass.annotations.*;
+import org.compass.annotations.Index;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.Store;
 
 /**
  * Book object.
@@ -60,7 +66,7 @@ public class Book extends UUIDSupport {
     public int getCategoryId() { return categoryId; }
     public void setCategoryId(int categoryId) { this.categoryId = categoryId; }
 
-    @SearchableProperty
+    @SearchableProperty(boost=2.0f)
     @Column(nullable=false, length=50)
     public String getAuthor() { return author; }
     public void setAuthor(String author) { this.author = author; }
@@ -70,12 +76,12 @@ public class Book extends UUIDSupport {
     public String getPublisher() { return publisher; }
     public void setPublisher(String publisher) { this.publisher = publisher; }
 
-    @SearchableProperty(boost=2)
+    @SearchableProperty(boost=5.0f)
     @Column(nullable=false, length=50)
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    @SearchableProperty(boost=2)
+    @SearchableProperty(boost=4.0f)
     @Column(nullable=true, length=50)
     public String getOriginalName() { return originalName; }
     public void setOriginalName(String originalName) { this.originalName = originalName; }
@@ -106,6 +112,7 @@ public class Book extends UUIDSupport {
 
     @SearchableProperty(converter="date", index=Index.NO, store=Store.YES)
     @Column(nullable=false, columnDefinition="DATE")
+    @org.hibernate.annotations.Index(name="INX_PUBDATE")
     public Date getPubDate() { return pubDate; }
     public void setPubDate(Date pubDate) { this.pubDate = pubDate; }
 
