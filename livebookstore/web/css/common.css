@@ -1,3 +1,4 @@
+
 body {
 	background-color: #FFFFFF;
 	margin-top:5px;
@@ -164,6 +165,12 @@ select {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #BCBCBC;
+}
+
+span.highlight {
+    background-color:#FFFF99;
+    color:#990000;
+    font-weight:bold;
 }
 
 span.header { font-size: 14.8px; font-weight:bold; }
