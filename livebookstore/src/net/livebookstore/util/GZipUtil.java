@@ -16,7 +16,9 @@ public final class GZipUtil {
             output = new GZIPOutputStream(byteOutput);
             output.write(data);
         }
-        catch (IOException e) {}
+        catch (IOException e) {
+            throw new RuntimeException("G-Zip failed.", e);
+        }
         finally {
             if(output!=null) {
                 try {
