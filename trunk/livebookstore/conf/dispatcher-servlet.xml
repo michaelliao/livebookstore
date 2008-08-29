@@ -8,10 +8,10 @@
 
     <!--========================================================================
         Import auto-generated xml & XFire configuaration file
-    =========================================================================-->
 
     <import resource="dispatcher-servlet-import-beans.xml" />
     <import resource="classpath:org/codehaus/xfire/spring/xfire.xml" />
+    =========================================================================-->
 
     <!--============================================================================
         URL Mapping configuration
@@ -24,7 +24,6 @@
 
     <!--============================================================================
         Web Service exporter
-    =============================================================================-->
 
     <bean id="bookstoreExporter" name="/bookstoreWebService"
         class="org.codehaus.xfire.spring.remoting.XFireExporter">
@@ -38,6 +37,7 @@
         <property name="searchService" ref="searchService" />
         <property name="imageRootUrl" value="http://www.livebookstore.net/upload/" />
     </bean>
+    =============================================================================-->
 
     <!--============================================================================
         Using CommonsUpload As File Upload Component
@@ -60,29 +60,6 @@
     <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="configLocation" value="/WEB-INF/velocity.properties" />
         <property name="resourceLoaderPath" value="/" />
-    </bean>
-
-    <!--============================================================================
-        Cache configuration
-    =============================================================================-->
-
-    <bean id="memoryCacheFilter" class="net.livebookstore.web.filter.MemoryCacheFilter">
-        <property name="expiresTime" value="60" />
-        <property name="cacheDefinition">
-            <value>
-                /listBooks.jspx=categoryId 16777216, page 1
-                /topSales.jspx=categoryId 16777216
-            </value>
-        </property>
-    </bean>
-
-    <bean id="fileCacheFilter" class="net.livebookstore.web.filter.FileCacheFilter">
-        <property name="fileDir" value="/WEB-INF/static-files/" />
-        <property name="cacheDefinition">
-            <value>
-                /bookDetail.jspx=id
-            </value>
-        </property>
     </bean>
 
 </beans>
