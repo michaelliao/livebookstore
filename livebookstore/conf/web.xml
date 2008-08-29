@@ -14,9 +14,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/security.xml,
-            /WEB-INF/services.xml,
-            /WEB-INF/dispatcher-servlet.xml
+            /WEB-INF/security.xml,/WEB-INF/services.xml
         </param-value>
     </context-param>
 
@@ -29,7 +27,7 @@
     <!--========================================================================
         Filters
     =========================================================================-->
-
+<!-- DISABLED
     <filter>
         <filter-name>performanceFilter</filter-name>
         <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
@@ -38,7 +36,7 @@
             <param-value>net.livebookstore.web.filter.PerformanceFilter</param-value>
         </init-param>
     </filter>
-
+ -->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>net.livebookstore.web.filter.EncodingFilter</filter-class>
@@ -104,13 +102,13 @@
             <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
         </init-param>
     </filter>
-
+<!-- DISABLED
     <filter-mapping>
         <filter-name>performanceFilter</filter-name>
         <url-pattern>*.jspx</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
+-->
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>*.jspx</url-pattern>
@@ -193,12 +191,12 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.jspx</url-pattern>
     </servlet-mapping>
-
+<!-- DISABLED
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/bookstoreWebService*</url-pattern>
     </servlet-mapping>
-
+ -->
     <!--========================================================================
         Session
     =========================================================================-->

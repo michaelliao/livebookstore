@@ -113,7 +113,7 @@
     =========================================================================-->
 
     <bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/jms/bookstore/factory" />
+        <property name="jndiName" value="java:comp/env/jms/factory" />
     </bean>
 
     <bean id="jmsDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -193,5 +193,28 @@
     </bean>
 
     - DISABLED -->
+
+    <!--============================================================================
+        Cache configuration
+    =============================================================================-->
+
+    <bean id="memoryCacheFilter" class="net.livebookstore.web.filter.MemoryCacheFilter">
+        <property name="expiresTime" value="600" />
+        <property name="cacheDefinition">
+            <value>
+                /listBooks.jspx=categoryId 16777216, page 1
+                /topSales.jspx=categoryId 16777216
+            </value>
+        </property>
+    </bean>
+
+    <bean id="fileCacheFilter" class="net.livebookstore.web.filter.FileCacheFilter">
+        <property name="fileDir" value="/WEB-INF/static-files/" />
+        <property name="cacheDefinition">
+            <value>
+                /bookDetail.jspx=id
+            </value>
+        </property>
+    </bean>
 
 </beans>
